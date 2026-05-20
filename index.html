@@ -16,8 +16,9 @@
   --r:6px;--font:'IBM Plex Mono',monospace;--disp:'Bebas Neue',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;overflow:hidden;}
-body{background:var(--bg);color:var(--txt);font-family:var(--font);font-size:12px;}
+html{height:100%;height:-webkit-fill-available;}
+body{background:var(--bg);color:var(--txt);font-family:var(--font);font-size:12px;
+  height:100%;height:-webkit-fill-available;overflow:hidden;}
 
 /* SCROLLBAR */
 ::-webkit-scrollbar{width:4px;height:4px;}
@@ -26,7 +27,8 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);font-size:12p
 
 /* HEADER */
 #hdr{height:48px;background:var(--panel);border-bottom:1px solid var(--b1);
-  display:flex;align-items:center;padding:0 14px;gap:10px;position:relative;z-index:100;}
+  display:flex;align-items:center;padding:0 14px;gap:8px;position:relative;z-index:100;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;}
 #hdr .logo{font-family:var(--disp);font-size:20px;letter-spacing:2px;white-space:nowrap;}
 #hdr .logo em{color:var(--acc);font-style:normal;}
 #hdr .logo sup{font-size:10px;color:var(--muted);font-family:var(--font);letter-spacing:0;vertical-align:super;}
@@ -40,15 +42,22 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);font-size:12p
   letter-spacing:1px;padding:2px 6px;border-radius:2px;}
 
 /* LAYOUT */
-#app{display:grid;grid-template-columns:252px 1fr 272px;height:calc(100vh - 48px);}
+#app{display:grid;grid-template-columns:252px 1fr 272px;
+  height:calc(100vh - 48px);max-height:calc(100vh - 48px);}
 
 /* SIDEBARS */
-.sb{background:var(--panel);overflow-y:auto;overflow-x:hidden;}
+.sb{background:var(--panel);
+  overflow-y:scroll;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;}
 #sb-left{border-right:1px solid var(--b1);}
 #sb-right{border-left:1px solid var(--b1);}
+#sb-left::after,#sb-right::after{content:'';display:block;height:140px;}
 
 /* CENTER */
-#center{background:var(--bg);overflow:auto;display:flex;flex-direction:column;align-items:center;padding:16px;}
+#center{background:var(--bg);overflow-y:scroll;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  display:flex;flex-direction:column;align-items:center;padding:16px;padding-bottom:120px;}
 #empty{padding:60px 20px;text-align:center;color:var(--muted);}
 #empty .ei{font-size:44px;margin-bottom:12px;}
 #workarea{display:none;width:100%;}
