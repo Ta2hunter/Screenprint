@@ -138,12 +138,18 @@ select:focus{border-color:var(--acc);}
 /* CHANNELS */
 .chl{display:flex;flex-direction:column;gap:3px;}
 .chi{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);
-  padding:6px 8px;display:flex;align-items:center;gap:6px;transition:all .15s;}
+  padding:6px 8px;display:flex;align-items:center;gap:5px;transition:all .15s;}
 .chi.on{border-color:var(--acc);}
+.chi.no-print{opacity:.45;border-style:dashed;}
 .ch-sw{width:13px;height:13px;border-radius:2px;flex-shrink:0;border:1px solid rgba(255,255,255,.1);}
-.ch-nm{flex:1;font-size:10px;font-weight:600;}
-.ch-an{font-size:9px;color:var(--muted);}
-.ch-ey{font-size:13px;cursor:pointer;opacity:.7;}
+.ch-nm{flex:1;font-size:10px;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ch-an{font-size:9px;color:var(--muted);flex-shrink:0;}
+.ch-ey{font-size:12px;cursor:pointer;opacity:.7;flex-shrink:0;}
+.ch-print{font-size:11px;cursor:pointer;flex-shrink:0;width:20px;height:20px;
+  border-radius:3px;border:1px solid var(--b2);display:flex;align-items:center;
+  justify-content:center;transition:all .15s;background:var(--s2);}
+.ch-print.on{background:var(--acc);border-color:var(--acc);color:#000;}
+.ch-print.off{background:var(--s3);border-color:var(--b1);color:var(--muted);}
 
 /* TABS */
 .tabs{display:flex;gap:2px;margin-bottom:9px;}
@@ -231,10 +237,12 @@ select:focus{border-color:var(--acc);}
   <button class="hbtn undo" id="undo-btn" onclick="doUndo()" title="Undo last action">↩ Undo</button>
   <button class="hbtn danger" id="del-btn" onclick="deleteImage()" title="Delete image and reset">🗑 Delete</button>
   <button class="hbtn" onclick="openModal('gm')">👕 Preview</button>
+  <button class="hbtn" onclick="openModal('hcm')">🔬 HT Composite</button>
   <button class="hbtn" onclick="openModal('srm')">⊞ Step&Repeat</button>
   <button class="hbtn" onclick="openModal('pm')">🖨 Print</button>
   <button class="hbtn pri" onclick="exportAll()">⬇ Export All</button>
   <span class="badge">v4</span>
+  <a href="manual.html" target="_blank" style="background:var(--s2);border:1px solid var(--b1);color:var(--muted);font-family:var(--font);font-size:10px;padding:5px 9px;border-radius:var(--r);text-decoration:none;white-space:nowrap;">📖 Help</a>
 </div>
 
 <div id="app">
@@ -298,8 +306,47 @@ select:focus{border-color:var(--acc);}
   </div>
 
   <div class="sec">
+    <div class="st">Image Position</div>
+    <div class="info c" style="font-size:9px;line-height:1.6;"><strong>For DTF ganging</strong> nudge artwork on the print sheet. For screen print, position is set physically on the platen — use reg marks for alignment.</div>
+    <div class="row">
+      <span class="lbl">Offset X</span>
+      <input type="range" id="off-x" min="-50" max="50" value="0" step="1"
+        oninput="sv('off-x-v',this.value+'%');redrawBoard()">
+      <span class="val" id="off-x-v">0%</span>
+    </div>
+    <div class="row">
+      <span class="lbl">Offset Y</span>
+      <input type="range" id="off-y" min="-50" max="50" value="0" step="1"
+        oninput="sv('off-y-v',this.value+'%');redrawBoard()">
+      <span class="val" id="off-y-v">0%</span>
+    </div>
+    <div class="row">
+      <span class="lbl">Scale</span>
+      <input type="range" id="img-scale" min="50" max="150" value="100" step="1"
+        oninput="sv('scale-v',this.value+'%');redrawBoard()">
+      <span class="val" id="scale-v">100%</span>
+    </div>
+    <div class="row">
+      <span class="lbl">Rotate</span>
+      <input type="range" id="img-rot" min="-180" max="180" value="0" step="1"
+        oninput="sv('rot-v',this.value+'°');redrawBoard()">
+      <span class="val" id="rot-v">0°</span>
+    </div>
+    <button class="btn bs" onclick="resetTransform()">Reset Position</button>
+  </div>
+
+  <div class="sec">
     <div class="st">Channels</div>
+    <div class="info" style="font-size:9px;line-height:1.7;margin-bottom:8px;">
+      <strong>👁 Eye</strong> = show/hide in preview &nbsp;|&nbsp; <strong>🖨 Print</strong> = include in output &amp; export.<br>
+      Turn off Print for colors you are NOT printing.
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);padding:0 2px;margin-bottom:4px;">
+      <span>CHANNEL</span>
+      <span style="display:flex;gap:18px;"><span>VIEW</span><span>PRINT</span></span>
+    </div>
     <div class="chl" id="chl"></div>
+    <div id="color-count" style="font-size:10px;color:var(--acc);margin-top:6px;text-align:center;font-weight:600;"></div>
     <div class="b2g">
       <button class="btn bp" onclick="doSep()">⚡ Auto Sep</button>
       <button class="btn bs" onclick="doSpot()">🎨 Spot</button>
@@ -554,20 +601,80 @@ select:focus{border-color:var(--acc);}
     <button class="btn bs" onclick="applyInkLim()">Apply Ink Limit</button>
   </div>
 
-  <!-- PMS -->
+  <!-- PMS + COLOR ISOLATION -->
   <div id="rp-pms" class="sec" style="display:none">
+
+    <!-- COLOR ISOLATION TOOL -->
+    <div class="st">🎯 Color Isolation</div>
+    <div class="info c"><strong>Tap any color</strong> in your artwork to isolate it as a clean plate. Perfect for spot colors — red, navy, gold etc.</div>
+
+    <!-- Sampled color display -->
+    <div style="display:flex;gap:6px;align-items:center;margin-bottom:8px;">
+      <div id="iso-swatch" style="width:36px;height:36px;border-radius:4px;border:1px solid var(--b2);background:#888;flex-shrink:0;"></div>
+      <div style="flex:1;">
+        <div id="iso-name" style="font-size:11px;font-weight:600;color:var(--txt);">No color sampled</div>
+        <div id="iso-hex" style="font-size:10px;color:var(--muted);">Tap artwork to sample</div>
+      </div>
+    </div>
+
+    <!-- Tolerance -->
+    <div class="row">
+      <span class="lbl">Tolerance</span>
+      <input type="range" id="iso-tol" min="5" max="120" value="40"
+        oninput="sv('iso-tol-v',this.value);previewIsolation()">
+      <span class="val" id="iso-tol-v">40</span>
+    </div>
+
+    <!-- Edge cleanup -->
+    <div class="row">
+      <span class="lbl">Edge clean</span>
+      <input type="range" id="iso-edge" min="0" max="5" value="1"
+        oninput="sv('iso-edge-v',this.value+'px')">
+      <span class="val" id="iso-edge-v">1px</span>
+    </div>
+
+    <!-- Feather / expand -->
+    <div class="row">
+      <span class="lbl">Expand</span>
+      <input type="range" id="iso-expand" min="-3" max="5" value="0"
+        oninput="sv('iso-exp-v',this.value+'px')">
+      <span class="val" id="iso-exp-v">0px</span>
+    </div>
+
+    <div class="trow">
+      <span class="tlbl">Invert (film neg)</span>
+      <div class="tog on" id="tog-iso-inv" onclick="togEl('tog-iso-inv')"></div>
+    </div>
+
+    <!-- Preview canvas -->
+    <div style="background:var(--s3);border-radius:var(--r);padding:6px;margin-bottom:8px;text-align:center;">
+      <canvas id="iso-prev" style="max-width:100%;border-radius:3px;display:block;margin:0 auto;"></canvas>
+      <div style="font-size:9px;color:var(--muted);margin-top:4px;" id="iso-prev-lbl">Sample a color to preview</div>
+    </div>
+
+    <!-- Buttons -->
+    <button class="btn bp" id="iso-sample-btn" onclick="startIsoSample()">🎯 Tap Color in Artwork</button>
+    <button class="btn bs" onclick="generateIsoPlate()" style="margin-top:4px">⚡ Generate Plate</button>
+    <button class="btn bc" onclick="addIsoToChannels()" style="margin-top:4px">➕ Add as Channel</button>
+
+    <!-- Named color slots -->
+    <div class="st" style="margin-top:10px">Isolated Colors</div>
+    <div id="iso-list" style="display:flex;flex-direction:column;gap:3px;max-height:140px;overflow-y:auto;-webkit-overflow-scrolling:touch;">
+      <div style="font-size:10px;color:var(--muted);padding:5px;text-align:center">None yet — sample colors above</div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div style="border-top:1px solid var(--b1);margin:12px 0;"></div>
+
+    <!-- PANTONE MATCHER -->
     <div class="st">Pantone Matcher</div>
-    <div class="info c"><strong>Sample any color</strong> from your image or enter hex. Finds closest Pantone for your ink mixer.</div>
     <div style="display:flex;gap:5px;align-items:center;margin-bottom:7px;">
-      <span class="lbl">Color</span>
-      <input type="color" id="pcol" value="#ff4500" oninput="matchPMS()" style="width:30px;height:26px;border:none;background:none;cursor:pointer;padding:0;">
+      <input type="color" id="pcol" value="#ff4500" oninput="matchPMS()" style="width:30px;height:26px;border:none;background:none;cursor:pointer;padding:0;border-radius:3px;">
       <input type="text" id="phex" value="#ff4500" style="flex:1;font-size:11px;" oninput="syncPMS()">
     </div>
     <div id="pres" style="margin-bottom:7px;"></div>
     <div class="st" style="margin-top:3px">Common Screen Print PMS</div>
     <div class="pgrid" id="pgrid"></div>
-    <button class="btn bs" style="margin-top:7px" onclick="sampleImg()">🔍 Sample from Image</button>
-    <div style="font-size:9px;color:var(--muted);margin-top:5px;line-height:1.6">Tap button then tap artwork to sample.</div>
   </div>
 
   <!-- PRESETS -->
@@ -588,6 +695,33 @@ select:focus{border-color:var(--acc);}
 </div><!-- end right -->
 </div><!-- end app -->
 </div><!-- end wrap -->
+
+<!-- HALFTONE COMPOSITE MODAL -->
+<div class="modal" id="hcm">
+  <div class="mbox" style="max-width:700px;">
+    <div class="mhdr">
+      <span class="mtit">HALFTONE COMPOSITE PREVIEW</span>
+      <select id="hc-bg" onchange="renderHTcomposite()" style="font-size:10px;padding:4px 7px;">
+        <option value="#ffffff">White garment</option>
+        <option value="#111111">Black garment</option>
+        <option value="#888888">Grey garment</option>
+        <option value="#c0392b">Red garment</option>
+        <option value="#2980b9">Blue garment</option>
+      </select>
+      <div class="tog on" id="tog-hc-dots" onclick="togEl('tog-hc-dots');renderHTcomposite()" style="margin:0 4px;"></div>
+      <span style="font-size:10px;color:var(--muted);">Show dots</span>
+      <button class="hbtn" onclick="dlHTcomposite()">⬇ Save</button>
+      <span class="mcl" onclick="closeModal('hcm')">✕</span>
+    </div>
+    <div class="mbdy" style="background:#1a1a1a;text-align:center;padding:12px;">
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;">
+        Simulates how all ink layers look stacked — with actual halftone dots visible
+      </div>
+      <canvas id="hc-cv" style="max-width:100%;border-radius:4px;"></canvas>
+      <div id="hc-info" style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.8;"></div>
+    </div>
+  </div>
+</div>
 
 <!-- GARMENT MODAL -->
 <div class="modal" id="gm">
@@ -697,11 +831,11 @@ let liveTimer=null;
 let fullTimer=null;
 const CM={cm:1,mm:10,in:.3937,px:113.39};
 const CH_DEFS=[
-  {id:'cyan',nm:'Cyan',col:'#00d4ff',ang:15,vis:true},
-  {id:'magenta',nm:'Magenta',col:'#ff2d78',ang:75,vis:true},
-  {id:'yellow',nm:'Yellow',col:'#ffe000',ang:90,vis:true},
-  {id:'key',nm:'Black K',col:'#aaaaaa',ang:45,vis:true},
-  {id:'white',nm:'White UB',col:'#dddddd',ang:0,vis:false},
+  {id:'cyan',   nm:'Cyan',     col:'#00d4ff',ang:15,vis:true, print:true},
+  {id:'magenta',nm:'Magenta',  col:'#ff2d78',ang:75,vis:true, print:true},
+  {id:'yellow', nm:'Yellow',   col:'#ffe000',ang:90,vis:true, print:true},
+  {id:'key',    nm:'Black K',  col:'#aaaaaa',ang:45,vis:true, print:true},
+  {id:'white',  nm:'White UB', col:'#dddddd',ang:0, vis:false,print:false},
 ];
 let chDefs=[...CH_DEFS.map(c=>({...c}))];
 
@@ -807,58 +941,152 @@ function onSize(which){
 }
 
 // ============================================================
-// ARTBOARD — fixed display scale, artwork fills canvas exactly
+// ARTBOARD — with transform controls
 // ============================================================
 function redrawBoard(){
   if(!img)return;
   const ctr=document.getElementById('ctr');
-  const maxW=Math.min(ctr.clientWidth-28, 900);
-  const maxH=Math.min(ctr.clientHeight-120, 700);
+  const maxW=Math.min(ctr.clientWidth-28,900);
+  const maxH=Math.min(ctr.clientHeight-120,700);
   const asp=artHcm/artWcm;
-  let dispW=maxW, dispH=Math.round(maxW*asp);
+  let dispW=maxW,dispH=Math.round(maxW*asp);
   if(dispH>maxH){dispH=maxH;dispW=Math.round(maxH/asp);}
   const ab=document.getElementById('ab');
-  ab.width=dispW; ab.height=dispH;
+  ab.width=dispW;ab.height=dispH;
   const ctx=ab.getContext('2d');
-  // Fill garment color
   ctx.fillStyle=document.getElementById('gcol').value;
   ctx.fillRect(0,0,dispW,dispH);
-  // Draw image scaled to exact canvas — no empty space
-  ctx.drawImage(img,0,0,dispW,dispH);
-  // Reg overlay
+
+  // Apply transforms
+  const offX=(parseFloat(document.getElementById('off-x')?.value)||0)/100*dispW;
+  const offY=(parseFloat(document.getElementById('off-y')?.value)||0)/100*dispH;
+  const scale=(parseFloat(document.getElementById('img-scale')?.value)||100)/100;
+  const rot=(parseFloat(document.getElementById('img-rot')?.value)||0)*Math.PI/180;
+
+  ctx.save();
+  ctx.translate(dispW/2+offX, dispH/2+offY);
+  ctx.rotate(rot);
+  ctx.scale(scale,scale);
+  ctx.drawImage(img,-dispW/2,-dispH/2,dispW,dispH);
+  ctx.restore();
+
   const ro=document.getElementById('reg-ov');
-  ro.width=dispW; ro.height=dispH;
-  ro.style.width=dispW+'px'; ro.style.height=dispH+'px';
-  drawReg(ro.getContext('2d'),dispW,dispH,'ORIGINAL','rgba(200,200,200,0.6)');
+  ro.width=dispW;ro.height=dispH;
+  ro.style.width=dispW+'px';ro.style.height=dispH+'px';
+  drawReg(ro.getContext('2d'),dispW,dispH,'ORIGINAL','rgba(200,200,200,0.5)');
 }
 
-function fitWin(){
-  // already auto-fits; just call redrawBoard
+function fitWin(){redrawBoard();}
+
+function resetTransform(){
+  ['off-x','off-y'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=0;});
+  const sc=document.getElementById('img-scale');if(sc)sc.value=100;
+  const rt=document.getElementById('img-rot');if(rt)rt.value=0;
+  sv('off-x-v','0%');sv('off-y-v','0%');sv('scale-v','100%');sv('rot-v','0°');
   redrawBoard();
 }
 
 // ============================================================
-// REGISTRATION MARKS — scale with canvas
+// REGISTRATION MARKS + PLATE INFO LABEL
 // ============================================================
 function drawReg(ctx,W,H,label,color){
-  // Scale reg mark size proportionally
-  const s=Math.max(10,Math.min(20,W*0.025));
-  const off=Math.max(8,Math.min(16,W*0.018));
-  const pts=[[off,off],[W/2,off],[W-off,off],[off,H/2],[W-off,H/2],[off,H-off],[W/2,H-off],[W-off,H-off]];
-  ctx.save();ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=Math.max(0.5,W*0.001);
+  // Scale reg mark size — minimum 24px, generous sizing
+  const s=Math.max(24,Math.min(40,W*0.04));
+  const lw=Math.max(2,Math.min(4,W*0.004)); // thick lines
+  const off=s+6; // offset from edge = mark size + padding
+
+  // Always solid black for plate output, use color param for preview overlay only
+  const isPreview=color&&color.includes('rgba');
+  const strokeCol=isPreview?color:'#000000';
+  const fillCol=isPreview?color:'#000000';
+
+  ctx.save();
+  ctx.strokeStyle=strokeCol;
+  ctx.fillStyle=fillCol;
+  ctx.lineWidth=lw;
+  ctx.lineCap='round';
+
+  const pts=[
+    [off,off],[W/2,off],[W-off,off],
+    [off,H/2],[W-off,H/2],
+    [off,H-off],[W/2,H-off],[W-off,H-off]
+  ];
+
   pts.forEach(([x,y])=>{
-    ctx.beginPath();ctx.moveTo(x-s/2,y);ctx.lineTo(x+s/2,y);ctx.moveTo(x,y-s/2);ctx.lineTo(x,y+s/2);ctx.stroke();
-    ctx.beginPath();ctx.arc(x,y,s/3,0,Math.PI*2);ctx.stroke();
+    // Crosshair — long lines
+    ctx.beginPath();
+    ctx.moveTo(x-s,y);ctx.lineTo(x+s,y);
+    ctx.moveTo(x,y-s);ctx.lineTo(x,y+s);
+    ctx.stroke();
+    // Outer circle — unfilled ring
+    ctx.beginPath();ctx.arc(x,y,s*0.55,0,Math.PI*2);ctx.stroke();
+    // Inner filled dot
+    ctx.beginPath();ctx.arc(x,y,lw*1.2,0,Math.PI*2);ctx.fill();
   });
-  const cm=Math.max(8,W*0.015),cg=Math.max(4,W*0.008);
+
+  // Corner crop marks — L-shaped, clearly outside corners
+  const cmLen=s*1.2, cmGap=s*0.4;
   [[0,0,1,1],[W,0,-1,1],[0,H,1,-1],[W,H,-1,-1]].forEach(([x,y,dx,dy])=>{
     ctx.beginPath();
-    ctx.moveTo(x+dx*cg,y);ctx.lineTo(x+dx*(cg+cm),y);
-    ctx.moveTo(x,y+dy*cg);ctx.lineTo(x,y+dy*(cg+cm));ctx.stroke();
+    ctx.moveTo(x+dx*cmGap,y);ctx.lineTo(x+dx*(cmGap+cmLen),y);
+    ctx.moveTo(x,y+dy*cmGap);ctx.lineTo(x,y+dy*(cmGap+cmLen));
+    ctx.stroke();
   });
-  const fs=Math.max(8,Math.min(11,W*0.013));
-  ctx.font=`${fs}px "IBM Plex Mono",monospace`;ctx.textAlign='center';
-  ctx.fillText(label.toUpperCase()+' | '+new Date().toLocaleDateString(),W/2,H-3);
+
+  // PLATE INFO BAR — solid black bar at bottom with all plate details
+  if(!isPreview){
+    const barH=Math.max(36,H*0.065);
+    const lpi=document.getElementById('lpi')?.value||'45';
+    const ang=document.getElementById('ht-ang')?.value||'45';
+    const dpi=document.getElementById('dpi')?.value||'300';
+    const ch=chDefs.find(c=>c.nm===label||c.id===label);
+    const chColor=ch?ch.col:'#ffffff';
+    const date=new Date().toLocaleDateString();
+    const size=`${(+artWcm).toFixed(1)}×${(+artHcm).toFixed(1)}cm`;
+
+    // Solid black bar
+    ctx.fillStyle='#000000';
+    ctx.fillRect(0,H-barH,W,barH);
+
+    // Color swatch — large and obvious
+    ctx.fillStyle=chColor;
+    const swSize=barH-6;
+    ctx.fillRect(4,H-barH+3,swSize,swSize);
+    ctx.strokeStyle='#ffffff';ctx.lineWidth=1.5;
+    ctx.strokeRect(4,H-barH+3,swSize,swSize);
+
+    // Channel name — big and bold
+    const bigFS=Math.max(14,Math.min(22,barH*0.5));
+    const smallFS=Math.max(9,Math.min(13,barH*0.3));
+    ctx.fillStyle='#ffffff';
+    ctx.font=`bold ${bigFS}px "IBM Plex Mono",monospace`;
+    ctx.textAlign='left';
+    ctx.fillText('▶ '+label.toUpperCase(), swSize+10, H-barH+bigFS+2);
+    ctx.font=`${smallFS}px "IBM Plex Mono",monospace`;
+    ctx.fillStyle='rgba(255,255,255,0.75)';
+    ctx.fillText(`${lpi} LPI · ${ang}° · ${dpi} DPI · ${size} · ${date}`, swSize+10, H-barH+bigFS+smallFS+4);
+
+    // Top-left corner label — high contrast box
+    const tfs=Math.max(11,Math.min(15,W*0.018));
+    const lblW=W*0.28;
+    ctx.fillStyle='#000000';
+    ctx.fillRect(0,0,lblW,tfs+10);
+    ctx.fillStyle='#ffffff';
+    ctx.font=`bold ${tfs}px "IBM Plex Mono",monospace`;
+    ctx.textAlign='left';
+    ctx.fillText('▶ '+label.toUpperCase(),5,tfs+4);
+
+    // Top-right: screen number if available
+    const idx=chDefs.findIndex(c=>c.nm===label||c.id===label);
+    if(idx>=0){
+      const scrNum=`SCREEN ${idx+1} of ${chDefs.filter(c=>c.print).length||chDefs.length}`;
+      ctx.fillStyle='#000000';
+      ctx.fillRect(W-lblW,0,lblW,tfs+10);
+      ctx.fillStyle='#ffffff';
+      ctx.textAlign='right';
+      ctx.fillText(scrNum,W-5,tfs+4);
+    }
+  }
   ctx.restore();
 }
 
@@ -868,14 +1096,39 @@ function drawReg(ctx,W,H,label,color){
 function renderChanList(){
   const el=document.getElementById('chl');el.innerHTML='';
   chDefs.forEach(ch=>{
-    const d=document.createElement('div');d.className='chi'+(ch.vis?' on':'');
-    d.innerHTML=`<div class="ch-sw" style="background:${ch.col}"></div>
-      <div class="ch-nm">${ch.nm}</div><div class="ch-an">${ch.ang}°</div>
-      <div class="ch-ey" onclick="toggleCh('${ch.id}',event)">${ch.vis?'👁':'🚫'}</div>`;
+    if(ch.print===undefined)ch.print=true; // default new channels to print
+    const d=document.createElement('div');
+    d.className='chi'+(ch.vis?' on':'')+(ch.print?'':' no-print');
+    d.innerHTML=`
+      <div class="ch-sw" style="background:${ch.col}"></div>
+      <div class="ch-nm" title="${ch.nm}">${ch.nm}</div>
+      <div class="ch-an">${ch.ang}°</div>
+      <div class="ch-ey" onclick="toggleChVis('${ch.id}',event)" title="Show/hide in preview">${ch.vis?'👁':'🚫'}</div>
+      <div class="ch-print ${ch.print?'on':'off'}" onclick="toggleChPrint('${ch.id}',event)" title="${ch.print?'Click to exclude from print':'Click to include in print'}">
+        ${ch.print?'🖨':'—'}
+      </div>`;
     el.appendChild(d);
   });
+  updateColorCount();
 }
-function toggleCh(id,e){e.stopPropagation();const c=chDefs.find(x=>x.id===id);if(c){c.vis=!c.vis;renderChanList();}}
+function toggleChVis(id,e){
+  e.stopPropagation();
+  const c=chDefs.find(x=>x.id===id);
+  if(c){c.vis=!c.vis;renderChanList();}
+}
+function toggleChPrint(id,e){
+  e.stopPropagation();
+  const c=chDefs.find(x=>x.id===id);
+  if(c){c.print=!c.print;renderChanList();}
+}
+function updateColorCount(){
+  const active=chDefs.filter(c=>c.print&&plates[c.id]);
+  const el=document.getElementById('color-count');
+  if(el){
+    if(active.length===0){el.textContent='';return;}
+    el.textContent=`${active.length} color${active.length!==1?'s':''} selected for print: `+active.map(c=>c.nm).join(', ');
+  }
+}
 
 // ============================================================
 // HELPERS
@@ -1325,6 +1578,171 @@ function inkProfile(){
 }
 
 // ============================================================
+// COLOR ISOLATION TOOL
+// ============================================================
+let isoColor=null; // {r,g,b,hex}
+let isoPlates=[];  // [{name,hex,canvas}]
+
+function startIsoSample(){
+  if(!img){alert('Load an image first.');return;}
+  const btn=document.getElementById('iso-sample-btn');
+  btn.textContent='👆 Tap any color in artwork…';
+  btn.style.background='var(--acc2)';btn.style.color='#fff';
+  document.getElementById('ab').style.cursor='crosshair';
+  document.getElementById('ab').addEventListener('click',doIsoSample,{once:true});
+}
+
+function doIsoSample(e){
+  document.getElementById('ab').style.cursor='default';
+  const btn=document.getElementById('iso-sample-btn');
+  btn.textContent='🎯 Tap Color in Artwork';
+  btn.style.background='';btn.style.color='';
+  const ab=document.getElementById('ab');
+  const rect=ab.getBoundingClientRect();
+  const px=Math.round((e.clientX-rect.left)/rect.width*ab.width);
+  const py=Math.round((e.clientY-rect.top)/rect.height*ab.height);
+  const d=ab.getContext('2d').getImageData(px,py,1,1).data;
+  if(d[3]<10){alert('Tapped a transparent area — tap on the artwork itself.');return;}
+  isoColor={r:d[0],g:d[1],b:d[2],hex:'#'+[d[0],d[1],d[2]].map(v=>v.toString(16).padStart(2,'0')).join('')};
+  // Update UI
+  document.getElementById('iso-swatch').style.background=isoColor.hex;
+  document.getElementById('iso-hex').textContent=isoColor.hex.toUpperCase();
+  // find closest PMS name
+  let best=PMS[0],bd=Infinity;
+  PMS.forEach(p=>{const dist=cDist(isoColor.hex,p.h);if(dist<bd){bd=dist;best=p;}});
+  document.getElementById('iso-name').textContent=best.n+' (approx)';
+  // sync pantone picker too
+  document.getElementById('pcol').value=isoColor.hex;
+  document.getElementById('phex').value=isoColor.hex;
+  matchPMS();
+  previewIsolation();
+}
+
+function previewIsolation(){
+  if(!isoColor||!img)return;
+  const tol=parseInt(document.getElementById('iso-tol').value);
+  const inv=isOn('tog-iso-inv');
+  // work at small scale for live preview speed
+  const SCALE=0.15;
+  const W=Math.round(img.width*SCALE),H=Math.round(img.height*SCALE);
+  const tmp=offs(W,H);const ctx=tmp.getContext('2d');
+  ctx.drawImage(img,0,0,W,H);
+  const id2=ctx.getImageData(0,0,W,H);const d=id2.data;
+  const out=new Uint8ClampedArray(W*H*4);
+  const {r:tr,g:tg,b:tb}=isoColor;
+  for(let i=0;i<d.length;i+=4){
+    if(d[i+3]<10){out[i+3]=0;continue;}
+    const dist=Math.sqrt((d[i]-tr)**2+(d[i+1]-tg)**2+(d[i+2]-tb)**2);
+    const match=dist<tol;
+    const v=match?(inv?0:255):(inv?255:0);
+    out[i]=v;out[i+1]=v;out[i+2]=v;out[i+3]=match?255:inv?255:0;
+  }
+  const cv=document.getElementById('iso-prev');
+  cv.width=W;cv.height=H;
+  cv.getContext('2d').putImageData(new ImageData(out,W,H),0,0);
+  document.getElementById('iso-prev-lbl').textContent=
+    `Preview · tol:${tol} · tap "Generate Plate" for full quality`;
+}
+
+function generateIsoPlate(){
+  if(!isoColor||!img){alert('Sample a color first.');return;}
+  showP('ISOLATING COLOR','Processing…',0);
+  setTimeout(()=>{
+    const tol=parseInt(document.getElementById('iso-tol').value);
+    const edge=parseInt(document.getElementById('iso-edge').value);
+    const expand=parseInt(document.getElementById('iso-expand').value);
+    const inv=isOn('tog-iso-inv');
+    const{d,W,H}=getWork();const dd=d.data;
+    const{r:tr,g:tg,b:tb}=isoColor;
+    const out=new Uint8ClampedArray(W*H*4);
+    // Step 1: color match
+    for(let i=0;i<dd.length;i+=4){
+      if(dd[i+3]<10){out[i+3]=0;continue;}
+      const dist=Math.sqrt((dd[i]-tr)**2+(dd[i+1]-tg)**2+(dd[i+2]-tb)**2);
+      const v=dist<tol?255:0;
+      out[i]=v;out[i+1]=v;out[i+2]=v;out[i+3]=v>0?255:0;
+    }
+    setP(40,'Edge cleanup…');
+    // Step 2: edge cleanup (remove tiny isolated pixels)
+    if(edge>0){
+      for(let y=edge;y<H-edge;y++)for(let x=edge;x<W-edge;x++){
+        if(out[(y*W+x)*4]>128){
+          let n=0;
+          for(let dy=-edge;dy<=edge;dy++)for(let dx=-edge;dx<=edge;dx++)
+            if(dx||dy)if(out[((y+dy)*W+(x+dx))*4]>128)n++;
+          if(n<edge*2){out[(y*W+x)*4]=0;out[(y*W+x)*4+1]=0;out[(y*W+x)*4+2]=0;out[(y*W+x)*4+3]=0;}
+        }
+      }
+    }
+    setP(65,'Expand/contract…');
+    // Step 3: expand or contract
+    let result=out;
+    if(expand>0){
+      result=new Uint8ClampedArray(out.length);
+      for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+        const i=(y*W+x)*4;
+        if(out[i]>128){result[i]=255;result[i+1]=255;result[i+2]=255;result[i+3]=255;continue;}
+        let found=false;
+        for(let dy=-expand;dy<=expand&&!found;dy++)for(let dx=-expand;dx<=expand&&!found;dx++){
+          const nx=x+dx,ny=y+dy;
+          if(nx>=0&&nx<W&&ny>=0&&ny<H&&out[(ny*W+nx)*4]>128)found=true;
+        }
+        if(found){result[i]=255;result[i+1]=255;result[i+2]=255;result[i+3]=255;}
+        else{result[i+3]=0;}
+      }
+    } else if(expand<0){
+      result=erode(out,W,H,Math.abs(expand));
+    }
+    setP(85,'Building plate…');
+    // Step 4: invert if needed
+    const final=new Uint8ClampedArray(result.length);
+    for(let i=0;i<result.length;i+=4){
+      const v=result[i];
+      final[i]=inv?255-v:v;final[i+1]=inv?255-v:v;final[i+2]=inv?255-v:v;
+      final[i+3]=result[i+3]>0?255:inv?255:0;
+    }
+    const cv=offs(W,H);cv.getContext('2d').putImageData(new ImageData(final,W,H),0,0);
+    // Store
+    const name=document.getElementById('iso-name').textContent.replace(' (approx)','');
+    const stored={name,hex:isoColor.hex,canvas:cv};
+    isoPlates.push(stored);
+    // Also add to plates for export
+    const pid='iso_'+isoPlates.length;
+    plates[pid]=cv;
+    chDefs.push({id:pid,nm:name,col:isoColor.hex,ang:45,vis:true});
+    renderChanList();renderPlates();renderIsoList();
+    setTimeout(()=>hideP(),100);
+  },30);
+}
+
+function addIsoToChannels(){generateIsoPlate();}
+
+function renderIsoList(){
+  const el=document.getElementById('iso-list');el.innerHTML='';
+  if(!isoPlates.length){
+    el.innerHTML='<div style="font-size:10px;color:var(--muted);padding:5px;text-align:center">None yet</div>';return;
+  }
+  isoPlates.forEach((p,i)=>{
+    const d=document.createElement('div');
+    d.style.cssText='display:flex;align-items:center;gap:6px;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:6px 8px;';
+    d.innerHTML=`<div style="width:14px;height:14px;border-radius:2px;background:${p.hex};border:1px solid rgba(255,255,255,.1);flex-shrink:0;"></div>
+      <div style="flex:1;font-size:10px;">${p.name}</div>
+      <div style="font-size:9px;color:var(--muted);">${p.hex}</div>
+      <span style="cursor:pointer;color:var(--muted);font-size:11px;" onclick="removeIsoPlate(${i})">✕</span>`;
+    el.appendChild(d);
+  });
+}
+
+function removeIsoPlate(i){
+  const p=isoPlates[i];
+  const pid='iso_'+(i+1);
+  delete plates[pid];
+  chDefs=chDefs.filter(c=>c.id!==pid);
+  isoPlates.splice(i,1);
+  renderIsoList();renderChanList();renderPlates();
+}
+
+// ============================================================
 // PANTONE
 // ============================================================
 function h2rgb(h){return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];}
@@ -1353,21 +1771,6 @@ function renderPMSgrid(active){
     chip.onclick=()=>{document.getElementById('pcol').value=p.h;document.getElementById('phex').value=p.h;matchPMS();};
     g.appendChild(chip);
   });
-}
-function sampleImg(){
-  if(!img){alert('Load an image first.');return;}
-  sampling=true;document.getElementById('ab').style.cursor='crosshair';
-  document.getElementById('ab').addEventListener('click',sampleClick,{once:true});
-}
-function sampleClick(e){
-  sampling=false;document.getElementById('ab').style.cursor='default';
-  const ab=document.getElementById('ab');const rect=ab.getBoundingClientRect();
-  const px=Math.round((e.clientX-rect.left)/rect.width*ab.width);
-  const py=Math.round((e.clientY-rect.top)/rect.height*ab.height);
-  const d=ab.getContext('2d').getImageData(px,py,1,1).data;
-  const hex='#'+[d[0],d[1],d[2]].map(v=>v.toString(16).padStart(2,'0')).join('');
-  document.getElementById('pcol').value=hex;document.getElementById('phex').value=hex;
-  matchPMS();rTab('pms',document.querySelector('#rtabs .tab:nth-child(4)'));
 }
 
 // ============================================================
@@ -1432,14 +1835,14 @@ function updScr(){
 }
 
 // ============================================================
-// RENDER PLATES
+// RENDER PLATES — only show print-enabled channels
 // ============================================================
 function renderPlates(){
   const row=document.getElementById('plates');row.innerHTML='';
-  const visible=chDefs.filter(c=>c.vis&&plates[c.id]);
+  const toPrint=chDefs.filter(c=>c.print&&plates[c.id]);
   const extra=Object.keys(plates).filter(id=>!chDefs.find(c=>c.id===id));
-  [...visible.map(c=>c.id),...extra].forEach(chId=>{
-    const ch=chDefs.find(c=>c.id===chId)||{nm:chId,col:'#aaa'};
+  [...toPrint.map(c=>c.id),...extra].forEach(chId=>{
+    const ch=chDefs.find(c=>c.id===chId)||{nm:chId,col:'#aaa',print:true};
     const box=document.createElement('div');box.className='pb';
     const cv=document.createElement('canvas');cv.width=108;cv.height=72;
     const src=plates[chId];const sc=Math.min(108/src.width,72/src.height);
@@ -1451,6 +1854,7 @@ function renderPlates(){
     acts.innerHTML=`<button class="pa" onclick="dlPlate('${chId}')">⬇ DL</button><button class="pa" onclick="viewPlate('${chId}')">👁 View</button>`;
     box.appendChild(cv);box.appendChild(lbl);box.appendChild(acts);row.appendChild(box);
   });
+  updateColorCount();
 }
 function dlPlate(id){
   const src=plates[id];if(!src)return;
@@ -1464,7 +1868,11 @@ function viewPlate(id){
   const w=window.open('','_blank');
   w.document.write(`<html><body style="margin:0;background:#111"><img src="${src.toDataURL()}" style="max-width:100%;display:block;margin:auto"></body></html>`);
 }
-function exportAll(){Object.keys(plates).forEach((id,i)=>setTimeout(()=>dlPlate(id),i*250));}
+function exportAll(){
+  const toPrint=chDefs.filter(c=>c.print&&plates[c.id]).map(c=>c.id);
+  const extra=Object.keys(plates).filter(id=>!chDefs.find(c=>c.id===id));
+  [...toPrint,...extra].forEach((id,i)=>setTimeout(()=>dlPlate(id),i*250));
+}
 
 // ============================================================
 // GARMENT PREVIEW
@@ -1659,11 +2067,88 @@ function openModal(id){
   if(id==='gm')renderGarment();
   if(id==='srm')applyStepRepeat();
   if(id==='pm')renderPrint();
+  if(id==='hcm')renderHTcomposite();
 }
 function closeModal(id){document.getElementById(id).classList.remove('show');}
 document.querySelectorAll('.modal').forEach(m=>{
   m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});
 });
+
+// ============================================================
+// HALFTONE COMPOSITE PREVIEW — actual dots stacked
+// ============================================================
+function renderHTcomposite(){
+  const cv=document.getElementById('hc-cv');
+  const bg=document.getElementById('hc-bg')?.value||'#ffffff';
+  const showDots=isOn('tog-hc-dots');
+  const hasPl=Object.keys(plates).length>0;
+
+  // Use artboard size for display
+  const ab=document.getElementById('ab');
+  const W=Math.min(ab.width,660);
+  const H=Math.round(W*(ab.height/ab.width));
+  cv.width=W;cv.height=H;
+  const ctx=cv.getContext('2d');
+
+  // Background (garment color)
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  if(!img){
+    ctx.fillStyle='rgba(255,255,255,.3)';ctx.font='14px IBM Plex Mono';
+    ctx.textAlign='center';ctx.fillText('Load an image first',W/2,H/2);
+    return;
+  }
+
+  if(!hasPl||!showDots){
+    // Just show original image on garment
+    ctx.globalAlpha=.9;ctx.drawImage(img,0,0,W,H);ctx.globalAlpha=1;
+    document.getElementById('hc-info').textContent='Run Auto Sep then Apply Halftone to see dot composite.';
+    return;
+  }
+
+  // Composite all channel plates with their ink colors
+  const lpi=parseInt(document.getElementById('lpi').value)||45;
+  const ang=parseInt(document.getElementById('ht-ang').value)||45;
+  const order=['white','cyan','magenta','yellow','key'];
+  const inkColors={white:'#ffffff',cyan:'#00aadd',magenta:'#dd0066',yellow:'#ddcc00',key:'#111111'};
+  const opacity={white:0.95,cyan:0.7,magenta:0.7,yellow:0.65,key:0.85};
+
+  order.forEach(chId=>{
+    const ch=chDefs.find(c=>c.id===chId);
+    if(!ch||!ch.vis||!plates[chId])return;
+    const src=plates[chId];
+    // Scale plate to display size
+    const tmp=offs(W,H);const tc=tmp.getContext('2d');
+    tc.drawImage(src,0,0,W,H);
+    // Get pixel data and composite with ink color
+    const id2=tc.getImageData(0,0,W,H);const d=id2.data;
+    const inkR=parseInt(inkColors[chId].slice(1,3),16);
+    const inkG=parseInt(inkColors[chId].slice(3,5),16);
+    const inkB=parseInt(inkColors[chId].slice(5,7),16);
+    for(let i=0;i<d.length;i+=4){
+      const density=1-(d[i]/255); // dark = ink
+      if(density>0.05){
+        d[i]=inkR;d[i+1]=inkG;d[i+2]=inkB;d[i+3]=Math.round(density*255*opacity[chId]);
+      } else {d[i+3]=0;}
+    }
+    tc.putImageData(id2,0,0);
+    ctx.globalCompositeOperation=chId==='white'?'source-over':'multiply';
+    ctx.drawImage(tmp,0,0);
+    ctx.globalCompositeOperation='source-over';
+  });
+
+  // Draw reg marks on composite
+  drawReg(ctx,W,H,'COMPOSITE','rgba(180,180,180,0.5)');
+
+  const plateCt=Object.keys(plates).length;
+  document.getElementById('hc-info').innerHTML=
+    `<strong style="color:#f5c400">${plateCt} color${plateCt>1?'s':''}</strong> · ${lpi} LPI · ${ang}° · `+
+    order.filter(id=>plates[id]).map(id=>`<span style="color:${inkColors[id]||'#fff'}">${(chDefs.find(c=>c.id===id)||{nm:id}).nm}</span>`).join(' + ');
+}
+function dlHTcomposite(){
+  const a=document.createElement('a');a.download='halftone_composite.png';
+  a.href=document.getElementById('hc-cv').toDataURL();a.click();
+}
 
 // ============================================================
 // INIT
