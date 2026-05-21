@@ -306,25 +306,47 @@ select:focus{border-color:var(--acc);}
   </div>
 
   <div class="sec">
-    <div class="st">Image Position</div>
-    <div class="info c" style="font-size:9px;line-height:1.6;"><strong>For DTF ganging</strong> nudge artwork on the print sheet. For screen print, position is set physically on the platen — use reg marks for alignment.</div>
+    <div class="st">🖼 Size &amp; Position</div>
+
+    <!-- Quick size buttons -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:8px;">
+      <button class="btn bs" style="padding:5px;font-size:9px;" onclick="quickScale(50)">50%</button>
+      <button class="btn bs" style="padding:5px;font-size:9px;" onclick="quickScale(75)">75%</button>
+      <button class="btn bp" style="padding:5px;font-size:9px;" onclick="quickScale(100)">100%</button>
+      <button class="btn bs" style="padding:5px;font-size:9px;" onclick="quickScale(125)">125%</button>
+    </div>
+
+    <div class="row">
+      <span class="lbl">Scale</span>
+      <input type="range" id="img-scale" min="10" max="200" value="100" step="1"
+        oninput="sv('scale-v',this.value+'%');redrawBoard()">
+      <span class="val" id="scale-v">100%</span>
+    </div>
+
+    <!-- Nudge pad -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin:6px 0;width:120px;margin-left:auto;margin-right:auto;">
+      <div></div>
+      <button class="btn bs" style="padding:5px;font-size:14px;" onclick="nudge(0,-5)">↑</button>
+      <div></div>
+      <button class="btn bs" style="padding:5px;font-size:14px;" onclick="nudge(-5,0)">←</button>
+      <button class="btn bs" style="padding:5px;font-size:9px;background:var(--s3);" onclick="resetTransform()">⌂</button>
+      <button class="btn bs" style="padding:5px;font-size:14px;" onclick="nudge(5,0)">→</button>
+      <div></div>
+      <button class="btn bs" style="padding:5px;font-size:14px;" onclick="nudge(0,5)">↓</button>
+      <div></div>
+    </div>
+
     <div class="row">
       <span class="lbl">Offset X</span>
-      <input type="range" id="off-x" min="-50" max="50" value="0" step="1"
+      <input type="range" id="off-x" min="-100" max="100" value="0" step="1"
         oninput="sv('off-x-v',this.value+'%');redrawBoard()">
       <span class="val" id="off-x-v">0%</span>
     </div>
     <div class="row">
       <span class="lbl">Offset Y</span>
-      <input type="range" id="off-y" min="-50" max="50" value="0" step="1"
+      <input type="range" id="off-y" min="-100" max="100" value="0" step="1"
         oninput="sv('off-y-v',this.value+'%');redrawBoard()">
       <span class="val" id="off-y-v">0%</span>
-    </div>
-    <div class="row">
-      <span class="lbl">Scale</span>
-      <input type="range" id="img-scale" min="50" max="150" value="100" step="1"
-        oninput="sv('scale-v',this.value+'%');redrawBoard()">
-      <span class="val" id="scale-v">100%</span>
     </div>
     <div class="row">
       <span class="lbl">Rotate</span>
@@ -332,7 +354,11 @@ select:focus{border-color:var(--acc);}
         oninput="sv('rot-v',this.value+'°');redrawBoard()">
       <span class="val" id="rot-v">0°</span>
     </div>
-    <button class="btn bs" onclick="resetTransform()">Reset Position</button>
+
+    <div style="font-size:9px;color:var(--muted);line-height:1.7;margin-top:4px;">
+      Use arrow buttons to nudge. ⌂ resets position.<br>
+      Scale below 100% = smaller design on canvas.
+    </div>
   </div>
 
   <div class="sec">
@@ -970,10 +996,18 @@ function redrawBoard(){
   ctx.drawImage(img,-dispW/2,-dispH/2,dispW,dispH);
   ctx.restore();
 
+  // NO reg marks on working preview — only on exported files
+  // Just show a subtle border to indicate canvas boundary
   const ro=document.getElementById('reg-ov');
   ro.width=dispW;ro.height=dispH;
   ro.style.width=dispW+'px';ro.style.height=dispH+'px';
-  drawReg(ro.getContext('2d'),dispW,dispH,'ORIGINAL','rgba(200,200,200,0.5)');
+  // Draw faint canvas boundary only
+  const roctx=ro.getContext('2d');
+  roctx.strokeStyle='rgba(245,196,0,0.25)';
+  roctx.lineWidth=1;
+  roctx.setLineDash([6,4]);
+  roctx.strokeRect(1,1,dispW-2,dispH-2);
+  roctx.setLineDash([]);
 }
 
 function fitWin(){redrawBoard();}
@@ -983,6 +1017,25 @@ function resetTransform(){
   const sc=document.getElementById('img-scale');if(sc)sc.value=100;
   const rt=document.getElementById('img-rot');if(rt)rt.value=0;
   sv('off-x-v','0%');sv('off-y-v','0%');sv('scale-v','100%');sv('rot-v','0°');
+  redrawBoard();
+}
+
+function quickScale(pct){
+  const el=document.getElementById('img-scale');
+  if(el){el.value=pct;sv('scale-v',pct+'%');redrawBoard();}
+}
+
+function nudge(dx,dy){
+  const ex=document.getElementById('off-x');
+  const ey=document.getElementById('off-y');
+  if(ex){
+    const nx=Math.max(-100,Math.min(100,parseInt(ex.value||0)+dx));
+    ex.value=nx;sv('off-x-v',nx+'%');
+  }
+  if(ey){
+    const ny=Math.max(-100,Math.min(100,parseInt(ey.value||0)+dy));
+    ey.value=ny;sv('off-y-v',ny+'%');
+  }
   redrawBoard();
 }
 
