@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>ScreenPrint Studio — User Manual</title>
+<title>ScreenPrint Studio Pro v4 — User Manual</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Bebas+Neue&display=swap');
 :root{
@@ -132,34 +132,73 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <body>
 
 <div class="site-hdr">
-  <div class="logo">SCREEN<em>PRINT</em> STUDIO <em>PRO</em></div>
-  <div class="sub">Complete User Guide — Plain English Edition</div>
+  <div class="logo">SCREEN<em>PRINT</em> STUDIO <em>PRO v4</em></div>
+  <div class="sub">Complete User Guide — Updated for v4 · Plain English Edition</div>
   <a href="index.html" class="back-btn">← Back to App</a>
 </div>
 
 <!-- TABLE OF CONTENTS -->
 <div class="toc">
   <h2>📖 What's in this guide</h2>
+  <div style="background:rgba(245,196,0,.08);border:1px solid rgba(245,196,0,.3);border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:10px;color:var(--acc);letter-spacing:.5px;">
+    ⭐ NEW IN v4: Sections marked NEW below cover features added since the original manual.
+  </div>
   <div class="toc-grid">
+    <a href="#snew" class="toc-item" style="border-color:rgba(245,196,0,.4);background:rgba(245,196,0,.06)"><span class="num" style="color:var(--acc2)">★</span><div><div class="ttl" style="color:var(--acc)">What's new in v4</div></div></a>
     <a href="#s1" class="toc-item"><span class="num">1</span><div><div class="ttl">What is screen printing?</div></div></a>
     <a href="#s2" class="toc-item"><span class="num">2</span><div><div class="ttl">Your first print — step by step</div></div></a>
     <a href="#s3" class="toc-item"><span class="num">3</span><div><div class="ttl">Loading your artwork</div></div></a>
+    <a href="#s3b" class="toc-item" style="border-color:rgba(0,229,255,.3)"><span class="num" style="color:var(--acc3)">3+</span><div><div class="ttl">Size, scale &amp; position <span style="color:var(--acc3)">NEW</span></div></div></a>
     <a href="#s4" class="toc-item"><span class="num">4</span><div><div class="ttl">Color separation explained</div></div></a>
-    <a href="#s5" class="toc-item"><span class="num">5</span><div><div class="ttl">Halftone — what & why</div></div></a>
+    <a href="#s5" class="toc-item"><span class="num">5</span><div><div class="ttl">Halftone — what &amp; why</div></div></a>
     <a href="#s6" class="toc-item"><span class="num">6</span><div><div class="ttl">RIP — film for burning screens</div></div></a>
-    <a href="#s7" class="toc-item"><span class="num">7</span><div><div class="ttl">Registration marks</div></div></a>
-    <a href="#s8" class="toc-item"><span class="num">8</span><div><div class="ttl">Underbase & choke</div></div></a>
-    <a href="#s9" class="toc-item"><span class="num">9</span><div><div class="ttl">Channels & print colors</div></div></a>
-    <a href="#s10" class="toc-item"><span class="num">10</span><div><div class="ttl">Color isolation tool</div></div></a>
+    <a href="#s7" class="toc-item"><span class="num">7</span><div><div class="ttl">Registration marks <span style="color:var(--acc3)">UPDATED</span></div></div></a>
+    <a href="#s8" class="toc-item"><span class="num">8</span><div><div class="ttl">Underbase &amp; choke <span style="color:var(--acc3)">UPDATED</span></div></div></a>
+    <a href="#s9" class="toc-item"><span class="num">9</span><div><div class="ttl">Channels &amp; print colors <span style="color:var(--acc3)">UPDATED</span></div></div></a>
+    <a href="#s10" class="toc-item" style="border-color:rgba(0,229,255,.3)"><span class="num" style="color:var(--acc3)">10</span><div><div class="ttl">Color isolation tool <span style="color:var(--acc3)">NEW</span></div></div></a>
+    <a href="#s10b" class="toc-item" style="border-color:rgba(0,229,255,.3)"><span class="num" style="color:var(--acc3)">10+</span><div><div class="ttl">Preview tools <span style="color:var(--acc3)">NEW</span></div></div></a>
     <a href="#s11" class="toc-item"><span class="num">11</span><div><div class="ttl">Presets — saving your settings</div></div></a>
     <a href="#s12" class="toc-item"><span class="num">12</span><div><div class="ttl">DTF vs Screen print</div></div></a>
-    <a href="#s13" class="toc-item"><span class="num">13</span><div><div class="ttl">Exporting & printing plates</div></div></a>
+    <a href="#s13" class="toc-item"><span class="num">13</span><div><div class="ttl">Exporting &amp; printing plates</div></div></a>
     <a href="#s14" class="toc-item"><span class="num">14</span><div><div class="ttl">Glossary of terms</div></div></a>
-    <a href="#s15" class="toc-item"><span class="num">15</span><div><div class="ttl">FAQ & troubleshooting</div></div></a>
+    <a href="#s15" class="toc-item"><span class="num">15</span><div><div class="ttl">FAQ &amp; troubleshooting <span style="color:var(--acc3)">UPDATED</span></div></div></a>
   </div>
 </div>
 
 <div class="content">
+
+<!-- WHAT'S NEW -->
+<div class="section" id="snew" style="border-color:rgba(245,196,0,.4);">
+  <div class="section-hdr" style="background:rgba(245,196,0,.08);">
+    <div class="section-num" style="color:var(--acc2)">★</div>
+    <div><div class="section-title">What's new in v4</div>
+    <div class="section-sub">Everything added since the original manual — read this first</div></div>
+  </div>
+  <div class="section-body">
+
+    <div class="callout good">
+      <span class="label">✅ v4 summary</span>
+      v4 adds a complete color isolation tool, redesigned size and position controls, smarter channel management with separate view/print toggles, bold registration marks on exports only, composite and garment preview modals, undo/delete, and a full halftone composite preview.
+    </div>
+
+    <table>
+      <tr><th>Feature</th><th>Where to find it</th><th>What it does</th></tr>
+      <tr><td><strong>🎯 Color Isolation</strong></td><td>PMS tab → right sidebar</td><td>Tap any color in your artwork to generate a clean plate for just that color. Best tool for spot color designs.</td></tr>
+      <tr><td><strong>Size &amp; Position controls</strong></td><td>Left sidebar — scroll down past Canvas Size</td><td>Scale buttons (50/75/100/125%), arrow nudge pad, offset X/Y sliders, rotate slider, reset button.</td></tr>
+      <tr><td><strong>🖨 Print toggle per channel</strong></td><td>Channels list — left sidebar</td><td>Each channel now has TWO buttons: 👁 eye (show/hide in preview) and 🖨 printer (include/exclude from export). Turn off printer for colors you are not printing.</td></tr>
+      <tr><td><strong>Registration marks</strong></td><td>Automatic on every export</td><td>Reg marks now only appear on exported film files — NOT on the working preview. Bold thick marks with full plate info bar at the bottom of every film.</td></tr>
+      <tr><td><strong>🔬 HT Composite</strong></td><td>Header button</td><td>Shows all ink layers stacked with actual halftone dots — what the final print will look like.</td></tr>
+      <tr><td><strong>👕 Garment Preview</strong></td><td>Header button</td><td>Shows your design on a T-shirt, hoodie, tote, or flat layout with all channels composited.</td></tr>
+      <tr><td><strong>⊞ Step &amp; Repeat</strong></td><td>Header button</td><td>Tiles your design in a grid — for DTF ganging multiple prints on one film sheet.</td></tr>
+      <tr><td><strong>↩ Undo</strong></td><td>Header — top left</td><td>Reverts the last action. Clears plates and returns to the original image.</td></tr>
+      <tr><td><strong>🗑 Delete</strong></td><td>Header — top left</td><td>Removes the current image and resets everything. Asks for confirmation first.</td></tr>
+      <tr><td><strong>Underbase modes</strong></td><td>Left sidebar — Underbase/Choke</td><td>Three modes: Full image, Key areas only, Threshold. Key areas only prevents white showing under black outlines.</td></tr>
+      <tr><td><strong>Color count display</strong></td><td>Below channels list</td><td>Shows how many screens are currently set to print, and which colors they are.</td></tr>
+      <tr><td><strong>📖 Help button</strong></td><td>Header — far right</td><td>Opens this manual in a new tab.</td></tr>
+    </table>
+
+  </div>
+</div>
 
 <!-- SECTION 1 -->
 <div class="section" id="s1">
@@ -261,14 +300,18 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div class="step-body">
           <div class="step-title">Run color separation</div>
           <div class="step-text">For a <strong>photographic/gradient image</strong>: tap <strong>⚡ Auto Sep</strong> — splits into Cyan, Magenta, Yellow, Black channels.<br><br>
-          For a <strong>spot color logo/design</strong> (flat colors, like the badminton design): tap <strong>🎨 Spot</strong> — detects each individual color separately. This is usually better for garment printing.</div>
+          For a <strong>spot color logo/design</strong> (flat colors like a badminton shuttle or car design): tap <strong>🎨 Spot</strong> — detects each individual color separately.<br><br>
+          <strong>Best method for most garment designs:</strong> Use the <strong>🎯 Color Isolation tool</strong> in the PMS tab — tap each color individually for the cleanest plates.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-num">6</div>
         <div class="step-body">
           <div class="step-title">Turn off colors you're not printing</div>
-          <div class="step-text">In the <strong>Channels list</strong>, each color has a <strong>🖨 print button</strong>. Tap it to exclude colors you don't need. The button goes dim when excluded. Only your selected colors will export.</div>
+          <div class="step-text">In the <strong>Channels list</strong>, each color has TWO buttons:<br>
+          <strong>👁 Eye</strong> = show or hide in the preview<br>
+          <strong>🖨 Printer icon</strong> = include or exclude from export<br><br>
+          Tap the 🖨 printer button to turn it grey/dim for any color you don't want to print. The color count below the list shows how many screens you have active.</div>
         </div>
       </div>
       <div class="step">
@@ -351,6 +394,66 @@ tr:hover td{background:rgba(255,255,255,.02);}
   </div>
 </div>
 
+<!-- SECTION 3b — NEW -->
+<div class="section" id="s3b" style="border-color:rgba(0,229,255,.3);">
+  <div class="section-hdr" style="background:rgba(0,229,255,.05);">
+    <div class="section-num" style="color:var(--acc3)">3+</div>
+    <div><div class="section-title">Size, scale and position — NEW in v4</div>
+    <div class="section-sub">Making your design the right size and putting it in the right place</div></div>
+  </div>
+  <div class="section-body">
+
+    <div class="callout info">
+      <span class="label">📋 Important to understand</span>
+      The <strong>Canvas Size</strong> (cm width × height) sets the real-world print size. The <strong>Scale slider</strong> in Size &amp; Position makes the image larger or smaller within that canvas. They are separate controls.
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Quick scale buttons — 50% / 75% / 100% / 125%</div>
+          <div class="step-text">Tap any of the four quick buttons to instantly resize the artwork on the canvas. <strong>100%</strong> = fills the canvas edge to edge. <strong>75%</strong> = artwork is 3/4 the size with space around it. Use these to find the right size quickly then fine-tune with the Scale slider.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Scale slider — fine control from 10% to 200%</div>
+          <div class="step-text">Drag to resize. Going below 100% makes the design smaller on the canvas — useful when you want the design to be a specific size within a larger print area (like a small chest logo on a 40cm canvas).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Arrow nudge pad — move the design around</div>
+          <div class="step-text">The <strong>↑ ↓ ← →</strong> buttons move the artwork 5% in each direction. Use this to position your design — for example, to push it up toward the chest area, or center it horizontally. The <strong>⌂ home button</strong> in the center resets everything back to default position.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Offset X / Y sliders — precise positioning</div>
+          <div class="step-text">Fine control version of the nudge arrows. Drag left/right to move the design horizontally or vertically. Range is -100% to +100% of the canvas size. Useful for DTF ganging — positioning multiple designs on one film sheet.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Rotate slider</div>
+          <div class="step-text">Rotates your artwork from -180° to +180°. Useful if your artwork was uploaded sideways, or if you want a tilted design.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <span class="label">⚠️ Screen printing note</span>
+      For screen printing, you set the physical position on the platen (the board your garment sits on) — not in this app. The position controls here are mainly useful for <strong>DTF</strong> to gang multiple designs on one film, or to preview how the design looks on the garment. The registration marks handle multi-color alignment at the press.
+    </div>
+
+  </div>
+</div>
+
 <!-- SECTION 4 -->
 <div class="section" id="s4">
   <div class="section-hdr">
@@ -380,11 +483,20 @@ tr:hover td{background:rgba(255,255,255,.02);}
           <li>Anything with clear distinct colors</li>
         </ul>
       </div>
+      <div class="wf-card" style="border-color:rgba(0,229,255,.3);">
+        <div class="wf-card-title" style="color:var(--acc3)">🎯 Color Isolation — best for:</div>
+        <ul>
+          <li><strong>Any spot color design</strong></li>
+          <li><strong>Cleaning up noisy separation</strong></li>
+          <li><strong>Isolating one specific color</strong></li>
+          <li>When Auto Sep or Spot gives messy results</li>
+        </ul>
+      </div>
     </div>
 
     <div class="callout tip">
-      <span class="label">💡 Which is my design?</span>
-      Look at your artwork. Can you count the colors? (Red, navy, black, white = 4 colors) → Use <strong>Spot</strong>. Does it have smooth gradients that blend together like a photograph? → Use <strong>Auto Sep</strong>.
+      <span class="label">💡 Which method for my design?</span>
+      Can you count the colors? (Red, navy, black, white = 4 colors) → Use <strong>🎯 Color Isolation</strong> for each color. Does it have smooth gradients like a photograph? → Use <strong>Auto Sep</strong>. Not sure? Try Spot first, then use Color Isolation to clean up any channel that looks wrong.
     </div>
 
     <div class="steps">
@@ -516,39 +628,51 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <div class="section" id="s7">
   <div class="section-hdr">
     <div class="section-num">7</div>
-    <div><div class="section-title">Registration marks — your alignment system</div>
-    <div class="section-sub">How multi-color prints stay perfectly aligned</div></div>
+    <div><div class="section-title">Registration marks — updated in v4</div>
+    <div class="section-sub">Your alignment system — now only on exported files</div></div>
   </div>
   <div class="section-body">
-    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">Registration marks are the crosshair targets that appear on every plate. They let you line up multiple screens to print in exactly the same position.</p>
+    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">Registration marks are the crosshair targets on every plate. They let you line up multiple screens to print in exactly the same position.</p>
+
+    <div class="callout good">
+      <span class="label">✅ v4 change — reg marks moved off the preview</span>
+      In v4, registration marks <strong>no longer show on your working preview canvas</strong>. They were getting in the way while you worked. Now they only appear on <strong>exported film files</strong>. While working you see just a faint dashed yellow border showing the canvas edge.
+    </div>
 
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
         <div class="step-body">
-          <div class="step-title">Every plate has the same marks in the same positions</div>
-          <div class="step-text">There are 8 reg marks — one at each corner, one in the middle of each side. They are always in the exact same position on every plate. This is how you align screen 2 to match screen 1 perfectly.</div>
+          <div class="step-title">8 reg marks on every exported plate</div>
+          <div class="step-text">Corners, midpoints of each side — 8 total. Every plate has them in exactly the same position. This is how you align screen 2 to screen 1 precisely at the press.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-body">
-          <div class="step-title">The bottom info bar tells you which screen is which</div>
-          <div class="step-text">Every exported plate has a <strong>solid black bar at the bottom</strong> with: the color name, LPI, angle, DPI, canvas size, and date. There is also a <strong>label in the top left corner</strong>. When you have 4 films on your workbench you will always know which is which.</div>
+          <div class="step-title">Bold thick marks — visible on film</div>
+          <div class="step-text">v4 marks are <strong>solid black, thick lines, large circles</strong> — clearly visible when you hold the film up. Previous versions had faint marks that were hard to see. Each mark has a crosshair, an outer circle, and a centre dot.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-body">
-          <div class="step-title">How to use reg marks at the press</div>
-          <div class="step-text">Tape your first film (usually the black or underbase) to the screen glass. Expose it. When setting up the press, use the reg marks as your reference points. All subsequent films should have their reg marks in exactly the same position. Use a light table or registration pins for precise alignment.</div>
+          <div class="step-title">Plate info bar — know which film is which</div>
+          <div class="step-text">Every exported film has a <strong>solid black bar at the bottom</strong> showing: color swatch, color name, LPI, angle, DPI, print size, and date. A corner label top-left also shows the color name. When you have 4 films on your workbench you always know which goes on which screen.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Using reg marks at the press</div>
+          <div class="step-text">Tape your first film (underbase or black) to the screen. Expose it. When setting up the press, use the reg marks as your reference points. All other films must have their reg marks in exactly the same position. Use registration pins or a light table for precise alignment.</div>
         </div>
       </div>
     </div>
 
     <div class="callout tip">
       <span class="label">💡 Pro tip</span>
-      Print a <strong>test registration sheet</strong> first on paper through all your screens before committing to garments. Hold it up to the light — all the reg marks should stack perfectly on top of each other.
+      Print a <strong>test sheet on paper</strong> through all your screens before printing on garments. Hold it up to the light — all reg marks should stack perfectly on top of each other. If they don't, your registration needs adjusting before you waste garments.
     </div>
   </div>
 </div>
@@ -605,27 +729,48 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <div class="section" id="s9">
   <div class="section-hdr">
     <div class="section-num">9</div>
-    <div><div class="section-title">Channels — managing your print colors</div>
-    <div class="section-sub">How to select exactly which colors to print</div></div>
+    <div><div class="section-title">Channels — updated in v4</div>
+    <div class="section-sub">Two separate controls per channel — view and print</div></div>
   </div>
   <div class="section-body">
-    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">After separation, the Channels panel shows every color the app detected. You control which ones get processed, exported, and printed.</p>
+    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">After separation, every detected color appears as a channel. v4 gives each channel two separate controls so you can manage preview and output independently.</p>
+
+    <div class="callout good">
+      <span class="label">✅ v4 change — eye and printer are now separate</span>
+      Previously one toggle controlled both visibility and export. Now they are split: <strong>👁 eye</strong> controls the preview only, <strong>🖨 printer</strong> controls whether it exports. You can hide a channel from your preview while still printing it, or show it in preview while excluding it from output.
+    </div>
 
     <table>
-      <tr><th>Control</th><th>Icon</th><th>What it does</th></tr>
-      <tr><td><strong>Eye button</strong></td><td>👁 / 🚫</td><td>Shows or hides the channel in the preview. Does not affect export.</td></tr>
-      <tr><td><strong>Print button</strong></td><td>🖨 (yellow = on)</td><td>Includes or excludes from export and print. Turn OFF for colors you are not printing this run.</td></tr>
-      <tr><td><strong>Color count</strong></td><td>Text below list</td><td>Shows how many screens you are currently set up to print.</td></tr>
+      <tr><th>Button</th><th>Icon when ON</th><th>Icon when OFF</th><th>What it controls</th></tr>
+      <tr><td><strong>Eye button</strong></td><td>👁 visible</td><td>🚫 hidden</td><td>Shows or hides in the working preview only. Does NOT affect what gets exported.</td></tr>
+      <tr><td><strong>Print button</strong></td><td>🖨 yellow/bright</td><td>— grey/dim</td><td>Includes or excludes from export, print sheets, and Export All. Turn this OFF for colors you are not printing.</td></tr>
     </table>
 
     <div class="callout tip">
-      <span class="label">💡 Example — 4 color job</span>
-      You ran Spot separation and got 7 colors. You only want to print Red, Navy, Black, White UB. Tap the 🖨 button on Yellow, Cyan, Magenta and any others to turn them off. Now only 4 plates will export.
+      <span class="label">💡 4 color job example</span>
+      You ran Spot and got 7 channels. You only want to print Red, Navy, Black, White UB. Tap the <strong>🖨 print button</strong> on Yellow, Cyan, Magenta and any extras to turn them grey. The color count below the list updates to show "4 colors selected for print: Red, Navy, Black K, White UB." Only those 4 will export.
     </div>
 
     <div class="callout info">
-      <span class="label">📋 Print order matters</span>
-      Always print in this order: <strong>White underbase first → lightest colors → darkest colors → black last</strong>. Flash cure between colors if using plastisol ink on dark garments.
+      <span class="label">📋 Print order for screen printing</span>
+      Always print in this order: <strong>White underbase first → lightest colors → darkest colors → black last</strong>. Flash cure (heat) between colors on dark garments when using plastisol ink.
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">!</div>
+        <div class="step-body">
+          <div class="step-title">Color count display</div>
+          <div class="step-text">Below the channels list, a line shows exactly how many screens are active and which colors they are — for example "4 colors selected for print: Cyan, Black K, Red, White UB". This is your quick sanity check before exporting.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">!</div>
+        <div class="step-body">
+          <div class="step-title">Faded / dashed channels</div>
+          <div class="step-text">When a channel's print button is turned off, the channel row goes faded with a dashed border. This visually confirms it's excluded from output without removing it from the list.</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -683,6 +828,49 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <span class="label">✅ Best practice for spot color artwork</span>
       Remove BG → tap each color one at a time → generate plates → turn off any auto-sep channels you don't need → export only your isolated color plates.
     </div>
+  </div>
+</div>
+
+<!-- SECTION 10b — NEW -->
+<div class="section" id="s10b" style="border-color:rgba(0,229,255,.3);">
+  <div class="section-hdr" style="background:rgba(0,229,255,.05);">
+    <div class="section-num" style="color:var(--acc3)">10+</div>
+    <div><div class="section-title">Preview tools — NEW in v4</div>
+    <div class="section-sub">See what your print will look like before you commit to film</div></div>
+  </div>
+  <div class="section-body">
+
+    <table>
+      <tr><th>Button</th><th>Where</th><th>What you see</th></tr>
+      <tr><td><strong>🔬 HT Composite</strong></td><td>Header</td><td>All ink channels stacked together with actual halftone dots rendered in each ink color. Shows the rosette dot pattern. This is the closest to what the final print will look like.</td></tr>
+      <tr><td><strong>👕 Preview</strong></td><td>Header</td><td>Your design composited onto a garment silhouette — T-shirt, hoodie, tote, or flat. Shows all visible channels in their ink colors. Change garment color in the dropdown.</td></tr>
+      <tr><td><strong>👁 Composite View</strong></td><td>Below channels list</td><td>Quick composite of all visible channels stacked in the center canvas — without opening a modal.</td></tr>
+    </table>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">🔬 HT Composite — the most important preview</div>
+          <div class="step-text">Tap <strong>HT Composite</strong> in the header after running separation and halftone. You see all channels rendered together — cyan dots at 15°, magenta at 75°, yellow at 90°, black at 45°. The rosette pattern in the overlapping areas is normal and expected — that's how CMYK printing works. Toggle <strong>Show dots</strong> on/off to compare with and without halftone. Change garment color in the dropdown to check light and dark backgrounds. Download the composite as a PNG for client approval.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">👕 Garment Preview — for client sign-off</div>
+          <div class="step-text">Opens your design on a garment silhouette. Choose T-Shirt, Hoodie, Tote Bag, or Flat. Tap <strong>⬇ Save</strong> to download the preview as a PNG — useful for sending to clients for approval before you burn any screens.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Live halftone preview while adjusting sliders</div>
+          <div class="step-text">In the HT tab, the <strong>Live Preview toggle</strong> at the top shows a real-time low-resolution halftone as you drag any slider. The preview updates within milliseconds as you move. When you lift your finger, the full quality version processes. Turn it off if your iPad is running slow.</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -975,8 +1163,43 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
 
     <div class="faq-item">
-      <div class="faq-q">The app is running slowly on my iPad</div>
-      <div class="faq-a"><strong>Fix:</strong> Set DPI to 150 while working, then switch to 300 or 600 for final export. Turn off Live Preview if you don't need it. For very large images, the separation and halftone processing takes more time — this is normal.</div>
+      <div class="faq-q">The registration marks are showing on my preview canvas and getting in the way</div>
+      <div class="faq-a"><strong>This is fixed in v4.</strong> Reg marks no longer show on the working preview — only on exported film files. If you are still seeing them, you may have an older version of the file. Upload the latest index.html to GitHub.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How do I make my design smaller on the canvas?</div>
+      <div class="faq-a">Scroll down in the left sidebar past Canvas Size to find <strong>Size &amp; Position</strong>. Tap the <strong>75%</strong> or <strong>50%</strong> quick button to instantly shrink the artwork. Use the Scale slider for fine control. Use the arrow nudge pad (↑ ↓ ← →) to move it around. Tap ⌂ to reset.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">I turned off a channel but it still exported</div>
+      <div class="faq-a">There are two separate buttons per channel. The <strong>👁 eye</strong> only hides in preview. You must turn off the <strong>🖨 printer button</strong> (it goes grey/dim) to exclude from export. Make sure you tapped the printer icon, not the eye.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How do I use the color isolation tool for my spot color design?</div>
+      <div class="faq-a">Go to the <strong>PMS tab</strong> on the right sidebar. Tap <strong>🎯 Tap Color in Artwork</strong> — the button turns orange. Then tap directly on the color you want in your artwork (e.g. tap the red area). A preview appears. Adjust the <strong>Tolerance</strong> slider until only that color is selected. Tap <strong>⚡ Generate Plate</strong>. Repeat for each color. Turn off the auto-sep channels you don't need.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What's the difference between HT Composite and Garment Preview?</div>
+      <div class="faq-a"><strong>HT Composite</strong> (🔬) shows the actual halftone dots of all channels stacked — this is the technical output view, showing exactly how the ink will land. <strong>Garment Preview</strong> (👕) shows the design on a garment silhouette with ink colors tinted — this is the presentation view for showing clients or checking placement.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">My white underbase is showing a halo or edge around the design</div>
+      <div class="faq-a">Change the <strong>UB Mode</strong> to <strong>Key areas only</strong> — this stops white printing under the black outlines which is usually where the halo appears. Also increase the <strong>Choke</strong> value slightly (try 0.5mm to 1mm) to shrink the white plate inward.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">I made a mistake — how do I undo?</div>
+      <div class="faq-a">Tap <strong>↩ Undo</strong> in the header. This clears the plates and returns to the original loaded image so you can start the separation again. It does not undo individual slider moves — it reverts the last major action like separation or halftone.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How do I start over with a completely different image?</div>
+      <div class="faq-a">Tap the red <strong>🗑 Delete</strong> button in the header. It asks for confirmation then clears everything — image, plates, channels, history. Tap the artwork upload area to load a new image.</div>
     </div>
 
   </div>
