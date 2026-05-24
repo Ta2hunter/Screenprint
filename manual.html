@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>ScreenPrint Studio Pro v4 — User Manual</title>
+<title>ScreenPrint Studio Pro v5 — User Manual</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Bebas+Neue&display=swap');
 :root{
@@ -11,1203 +11,505 @@
   --b1:#333345;--b2:#44445a;
   --txt:#e2e2f0;--muted:#7070a0;
   --acc:#f5c400;--acc2:#ff4500;--acc3:#00e5ff;
-  --green:#00e676;--red:#ff3d3d;--purple:#c77dff;
+  --green:#00e676;--red:#ff3d3d;
   --font:'IBM Plex Mono',monospace;--disp:'Bebas Neue',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--txt);font-family:var(--font);font-size:13px;line-height:1.7;}
-
-/* HEADER */
-.site-hdr{background:var(--panel);border-bottom:2px solid var(--acc);padding:16px 20px;
+.hdr{background:var(--panel);border-bottom:2px solid var(--acc);padding:14px 20px;
   position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.site-hdr .logo{font-family:var(--disp);font-size:24px;letter-spacing:2px;}
-.site-hdr .logo em{color:var(--acc);font-style:normal;}
-.site-hdr .sub{font-size:11px;color:var(--muted);flex:1;}
-.back-btn{background:var(--acc);color:#000;font-family:var(--font);font-size:11px;font-weight:600;
+.hdr .logo{font-family:var(--disp);font-size:22px;letter-spacing:2px;}
+.hdr .logo em{color:var(--acc);font-style:normal;}
+.hdr .sub{font-size:11px;color:var(--muted);flex:1;}
+.back{background:var(--acc);color:#000;font-family:var(--font);font-size:11px;font-weight:600;
   padding:6px 14px;border-radius:4px;text-decoration:none;letter-spacing:.5px;}
-
-/* TOC */
 .toc{background:var(--panel);border:1px solid var(--b1);border-radius:8px;
-  padding:20px;margin:20px;max-width:900px;margin-left:auto;margin-right:auto;}
+  padding:20px;margin:20px auto;max-width:900px;}
 .toc h2{font-family:var(--disp);font-size:18px;letter-spacing:1px;color:var(--acc);margin-bottom:14px;}
-.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
-.toc-item{background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:10px 12px;
-  text-decoration:none;color:var(--txt);transition:all .15s;display:flex;align-items:center;gap:8px;}
-.toc-item:hover{border-color:var(--acc);color:var(--acc);}
-.toc-item .num{font-family:var(--disp);font-size:20px;color:var(--acc);flex-shrink:0;}
-.toc-item .ttl{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;}
-
-/* CONTENT */
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:7px;}
+.ti{background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:9px 11px;
+  text-decoration:none;color:var(--txt);transition:all .15s;display:flex;align-items:center;gap:7px;}
+.ti:hover{border-color:var(--acc);color:var(--acc);}
+.ti .n{font-family:var(--disp);font-size:18px;color:var(--acc);flex-shrink:0;}
+.ti .t{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;}
+.ti.new{border-color:rgba(0,229,255,.3);}
+.ti.new .n{color:var(--acc3);}
 .content{max-width:900px;margin:0 auto;padding:0 20px 60px;}
-
-/* SECTION */
-.section{background:var(--panel);border:1px solid var(--b1);border-radius:8px;
-  margin-bottom:20px;overflow:hidden;}
-.section-hdr{background:var(--s1);padding:16px 20px;border-bottom:1px solid var(--b1);
-  display:flex;align-items:center;gap:12px;}
-.section-num{font-family:var(--disp);font-size:32px;color:var(--acc);line-height:1;flex-shrink:0;}
-.section-title{font-family:var(--disp);font-size:22px;letter-spacing:1px;}
-.section-sub{font-size:11px;color:var(--muted);}
-.section-body{padding:20px;}
-
-/* STEPS */
-.steps{display:flex;flex-direction:column;gap:14px;}
-.step{display:flex;gap:14px;align-items:flex-start;}
-.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc);color:#000;
-  font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;margin-top:2px;}
-.step-body{flex:1;}
-.step-title{font-weight:600;font-size:13px;color:var(--txt);margin-bottom:4px;}
-.step-text{font-size:12px;color:var(--muted);line-height:1.8;}
-.step-text strong{color:var(--txt);}
-
-/* CALLOUTS */
-.callout{border-radius:6px;padding:12px 14px;margin:12px 0;font-size:11px;line-height:1.8;}
-.callout.tip{background:rgba(245,196,0,.08);border-left:3px solid var(--acc);}
-.callout.warn{background:rgba(255,69,0,.08);border-left:3px solid var(--acc2);}
-.callout.info{background:rgba(0,229,255,.08);border-left:3px solid var(--acc3);}
-.callout.good{background:rgba(0,230,118,.08);border-left:3px solid var(--green);}
+.section{background:var(--panel);border:1px solid var(--b1);border-radius:8px;margin-bottom:18px;overflow:hidden;}
+.section.new-sec{border-color:rgba(0,229,255,.3);}
+.shdr{background:var(--s1);padding:14px 18px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:11px;}
+.shdr.new-hdr{background:rgba(0,229,255,.05);}
+.snum{font-family:var(--disp);font-size:30px;color:var(--acc);line-height:1;flex-shrink:0;}
+.snum.new{color:var(--acc3);}
+.stitle{font-family:var(--disp);font-size:20px;letter-spacing:1px;}
+.ssub{font-size:11px;color:var(--muted);}
+.sbody{padding:18px;}
+.steps{display:flex;flex-direction:column;gap:13px;}
+.step{display:flex;gap:12px;align-items:flex-start;}
+.sn{width:26px;height:26px;border-radius:50%;background:var(--acc);color:#000;
+  font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.sb2{flex:1;}
+.st2{font-weight:600;font-size:13px;color:var(--txt);margin-bottom:3px;}
+.stx{font-size:12px;color:var(--muted);line-height:1.8;}
+.stx strong{color:var(--txt);}
+.callout{border-radius:6px;padding:11px 13px;margin:11px 0;font-size:11px;line-height:1.8;}
+.callout.tip{background:rgba(245,196,0,.07);border-left:3px solid var(--acc);}
+.callout.warn{background:rgba(255,69,0,.07);border-left:3px solid var(--acc2);}
+.callout.info{background:rgba(0,229,255,.07);border-left:3px solid var(--acc3);}
+.callout.good{background:rgba(0,230,118,.07);border-left:3px solid var(--green);}
 .callout strong{color:var(--txt);}
-.callout .label{font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:9px;
-  display:block;margin-bottom:4px;}
-
-/* TABLE */
-table{width:100%;border-collapse:collapse;font-size:11px;margin:12px 0;}
-th{background:var(--s2);color:var(--muted);padding:7px 10px;text-align:left;font-weight:600;letter-spacing:.5px;}
-td{padding:7px 10px;border-top:1px solid var(--b1);vertical-align:top;}
+.callout .lbl{font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:9px;display:block;margin-bottom:3px;}
+table{width:100%;border-collapse:collapse;font-size:11px;margin:11px 0;}
+th{background:var(--s2);color:var(--muted);padding:6px 9px;text-align:left;font-weight:600;letter-spacing:.5px;}
+td{padding:6px 9px;border-top:1px solid var(--b1);vertical-align:top;}
 td strong{color:var(--acc);}
-tr:hover td{background:rgba(255,255,255,.02);}
-
-/* VISUAL DIAGRAM */
-.diagram{background:var(--s2);border-radius:6px;padding:16px;margin:12px 0;font-size:11px;}
-.diagram-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.wf{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:9px;margin:11px 0;}
+.wfc{background:var(--s2);border:1px solid var(--b1);border-radius:6px;padding:13px;}
+.wfc.new{border-color:rgba(0,229,255,.3);}
+.wft{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--acc);margin-bottom:7px;}
+.wft.new{color:var(--acc3);}
+.wfc ul{list-style:none;display:flex;flex-direction:column;gap:3px;}
+.wfc li{font-size:11px;color:var(--muted);padding-left:13px;position:relative;}
+.wfc li::before{content:"→";position:absolute;left:0;color:var(--acc);}
+.wfc li strong{color:var(--txt);}
 .flow{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin:8px 0;}
-.flow-box{background:var(--panel);border:1px solid var(--b2);border-radius:4px;padding:6px 10px;font-size:10px;font-weight:600;text-align:center;}
-.flow-box.acc{border-color:var(--acc);color:var(--acc);}
-.flow-box.grn{border-color:var(--green);color:var(--green);}
-.flow-box.red{border-color:var(--red);color:var(--red);}
-.flow-arrow{color:var(--muted);font-size:14px;}
-
-/* COLOR CHIPS */
-.chip-row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0;}
-.chip{border-radius:4px;padding:5px 10px;font-size:10px;font-weight:700;letter-spacing:.5px;}
-
-/* GLOSSARY */
-.gloss-item{padding:10px 0;border-bottom:1px solid var(--b1);}
+.fb{background:var(--panel);border:1px solid var(--b2);border-radius:4px;padding:5px 9px;font-size:10px;font-weight:600;text-align:center;}
+.fb.acc{border-color:var(--acc);color:var(--acc);}
+.fb.grn{border-color:var(--green);color:var(--green);}
+.fa{color:var(--muted);font-size:13px;}
+.gloss-item{padding:9px 0;border-bottom:1px solid var(--b1);}
 .gloss-item:last-child{border:none;}
-.gloss-term{font-weight:600;color:var(--acc);font-size:12px;margin-bottom:3px;}
-.gloss-def{font-size:11px;color:var(--muted);line-height:1.8;}
-.gloss-def strong{color:var(--txt);}
-
-/* FAQ */
-.faq-item{border:1px solid var(--b1);border-radius:6px;margin-bottom:8px;overflow:hidden;}
-.faq-q{background:var(--s1);padding:12px 14px;font-size:12px;font-weight:600;cursor:pointer;
-  display:flex;justify-content:space-between;align-items:center;}
+.gterm{font-weight:600;color:var(--acc);font-size:12px;margin-bottom:2px;}
+.gdef{font-size:11px;color:var(--muted);line-height:1.8;}
+.gdef strong{color:var(--txt);}
+.faq-item{border:1px solid var(--b1);border-radius:6px;margin-bottom:7px;overflow:hidden;}
+.faq-q{background:var(--s1);padding:11px 13px;font-size:12px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;}
 .faq-q:hover{background:var(--s2);}
-.faq-a{padding:12px 14px;font-size:11px;color:var(--muted);line-height:1.8;border-top:1px solid var(--b1);}
+.faq-a{padding:11px 13px;font-size:11px;color:var(--muted);line-height:1.8;border-top:1px solid var(--b1);}
 .faq-a strong{color:var(--txt);}
-
-/* WORKFLOW CARDS */
-.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:12px 0;}
-.wf-card{background:var(--s2);border:1px solid var(--b1);border-radius:6px;padding:14px;}
-.wf-card-title{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--acc);margin-bottom:8px;}
-.wf-card ul{list-style:none;display:flex;flex-direction:column;gap:4px;}
-.wf-card li{font-size:11px;color:var(--muted);padding-left:14px;position:relative;}
-.wf-card li::before{content:'→';position:absolute;left:0;color:var(--acc);}
-.wf-card li strong{color:var(--txt);}
-
-/* BACK TO TOP */
-.back-top{display:block;text-align:center;padding:14px;color:var(--muted);font-size:11px;
-  text-decoration:none;border:1px solid var(--b1);border-radius:6px;margin-top:10px;}
-.back-top:hover{color:var(--acc);border-color:var(--acc);}
-
-@media(max-width:600px){
-  .toc-grid{grid-template-columns:1fr 1fr;}
-  .wf-grid{grid-template-columns:1fr;}
-  .flow{flex-direction:column;}
-}
+.btop{display:block;text-align:center;padding:13px;color:var(--muted);font-size:11px;text-decoration:none;border:1px solid var(--b1);border-radius:6px;margin-top:9px;}
+.btop:hover{color:var(--acc);border-color:var(--acc);}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr 1fr;}.wf{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<div class="site-hdr">
-  <div class="logo">SCREEN<em>PRINT</em> STUDIO <em>PRO v4</em></div>
-  <div class="sub">Complete User Guide — Updated for v4 · Plain English Edition</div>
-  <a href="index.html" class="back-btn">← Back to App</a>
+<div class="hdr">
+  <div class="logo">SCREEN<em>PRINT</em> STUDIO <em>PRO v5</em></div>
+  <div class="sub">Complete User Guide — Plain English · v5 Edition</div>
+  <a href="index.html" class="back">← Back to App</a>
 </div>
 
-<!-- TABLE OF CONTENTS -->
 <div class="toc">
-  <h2>📖 What's in this guide</h2>
-  <div style="background:rgba(245,196,0,.08);border:1px solid rgba(245,196,0,.3);border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:10px;color:var(--acc);letter-spacing:.5px;">
-    ⭐ NEW IN v4: Sections marked NEW below cover features added since the original manual.
+  <h2>📖 Contents</h2>
+  <div style="background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.3);border-radius:6px;padding:9px 13px;margin-bottom:13px;font-size:10px;color:var(--acc3);letter-spacing:.5px;">
+    ⭐ This is the v5 manual — completely rewritten from scratch. All sections are new or updated.
   </div>
   <div class="toc-grid">
-    <a href="#snew" class="toc-item" style="border-color:rgba(245,196,0,.4);background:rgba(245,196,0,.06)"><span class="num" style="color:var(--acc2)">★</span><div><div class="ttl" style="color:var(--acc)">What's new in v4</div></div></a>
-    <a href="#s1" class="toc-item"><span class="num">1</span><div><div class="ttl">What is screen printing?</div></div></a>
-    <a href="#s2" class="toc-item"><span class="num">2</span><div><div class="ttl">Your first print — step by step</div></div></a>
-    <a href="#s3" class="toc-item"><span class="num">3</span><div><div class="ttl">Loading your artwork</div></div></a>
-    <a href="#s3b" class="toc-item" style="border-color:rgba(0,229,255,.3)"><span class="num" style="color:var(--acc3)">3+</span><div><div class="ttl">Size, scale &amp; position <span style="color:var(--acc3)">NEW</span></div></div></a>
-    <a href="#s4" class="toc-item"><span class="num">4</span><div><div class="ttl">Color separation explained</div></div></a>
-    <a href="#s5" class="toc-item"><span class="num">5</span><div><div class="ttl">Halftone — what &amp; why</div></div></a>
-    <a href="#s6" class="toc-item"><span class="num">6</span><div><div class="ttl">RIP — film for burning screens</div></div></a>
-    <a href="#s7" class="toc-item"><span class="num">7</span><div><div class="ttl">Registration marks <span style="color:var(--acc3)">UPDATED</span></div></div></a>
-    <a href="#s8" class="toc-item"><span class="num">8</span><div><div class="ttl">Underbase &amp; choke <span style="color:var(--acc3)">UPDATED</span></div></div></a>
-    <a href="#s9" class="toc-item"><span class="num">9</span><div><div class="ttl">Channels &amp; print colors <span style="color:var(--acc3)">UPDATED</span></div></div></a>
-    <a href="#s10" class="toc-item" style="border-color:rgba(0,229,255,.3)"><span class="num" style="color:var(--acc3)">10</span><div><div class="ttl">Color isolation tool <span style="color:var(--acc3)">NEW</span></div></div></a>
-    <a href="#s10b" class="toc-item" style="border-color:rgba(0,229,255,.3)"><span class="num" style="color:var(--acc3)">10+</span><div><div class="ttl">Preview tools <span style="color:var(--acc3)">NEW</span></div></div></a>
-    <a href="#s11" class="toc-item"><span class="num">11</span><div><div class="ttl">Presets — saving your settings</div></div></a>
-    <a href="#s12" class="toc-item"><span class="num">12</span><div><div class="ttl">DTF vs Screen print</div></div></a>
-    <a href="#s13" class="toc-item"><span class="num">13</span><div><div class="ttl">Exporting &amp; printing plates</div></div></a>
-    <a href="#s14" class="toc-item"><span class="num">14</span><div><div class="ttl">Glossary of terms</div></div></a>
-    <a href="#s15" class="toc-item"><span class="num">15</span><div><div class="ttl">FAQ &amp; troubleshooting <span style="color:var(--acc3)">UPDATED</span></div></div></a>
+    <a href="#s1" class="ti"><span class="n">1</span><div><div class="t">What is screen printing?</div></div></a>
+    <a href="#s2" class="ti new"><span class="n new">2</span><div><div class="t">Job Setup Wizard NEW</div></div></a>
+    <a href="#s3" class="ti"><span class="n">3</span><div><div class="t">Your first print walkthrough</div></div></a>
+    <a href="#s4" class="ti"><span class="n">4</span><div><div class="t">Loading artwork</div></div></a>
+    <a href="#s5" class="ti new"><span class="n new">5</span><div><div class="t">Layers system NEW</div></div></a>
+    <a href="#s6" class="ti"><span class="n">6</span><div><div class="t">Color separation</div></div></a>
+    <a href="#s7" class="ti new"><span class="n new">7</span><div><div class="t">Color isolation tool NEW</div></div></a>
+    <a href="#s8" class="ti"><span class="n">8</span><div><div class="t">Halftone</div></div></a>
+    <a href="#s9" class="ti"><span class="n">9</span><div><div class="t">RIP — film negatives</div></div></a>
+    <a href="#s10" class="ti"><span class="n">10</span><div><div class="t">Registration marks</div></div></a>
+    <a href="#s11" class="ti"><span class="n">11</span><div><div class="t">Underbase &amp; choke</div></div></a>
+    <a href="#s12" class="ti new"><span class="n new">12</span><div><div class="t">Pencil underbase editor NEW</div></div></a>
+    <a href="#s13" class="ti new"><span class="n new">13</span><div><div class="t">Save &amp; load projects NEW</div></div></a>
+    <a href="#s14" class="ti new"><span class="n new">14</span><div><div class="t">Procedure log NEW</div></div></a>
+    <a href="#s15" class="ti"><span class="n">15</span><div><div class="t">Presets</div></div></a>
+    <a href="#s16" class="ti"><span class="n">16</span><div><div class="t">Preview tools</div></div></a>
+    <a href="#s17" class="ti"><span class="n">17</span><div><div class="t">DTF vs screen print</div></div></a>
+    <a href="#s18" class="ti"><span class="n">18</span><div><div class="t">Exporting plates</div></div></a>
+    <a href="#s19" class="ti"><span class="n">19</span><div><div class="t">Glossary</div></div></a>
+    <a href="#s20" class="ti"><span class="n">20</span><div><div class="t">FAQ &amp; troubleshooting</div></div></a>
   </div>
 </div>
 
 <div class="content">
 
-<!-- WHAT'S NEW -->
-<div class="section" id="snew" style="border-color:rgba(245,196,0,.4);">
-  <div class="section-hdr" style="background:rgba(245,196,0,.08);">
-    <div class="section-num" style="color:var(--acc2)">★</div>
-    <div><div class="section-title">What's new in v4</div>
-    <div class="section-sub">Everything added since the original manual — read this first</div></div>
-  </div>
-  <div class="section-body">
-
-    <div class="callout good">
-      <span class="label">✅ v4 summary</span>
-      v4 adds a complete color isolation tool, redesigned size and position controls, smarter channel management with separate view/print toggles, bold registration marks on exports only, composite and garment preview modals, undo/delete, and a full halftone composite preview.
-    </div>
-
-    <table>
-      <tr><th>Feature</th><th>Where to find it</th><th>What it does</th></tr>
-      <tr><td><strong>🎯 Color Isolation</strong></td><td>PMS tab → right sidebar</td><td>Tap any color in your artwork to generate a clean plate for just that color. Best tool for spot color designs.</td></tr>
-      <tr><td><strong>Size &amp; Position controls</strong></td><td>Left sidebar — scroll down past Canvas Size</td><td>Scale buttons (50/75/100/125%), arrow nudge pad, offset X/Y sliders, rotate slider, reset button.</td></tr>
-      <tr><td><strong>🖨 Print toggle per channel</strong></td><td>Channels list — left sidebar</td><td>Each channel now has TWO buttons: 👁 eye (show/hide in preview) and 🖨 printer (include/exclude from export). Turn off printer for colors you are not printing.</td></tr>
-      <tr><td><strong>Registration marks</strong></td><td>Automatic on every export</td><td>Reg marks now only appear on exported film files — NOT on the working preview. Bold thick marks with full plate info bar at the bottom of every film.</td></tr>
-      <tr><td><strong>🔬 HT Composite</strong></td><td>Header button</td><td>Shows all ink layers stacked with actual halftone dots — what the final print will look like.</td></tr>
-      <tr><td><strong>👕 Garment Preview</strong></td><td>Header button</td><td>Shows your design on a T-shirt, hoodie, tote, or flat layout with all channels composited.</td></tr>
-      <tr><td><strong>⊞ Step &amp; Repeat</strong></td><td>Header button</td><td>Tiles your design in a grid — for DTF ganging multiple prints on one film sheet.</td></tr>
-      <tr><td><strong>↩ Undo</strong></td><td>Header — top left</td><td>Reverts the last action. Clears plates and returns to the original image.</td></tr>
-      <tr><td><strong>🗑 Delete</strong></td><td>Header — top left</td><td>Removes the current image and resets everything. Asks for confirmation first.</td></tr>
-      <tr><td><strong>Underbase modes</strong></td><td>Left sidebar — Underbase/Choke</td><td>Three modes: Full image, Key areas only, Threshold. Key areas only prevents white showing under black outlines.</td></tr>
-      <tr><td><strong>Color count display</strong></td><td>Below channels list</td><td>Shows how many screens are currently set to print, and which colors they are.</td></tr>
-      <tr><td><strong>📖 Help button</strong></td><td>Header — far right</td><td>Opens this manual in a new tab.</td></tr>
-    </table>
-
-  </div>
-</div>
-
-<!-- SECTION 1 -->
+<!-- S1 -->
 <div class="section" id="s1">
-  <div class="section-hdr">
-    <div class="section-num">1</div>
-    <div><div class="section-title">What is screen printing?</div>
-    <div class="section-sub">The basics — explained simply</div></div>
-  </div>
-  <div class="section-body">
-    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">Think of screen printing like a very precise stencil system. Instead of one stencil, you use one stencil per color.</p>
-
-    <div class="diagram">
-      <div class="diagram-title">How screen printing works</div>
-      <div class="flow">
-        <div class="flow-box acc">Your Design</div><div class="flow-arrow">→</div>
-        <div class="flow-box">Separate into colors</div><div class="flow-arrow">→</div>
-        <div class="flow-box">Print each color on film</div><div class="flow-arrow">→</div>
-        <div class="flow-box">Burn screen with film</div><div class="flow-arrow">→</div>
-        <div class="flow-box">Print ink through screen</div><div class="flow-arrow">→</div>
-        <div class="flow-box grn">Finished garment</div>
-      </div>
+  <div class="shdr"><div class="snum">1</div><div><div class="stitle">What is screen printing?</div><div class="ssub">The basics explained simply</div></div></div>
+  <div class="sbody">
+    <p style="color:var(--muted);font-size:12px;margin-bottom:13px;">Screen printing is a stencil system. One stencil per colour. Each stencil is a screen. You push ink through each screen onto the garment one colour at a time.</p>
+    <div class="callout info"><span class="lbl">The simple version</span>Your design → split into colours → each colour printed on film → film burns a screen → ink pushed through screen → garment printed.</div>
+    <div class="flow">
+      <div class="fb acc">Your Design</div><div class="fa">→</div>
+      <div class="fb">Split into colours</div><div class="fa">→</div>
+      <div class="fb">Print on film</div><div class="fa">→</div>
+      <div class="fb">Burn screens</div><div class="fa">→</div>
+      <div class="fb">Print on garment</div><div class="fa">→</div>
+      <div class="fb grn">Done</div>
     </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">One screen per color</div>
-          <div class="step-text">If your design has 4 colors — red, navy, black, white — you need 4 screens. Each screen only carries one color of ink.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">Film negatives go on the screen</div>
-          <div class="step-text">You print each color as a <strong>black film negative</strong> — black where ink should go. You then press this film against a light-sensitive screen and expose it to UV light. The light hardens the screen everywhere except where your black film was. Wash it out, and you have a stencil.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Print one color at a time</div>
-          <div class="step-text">Put the garment on the platen (the flat board). Press screen 1 down, push ink through with a squeegee. Lift. Move to screen 2. Repeat. Each color lines up using the <strong>registration marks</strong> — the crosshair targets on every plate.</div>
-        </div>
-      </div>
+    <div class="steps" style="margin-top:13px;">
+      <div class="step"><div class="sn">1</div><div class="sb2"><div class="st2">One screen per colour</div><div class="stx">4-colour design = 4 screens. Each screen only prints one colour of ink.</div></div></div>
+      <div class="step"><div class="sn">2</div><div class="sb2"><div class="st2">Film negatives go on the screen</div><div class="stx">You print each colour as a <strong>black film negative</strong>. Press it against a light-sensitive screen under UV light. The black blocks the light. Wash out the unexposed areas. You now have a stencil.</div></div></div>
+      <div class="step"><div class="sn">3</div><div class="sb2"><div class="st2">Print one colour at a time</div><div class="stx">Garment on platen. Screen 1 down. Push ink with squeegee. Lift. Screen 2. Repeat. Registration marks keep all colours aligned perfectly.</div></div></div>
     </div>
-
-    <div class="callout tip">
-      <span class="label">💡 Key insight</span>
-      This app takes your design and <strong>automatically creates each color as a separate film-ready file</strong>. You then print those files on film, burn your screens, and you're ready to print.
-    </div>
+    <div class="callout tip"><span class="lbl">What this app does</span>Takes your design and <strong>automatically creates each colour as a separate film-ready file</strong> with registration marks, plate labels, and all the settings a professional printer would use.</div>
   </div>
 </div>
 
-<!-- SECTION 2 -->
-<div class="section" id="s2">
-  <div class="section-hdr">
-    <div class="section-num">2</div>
-    <div><div class="section-title">Your first print — complete walkthrough</div>
-    <div class="section-sub">From zero to ready-to-burn in 10 steps</div></div>
-  </div>
-  <div class="section-body">
-    <div class="callout info">
-      <span class="label">📋 Before you start</span>
-      Have your artwork ready as a <strong>PNG or JPG file</strong>. PNG is better because it can have a transparent background. The higher resolution the better — at least 300dpi if possible.
-    </div>
-
+<!-- S2 NEW -->
+<div class="section new-sec" id="s2">
+  <div class="shdr new-hdr"><div class="snum new">2</div><div><div class="stitle">Job Setup Wizard — NEW in v5</div><div class="ssub">The app sets everything up automatically before you start</div></div></div>
+  <div class="sbody">
+    <div class="callout good"><span class="lbl">✅ New in v5</span>Every time you open the app, the Job Setup Wizard appears first. Answer 4 questions and the app configures all settings automatically — exactly like a professional printer would set up for that job type.</div>
     <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">Load your image</div>
-          <div class="step-text">Tap the <strong>🎨 artwork box</strong> on the left side. Pick your PNG or JPG from your iPad files. Your design appears in the center canvas.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">Remove the background</div>
-          <div class="step-text">Tap <strong>✂️ Remove BG</strong>. This removes the white canvas around your artwork. Without this, your separation will catch dots and noise outside your design. Always do this first.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Set your print size</div>
-          <div class="step-text">Under <strong>Canvas Size</strong>, type the width and height in cm. A standard chest print is about 28–32cm wide. The height adjusts automatically to keep proportions correct.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <div class="step-title">Choose your garment color</div>
-          <div class="step-text">Select the garment color from the dropdown. This affects the preview — it does not change your artwork. Black garment = you need a white underbase. White garment = no underbase needed usually.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">5</div>
-        <div class="step-body">
-          <div class="step-title">Run color separation</div>
-          <div class="step-text">For a <strong>photographic/gradient image</strong>: tap <strong>⚡ Auto Sep</strong> — splits into Cyan, Magenta, Yellow, Black channels.<br><br>
-          For a <strong>spot color logo/design</strong> (flat colors like a badminton shuttle or car design): tap <strong>🎨 Spot</strong> — detects each individual color separately.<br><br>
-          <strong>Best method for most garment designs:</strong> Use the <strong>🎯 Color Isolation tool</strong> in the PMS tab — tap each color individually for the cleanest plates.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">6</div>
-        <div class="step-body">
-          <div class="step-title">Turn off colors you're not printing</div>
-          <div class="step-text">In the <strong>Channels list</strong>, each color has TWO buttons:<br>
-          <strong>👁 Eye</strong> = show or hide in the preview<br>
-          <strong>🖨 Printer icon</strong> = include or exclude from export<br><br>
-          Tap the 🖨 printer button to turn it grey/dim for any color you don't want to print. The color count below the list shows how many screens you have active.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">7</div>
-        <div class="step-body">
-          <div class="step-title">Apply halftone (if needed)</div>
-          <div class="step-text">For photographic prints with gradients, go to the <strong>HT tab</strong> on the right and tap <strong>⚡ Apply Halftone</strong>. For flat spot colors, you can skip this — solid areas don't need halftone dots.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">8</div>
-        <div class="step-body">
-          <div class="step-title">Apply RIP for film output</div>
-          <div class="step-text">Go to the <strong>RIP tab</strong> on the right. Tap <strong>⚡ Apply RIP</strong>. This converts everything to pure black and white — maximum contrast — ready for film printing. This is what you send to your inkjet film printer.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">9</div>
-        <div class="step-body">
-          <div class="step-title">Preview the result</div>
-          <div class="step-text">Tap <strong>🔬 HT Composite</strong> in the header to see all colors stacked together — this is what the final print will look like. Tap <strong>👕 Preview</strong> to see it on a garment silhouette.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">10</div>
-        <div class="step-body">
-          <div class="step-title">Export your film files</div>
-          <div class="step-text">Tap <strong>⬇ Export All</strong> in the header. Each color downloads as a separate PNG with registration marks and a plate label. Send these to your inkjet film printer. Print on clear film, burn your screens, done.</div>
-        </div>
-      </div>
+      <div class="step"><div class="sn">Q1</div><div class="sb2"><div class="st2">Garment colour — White/Light or Dark/Black?</div><div class="stx"><strong>White/Light:</strong> no underbase needed. App sets overprint black, standard settings.<br><strong>Dark/Black:</strong> white underbase enabled automatically. App sets knockout black, choke 0.8mm.</div></div></div>
+      <div class="step"><div class="sn">Q2</div><div class="sb2"><div class="st2">Design type — Spot colors or Photo/Gradient?</div><div class="stx"><strong>Spot colors/Logo:</strong> flat countable colours like a badge or cartoon. App recommends Color Isolation tool.<br><strong>Photo/Gradient:</strong> smooth blending like a photograph. App sets CMYK separation, ellipse halftone dots, medium GCR.</div></div></div>
+      <div class="step"><div class="sn">Q3</div><div class="sb2"><div class="st2">Print method — Screen Print or DTF?</div><div class="stx"><strong>Screen Print:</strong> film → burn screens → press. App sets 1-bit RIP, 320% ink limit.<br><strong>DTF:</strong> direct to film transfer. App sets stochastic screening, 280% ink limit, mirror enabled.</div></div></div>
+      <div class="step"><div class="sn">Q4</div><div class="sb2"><div class="st2">How many colours?</div><div class="stx">Tells the app how complex the job is. Helps with recommendations for separation method and halftone settings.</div></div></div>
     </div>
+    <div class="callout tip"><span class="lbl">💡 After the wizard</span>Tap <strong>⚡ START JOB</strong> and the file picker opens immediately. Load your image and the app is already configured correctly for your job type.</div>
+    <table>
+      <tr><th>Wizard choice</th><th>What gets set automatically</th></tr>
+      <tr><td><strong>Dark garment</strong></td><td>White underbase ON · Knockout black · Garment preview = black · Choke 0.8mm</td></tr>
+      <tr><td><strong>Photo/gradient</strong></td><td>LPI 35 · Ellipse dots · Medium GCR · CMYK separation</td></tr>
+      <tr><td><strong>DTF</strong></td><td>Ink limit 280% · Stochastic FM · Mirror ON · No underbase</td></tr>
+      <tr><td><strong>Screen print</strong></td><td>Ink limit 320% · 1-bit RIP · Mirror OFF</td></tr>
+    </table>
   </div>
 </div>
 
-<!-- SECTION 3 -->
+<!-- S3 -->
 <div class="section" id="s3">
-  <div class="section-hdr">
-    <div class="section-num">3</div>
-    <div><div class="section-title">Loading your artwork</div>
-    <div class="section-sub">File types, resolution, and preparation</div></div>
+  <div class="shdr"><div class="snum">3</div><div><div class="stitle">Your first print — complete walkthrough</div><div class="ssub">From zero to ready-to-burn film in 10 steps</div></div></div>
+  <div class="sbody">
+    <div class="callout info"><span class="lbl">Before you start</span>Have your artwork ready as a PNG or JPG. PNG is better — it supports transparent backgrounds which makes separation much cleaner.</div>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><div class="sb2"><div class="st2">Answer the wizard questions</div><div class="stx">When the app opens, answer the 4 setup questions honestly. Tap ⚡ START JOB. The file picker opens.</div></div></div>
+      <div class="step"><div class="sn">2</div><div class="sb2"><div class="st2">Load your image</div><div class="stx">Select your PNG or JPG. It appears on the canvas. The size is automatically set to 30cm wide.</div></div></div>
+      <div class="step"><div class="sn">3</div><div class="sb2"><div class="st2">Remove the background</div><div class="stx">Tap <strong>✂️ Remove BG</strong>. This removes white canvas around your artwork. Always do this before separating — otherwise the separation picks up background noise.</div></div></div>
+      <div class="step"><div class="sn">4</div><div class="sb2"><div class="st2">Set your print size</div><div class="stx">Under Canvas Size, type your width in cm. Standard chest print is 28–32cm. Height adjusts automatically.</div></div></div>
+      <div class="step"><div class="sn">5</div><div class="sb2"><div class="st2">Separate the colours</div><div class="stx">For <strong>spot colour designs</strong> (logos, flat art): use the <strong>🎯 Color Isolation</strong> tool in the PMS tab — tap each colour individually.<br><br>For <strong>photographic images</strong>: tap <strong>⚡ Auto Sep</strong> — splits into CMYK channels automatically.</div></div></div>
+      <div class="step"><div class="sn">6</div><div class="sb2"><div class="st2">Check your layers</div><div class="stx">In the Layers panel, you see every separated colour. Tap each layer to view it on the canvas. Turn off the 🖨 printer button for any colour you are NOT printing this run.</div></div></div>
+      <div class="step"><div class="sn">7</div><div class="sb2"><div class="st2">Apply halftone if needed</div><div class="stx">For photographic prints with gradients: go to HT tab → tap ⚡ APPLY HALFTONE.<br>For flat spot colours: skip this step — solid colours don't need halftone dots.</div></div></div>
+      <div class="step"><div class="sn">8</div><div class="sb2"><div class="st2">Apply RIP for film output</div><div class="stx">Go to RIP tab → tap ⚡ APPLY RIP. Converts everything to pure black and white — maximum contrast — ready for your inkjet film printer.</div></div></div>
+      <div class="step"><div class="sn">9</div><div class="sb2"><div class="st2">Preview and check</div><div class="stx">Tap <strong>👁 View All Together</strong> to see all colours stacked. Tap <strong>🔬 HT Preview</strong> to see actual halftone dots. Tap <strong>👕 On Garment</strong> to see it on a shirt silhouette.</div></div></div>
+      <div class="step"><div class="sn">10</div><div class="sb2"><div class="st2">Save your project and export</div><div class="stx">Tap <strong>💾 Save</strong> to save your project file to your iPad. Then tap <strong>⬇ Export</strong> — each active colour downloads as a PNG with registration marks and plate label. Send to your film printer.</div></div></div>
+    </div>
   </div>
-  <div class="section-body">
+</div>
+
+<!-- S4 -->
+<div class="section" id="s4">
+  <div class="shdr"><div class="snum">4</div><div><div class="stitle">Loading your artwork</div><div class="ssub">File types, resolution, preparation</div></div></div>
+  <div class="sbody">
     <table>
       <tr><th>File type</th><th>Good for</th><th>Notes</th></tr>
-      <tr><td><strong>PNG</strong></td><td>Best choice for everything</td><td>Supports transparent background — use this if you have it</td></tr>
-      <tr><td><strong>JPG/JPEG</strong></td><td>Photos, complex images</td><td>No transparency — always run Remove BG first</td></tr>
-      <tr><td><strong>TIFF</strong></td><td>High quality originals</td><td>Large files but best quality</td></tr>
+      <tr><td><strong>PNG</strong></td><td>Best choice</td><td>Supports transparent background — use this whenever possible</td></tr>
+      <tr><td><strong>JPG</strong></td><td>Photos</td><td>No transparency — always run Remove BG first</td></tr>
+      <tr><td><strong>TIFF</strong></td><td>High quality originals</td><td>Large files, best quality</td></tr>
     </table>
-
-    <div class="callout warn">
-      <span class="label">⚠️ Important</span>
-      Always tap <strong>✂️ Remove BG</strong> after loading any image that has a white or solid color background. If you skip this, the separation will pick up color from the background and create noise outside your design.
-    </div>
-
+    <div class="callout warn"><span class="lbl">⚠️ Always Remove BG first</span>Before running any separation. If you skip this, the separation picks up the background colour and creates noise dots outside your design.</div>
     <div class="steps">
-      <div class="step">
-        <div class="step-num">A</div>
-        <div class="step-body">
-          <div class="step-title">Canvas Size — what does it mean?</div>
-          <div class="step-text">This is the <strong>physical size of your print</strong> on the garment. Type 30cm width for a standard chest print. The app calculates how many pixels that is at your chosen DPI. It does NOT stretch or change your artwork — it just tells the app how big the output file should be.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">B</div>
-        <div class="step-body">
-          <div class="step-title">DPI — what should I pick?</div>
-          <div class="step-text"><strong>300 DPI</strong> = standard for most prints. Good quality, manageable file size.<br>
-          <strong>600 DPI</strong> = for fine detail or when going through a RIP printer. Larger files.<br>
-          <strong>150 DPI</strong> = quick preview only, not for final output.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">C</div>
-        <div class="step-body">
-          <div class="step-title">The 🔗 link button between width and height</div>
-          <div class="step-text">When the chain link is <strong>yellow/connected</strong>, changing the width automatically adjusts the height to keep your design's proportions correct. Tap it to unlock if you want to stretch the canvas independently.</div>
-        </div>
-      </div>
+      <div class="step"><div class="sn">A</div><div class="sb2"><div class="st2">Canvas Size — set your real print dimensions</div><div class="stx">Type the physical width of your print in cm. 30cm = standard chest print. The app calculates the correct pixel size at your chosen DPI. The 🔗 link button keeps proportions locked when you change width.</div></div></div>
+      <div class="step"><div class="sn">B</div><div class="sb2"><div class="st2">DPI — which to choose</div><div class="stx"><strong>300 DPI</strong> = standard for most prints. Good quality, reasonable file size.<br><strong>600 DPI</strong> = for fine detail or RIP output to film. Larger files, slower processing.<br><strong>150 DPI</strong> = for quick preview only. Not for final output.</div></div></div>
+      <div class="step"><div class="sn">C</div><div class="sb2"><div class="st2">Size and Position controls</div><div class="stx">Quick scale buttons: <strong>50% 75% 100%</strong><br>Arrow nudge pad: <strong>↑ ↓ ← →</strong> moves the artwork on the canvas<br><strong>⌂</strong> resets everything back to default<br>Useful for DTF ganging multiple designs on one film sheet.</div></div></div>
     </div>
   </div>
 </div>
 
-<!-- SECTION 3b — NEW -->
-<div class="section" id="s3b" style="border-color:rgba(0,229,255,.3);">
-  <div class="section-hdr" style="background:rgba(0,229,255,.05);">
-    <div class="section-num" style="color:var(--acc3)">3+</div>
-    <div><div class="section-title">Size, scale and position — NEW in v4</div>
-    <div class="section-sub">Making your design the right size and putting it in the right place</div></div>
-  </div>
-  <div class="section-body">
-
-    <div class="callout info">
-      <span class="label">📋 Important to understand</span>
-      The <strong>Canvas Size</strong> (cm width × height) sets the real-world print size. The <strong>Scale slider</strong> in Size &amp; Position makes the image larger or smaller within that canvas. They are separate controls.
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">Quick scale buttons — 50% / 75% / 100% / 125%</div>
-          <div class="step-text">Tap any of the four quick buttons to instantly resize the artwork on the canvas. <strong>100%</strong> = fills the canvas edge to edge. <strong>75%</strong> = artwork is 3/4 the size with space around it. Use these to find the right size quickly then fine-tune with the Scale slider.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">Scale slider — fine control from 10% to 200%</div>
-          <div class="step-text">Drag to resize. Going below 100% makes the design smaller on the canvas — useful when you want the design to be a specific size within a larger print area (like a small chest logo on a 40cm canvas).</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Arrow nudge pad — move the design around</div>
-          <div class="step-text">The <strong>↑ ↓ ← →</strong> buttons move the artwork 5% in each direction. Use this to position your design — for example, to push it up toward the chest area, or center it horizontally. The <strong>⌂ home button</strong> in the center resets everything back to default position.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <div class="step-title">Offset X / Y sliders — precise positioning</div>
-          <div class="step-text">Fine control version of the nudge arrows. Drag left/right to move the design horizontally or vertically. Range is -100% to +100% of the canvas size. Useful for DTF ganging — positioning multiple designs on one film sheet.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">5</div>
-        <div class="step-body">
-          <div class="step-title">Rotate slider</div>
-          <div class="step-text">Rotates your artwork from -180° to +180°. Useful if your artwork was uploaded sideways, or if you want a tilted design.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="callout warn">
-      <span class="label">⚠️ Screen printing note</span>
-      For screen printing, you set the physical position on the platen (the board your garment sits on) — not in this app. The position controls here are mainly useful for <strong>DTF</strong> to gang multiple designs on one film, or to preview how the design looks on the garment. The registration marks handle multi-color alignment at the press.
-    </div>
-
-  </div>
-</div>
-
-<!-- SECTION 4 -->
-<div class="section" id="s4">
-  <div class="section-hdr">
-    <div class="section-num">4</div>
-    <div><div class="section-title">Color separation explained</div>
-    <div class="section-sub">The most important concept in screen printing</div></div>
-  </div>
-  <div class="section-body">
-    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">Color separation means splitting your full-color design into individual single-color layers. Each layer becomes one screen.</p>
-
-    <div class="wf-grid">
-      <div class="wf-card">
-        <div class="wf-card-title">⚡ Auto Sep — use for:</div>
-        <ul>
-          <li><strong>Photos</strong></li>
-          <li><strong>Gradients</strong> (colors that fade into each other)</li>
-          <li><strong>Photorealistic artwork</strong></li>
-          <li>Simulated process printing</li>
-        </ul>
-      </div>
-      <div class="wf-card">
-        <div class="wf-card-title">🎨 Spot — use for:</div>
-        <ul>
-          <li><strong>Logos</strong> with flat solid colors</li>
-          <li><strong>Cartoon/vector style</strong> artwork</li>
-          <li><strong>Text designs</strong></li>
-          <li>Anything with clear distinct colors</li>
-        </ul>
-      </div>
-      <div class="wf-card" style="border-color:rgba(0,229,255,.3);">
-        <div class="wf-card-title" style="color:var(--acc3)">🎯 Color Isolation — best for:</div>
-        <ul>
-          <li><strong>Any spot color design</strong></li>
-          <li><strong>Cleaning up noisy separation</strong></li>
-          <li><strong>Isolating one specific color</strong></li>
-          <li>When Auto Sep or Spot gives messy results</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="callout tip">
-      <span class="label">💡 Which method for my design?</span>
-      Can you count the colors? (Red, navy, black, white = 4 colors) → Use <strong>🎯 Color Isolation</strong> for each color. Does it have smooth gradients like a photograph? → Use <strong>Auto Sep</strong>. Not sure? Try Spot first, then use Color Isolation to clean up any channel that looks wrong.
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">?</div>
-        <div class="step-body">
-          <div class="step-title">What is CMYK?</div>
-          <div class="step-text">CMYK stands for <strong>Cyan, Magenta, Yellow, Key (Black)</strong>. These are the four ink colors used in process printing. By mixing these four at different dot sizes, you can recreate almost any color — like how your home printer works. Auto Sep splits your design into these 4 channels.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">?</div>
-        <div class="step-body">
-          <div class="step-title">What is a spot color?</div>
-          <div class="step-text">A spot color is a <strong>pre-mixed specific ink</strong>. Instead of mixing CMYK dots to simulate red, you just use actual red ink in its own screen. Spot colors are more vibrant and accurate — but each one needs its own screen. A 4-spot-color job needs 4 screens.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">?</div>
-        <div class="step-body">
-          <div class="step-title">What is Black Mode?</div>
-          <div class="step-text"><strong>Knockout Black</strong> = removes all other ink colors from areas that are black. The black plate is the only thing printing in black areas. Use for DTF and dark garments.<br><br>
-          <strong>Overprint Black</strong> = black prints on top of all other colors. Use for screen print on white garments — gives richer blacks.<br><br>
-          <strong>Pure K</strong> = only the K (black) channel carries black ink. Best for crisp text and fine lines.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SECTION 5 -->
-<div class="section" id="s5">
-  <div class="section-hdr">
-    <div class="section-num">5</div>
-    <div><div class="section-title">Halftone — what it is and why you need it</div>
-    <div class="section-sub">How gradients get printed with solid ink</div></div>
-  </div>
-  <div class="section-body">
-    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">Screen printing can only print one thing: ink or no ink. It cannot print "50% red". So to create the appearance of lighter or darker shades, we use halftone dots.</p>
-
-    <div class="callout info">
-      <span class="label">🔵 The idea</span>
-      Imagine a newspaper photo up close — you can see tiny dots. Far away it looks like a smooth photo. That's halftone. <strong>Big dots = dark area. Small dots = light area. No dots = white.</strong>
-    </div>
-
+<!-- S5 NEW -->
+<div class="section new-sec" id="s5">
+  <div class="shdr new-hdr"><div class="snum new">5</div><div><div class="stitle">The Layer System — NEW in v5</div><div class="ssub">Every colour is a layer you can view, edit, and control independently</div></div></div>
+  <div class="sbody">
+    <div class="callout good"><span class="lbl">✅ New in v5 — think Procreate for screen printing</span>After separation, every colour becomes a layer in the Layers panel. Tap any layer to view it on the main canvas. Show/hide layers independently. Choose which ones get printed.</div>
     <table>
-      <tr><th>Setting</th><th>What it does</th><th>Recommended</th></tr>
-      <tr><td><strong>LPI</strong> (Lines Per Inch)</td><td>How many rows of dots per inch. Higher = finer detail but needs finer mesh</td><td>45 LPI for most jobs</td></tr>
-      <tr><td><strong>Shape</strong></td><td>Circle, square, diamond, line etc. Changes the look of the dot pattern</td><td>Circle for most work</td></tr>
-      <tr><td><strong>Angle</strong></td><td>The angle the dot grid is rotated. Different channels need different angles to prevent moiré patterns</td><td>Use per-channel angles</td></tr>
-      <tr><td><strong>Contrast</strong></td><td>Pushes highlights lighter and shadows darker</td><td>Start at 20</td></tr>
-      <tr><td><strong>Min/Max dot</strong></td><td>Clips very small or very large dots that won't print cleanly</td><td>Min 5%, Max 95%</td></tr>
+      <tr><th>Control</th><th>Icon</th><th>What it does</th></tr>
+      <tr><td><strong>Tap the layer row</strong></td><td>—</td><td>Makes that layer the active view on the canvas. The canvas shows just that colour plate.</td></tr>
+      <tr><td><strong>Eye button</strong></td><td>👁 / 🚫</td><td>Shows or hides in the preview. Does NOT affect export.</td></tr>
+      <tr><td><strong>Print button</strong></td><td>🖨 yellow / — grey</td><td>Includes or excludes from export and print sheets. Turn OFF for colours you are not printing.</td></tr>
+      <tr><td><strong>🖼 Show Original</strong></td><td>—</td><td>Returns canvas to the original image view.</td></tr>
+      <tr><td><strong>👁 View All Together</strong></td><td>—</td><td>Shows all visible layers composited — what the final print looks like.</td></tr>
     </table>
-
-    <div class="callout warn">
-      <span class="label">⚠️ Mesh count rule</span>
-      Your LPI must be <strong>no more than 1/3 of your mesh count</strong>. Example: 156 mesh screen = maximum 52 LPI. If your LPI is too high for your mesh, the dots will clog and the print will be muddy. The mesh guide table in the app tells you the status automatically — green = OK, red = too fine.
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">!</div>
-        <div class="step-body">
-          <div class="step-title">When do I NOT need halftone?</div>
-          <div class="step-text">If your design is <strong>flat solid spot colors</strong> with no gradients — like a logo, text, or cartoon-style art — you don't need halftone. The solid ink areas print as solid. Skip halftone and go straight to RIP.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">!</div>
-        <div class="step-body">
-          <div class="step-title">Live preview slider</div>
-          <div class="step-text">The <strong>Live Preview toggle</strong> at the top of the HT tab shows a real-time low-res preview as you drag sliders. When you lift your finger the full quality version processes. Use this to dial in settings before committing.</div>
-        </div>
-      </div>
-    </div>
+    <div class="callout tip"><span class="lbl">💡 How to inspect each colour</span>After separation, tap each layer one by one. The canvas shows just that colour — you can see exactly what will print on that screen. If it looks wrong, use Color Isolation to regenerate it cleanly.</div>
+    <div class="callout info"><span class="lbl">Colour count</span>Below the layers list, a line shows how many screens are active for print and which colours they are — e.g. "4 colours for print: Cyan, Black K, Red, White UB". This is your final check before exporting.</div>
   </div>
 </div>
 
-<!-- SECTION 6 -->
+<!-- S6 -->
 <div class="section" id="s6">
-  <div class="section-hdr">
-    <div class="section-num">6</div>
-    <div><div class="section-title">RIP — creating your film negatives</div>
-    <div class="section-sub">The final step before burning screens</div></div>
-  </div>
-  <div class="section-body">
-    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">RIP stands for Raster Image Processor. It converts your artwork into the cleanest possible black and white output for printing on film.</p>
-
-    <div class="callout good">
-      <span class="label">✅ What good film output looks like</span>
-      Pure solid black where ink should go. Pure white everywhere else. No grey areas. No anti-aliased edges. Maximum contrast. This is what burns the sharpest screen.
+  <div class="shdr"><div class="snum">6</div><div><div class="stitle">Color separation</div><div class="ssub">Splitting your design into individual colour plates</div></div></div>
+  <div class="sbody">
+    <div class="wf">
+      <div class="wfc"><div class="wft">⚡ Auto Sep — use for:</div><ul><li><strong>Photos and gradients</strong></li><li>Smooth blending colours</li><li>Photorealistic artwork</li><li>Simulated process printing</li></ul></div>
+      <div class="wfc"><div class="wft">🎨 Spot — quick detect:</div><ul><li>Finds dominant colours automatically</li><li>Good starting point for logos</li><li>Can miss similar shades</li><li>Use Color Isolation after for cleanup</li></ul></div>
+      <div class="wfc new"><div class="wft new">🎯 Color Isolation — best for:</div><ul><li><strong>Any spot colour design</strong></li><li>Tap exact colour you want</li><li>Cleanest result for screen printing</li><li>Full tolerance control</li></ul></div>
     </div>
-
-    <table>
-      <tr><th>Setting</th><th>What it does</th><th>Use when</th></tr>
-      <tr><td><strong>1-bit pure B&W</strong></td><td>Everything either pure black or pure white — hardest edge</td><td>Spot colors, logos, text, solid areas</td></tr>
-      <tr><td><strong>Floyd-Steinberg dither</strong></td><td>Creates a random dot pattern to simulate grey tones</td><td>Photographic prints without halftone</td></tr>
-      <tr><td><strong>Stochastic FM</strong></td><td>Random tiny dots instead of regular grid — very fine detail</td><td>DTF, high detail photographic</td></tr>
-      <tr><td><strong>Grayscale</strong></td><td>Keeps grey values — use only if your printer handles greyscale film</td><td>Rarely needed</td></tr>
-    </table>
-
+    <div class="callout tip"><span class="lbl">💡 Which method for your design?</span>Can you count the colours? (Red, navy, black, white = 4) → Use <strong>🎯 Color Isolation</strong> for each colour. Does it look like a photograph with gradients? → Use <strong>Auto Sep</strong>.</div>
     <div class="steps">
-      <div class="step">
-        <div class="step-num">A</div>
-        <div class="step-body">
-          <div class="step-title">Invert (Ink positive)</div>
-          <div class="step-text">Normally your film is <strong>black where ink goes</strong> (negative). Some exposure units want the opposite — white where ink goes. Toggle <strong>Ink positive</strong> if your printer or bureau needs this. Ask your film output provider which they need.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">B</div>
-        <div class="step-body">
-          <div class="step-title">Mirror output</div>
-          <div class="step-text">Some printers need the film <strong>mirrored/flipped</strong> so the ink side is face-down against the screen during exposure. If your burns come out reversed, toggle Mirror on. Check with your exposure unit manufacturer.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">C</div>
-        <div class="step-body">
-          <div class="step-title">Sharpen passes</div>
-          <div class="step-text">Runs an unsharp mask filter before the 1-bit conversion. <strong>1–2 passes</strong> is usually enough to get crisp edges. Too many passes creates harsh artifacts.</div>
-        </div>
-      </div>
+      <div class="step"><div class="sn">?</div><div class="sb2"><div class="st2">What is CMYK?</div><div class="stx">Cyan, Magenta, Yellow, Key (Black). Four ink colours that mix by overlapping halftone dots to recreate almost any colour. Auto Sep splits your design into these 4 channels.</div></div></div>
+      <div class="step"><div class="sn">?</div><div class="sb2"><div class="st2">What is a spot colour?</div><div class="stx">A pre-mixed specific ink — like actual red ink, not CMYK dots that simulate red. More vibrant. Each spot colour needs its own screen. 4 spot colours = 4 screens.</div></div></div>
+      <div class="step"><div class="sn">?</div><div class="sb2"><div class="st2">Black mode — what to choose</div><div class="stx"><strong>Knockout Black:</strong> removes other ink under black areas. Use for DTF and dark garments.<br><strong>Overprint Black:</strong> black prints on top of everything. Use for screen print on white.<br><strong>Pure K:</strong> only K channel carries black. Best for crisp text and thin lines.</div></div></div>
     </div>
   </div>
 </div>
 
-<!-- SECTION 7 -->
-<div class="section" id="s7">
-  <div class="section-hdr">
-    <div class="section-num">7</div>
-    <div><div class="section-title">Registration marks — updated in v4</div>
-    <div class="section-sub">Your alignment system — now only on exported files</div></div>
-  </div>
-  <div class="section-body">
-    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">Registration marks are the crosshair targets on every plate. They let you line up multiple screens to print in exactly the same position.</p>
-
-    <div class="callout good">
-      <span class="label">✅ v4 change — reg marks moved off the preview</span>
-      In v4, registration marks <strong>no longer show on your working preview canvas</strong>. They were getting in the way while you worked. Now they only appear on <strong>exported film files</strong>. While working you see just a faint dashed yellow border showing the canvas edge.
-    </div>
-
+<!-- S7 NEW -->
+<div class="section new-sec" id="s7">
+  <div class="shdr new-hdr"><div class="snum new">7</div><div><div class="stitle">Color Isolation Tool — NEW in v5</div><div class="ssub">Tap any colour in your artwork to generate a clean plate</div></div></div>
+  <div class="sbody">
+    <div class="callout good"><span class="lbl">✅ The best way to handle spot colour designs</span>Instead of automatic separation guessing colours, you tap exactly the colour you want. The app isolates just that colour into a clean plate. Repeat for each colour in your design.</div>
     <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">8 reg marks on every exported plate</div>
-          <div class="step-text">Corners, midpoints of each side — 8 total. Every plate has them in exactly the same position. This is how you align screen 2 to screen 1 precisely at the press.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">Bold thick marks — visible on film</div>
-          <div class="step-text">v4 marks are <strong>solid black, thick lines, large circles</strong> — clearly visible when you hold the film up. Previous versions had faint marks that were hard to see. Each mark has a crosshair, an outer circle, and a centre dot.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Plate info bar — know which film is which</div>
-          <div class="step-text">Every exported film has a <strong>solid black bar at the bottom</strong> showing: color swatch, color name, LPI, angle, DPI, print size, and date. A corner label top-left also shows the color name. When you have 4 films on your workbench you always know which goes on which screen.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <div class="step-title">Using reg marks at the press</div>
-          <div class="step-text">Tape your first film (underbase or black) to the screen. Expose it. When setting up the press, use the reg marks as your reference points. All other films must have their reg marks in exactly the same position. Use registration pins or a light table for precise alignment.</div>
-        </div>
-      </div>
+      <div class="step"><div class="sn">1</div><div class="sb2"><div class="st2">Go to the 🎯 tab on the right sidebar</div><div class="stx">This is the Color Isolation + Pantone tab. It combines colour sampling with Pantone matching.</div></div></div>
+      <div class="step"><div class="sn">2</div><div class="sb2"><div class="st2">Tap "🎯 Tap Color in Artwork"</div><div class="stx">The button turns orange. Your canvas cursor becomes a crosshair. The app is waiting for you to tap.</div></div></div>
+      <div class="step"><div class="sn">3</div><div class="sb2"><div class="st2">Tap the colour you want</div><div class="stx">Tap directly on the red feathers, the navy band, the gold text — whatever colour you want to isolate. A live preview appears instantly showing what got selected.</div></div></div>
+      <div class="step"><div class="sn">4</div><div class="sb2"><div class="st2">Adjust Tolerance</div><div class="stx"><strong>Low (5–20):</strong> only pixels very close to the tapped colour. Good for clean solid areas.<br><strong>High (50–100):</strong> catches more shades. Good for areas with shadows or gradients within a colour.</div></div></div>
+      <div class="step"><div class="sn">5</div><div class="sb2"><div class="st2">Edge clean and Expand</div><div class="stx"><strong>Edge clean:</strong> removes stray isolated noise pixels outside your selection. Set to 1–2 for crisp edges.<br><strong>Expand:</strong> grows selection outward by pixels. Use +1 or +2 to add trap — ensures colour overlaps its neighbours at the press.</div></div></div>
+      <div class="step"><div class="sn">6</div><div class="sb2"><div class="st2">Tap ⚡ Generate Plate</div><div class="stx">Full resolution plate is created and added to your layers list. It appears in the plates row at the bottom. Repeat for every colour in your design.</div></div></div>
     </div>
-
-    <div class="callout tip">
-      <span class="label">💡 Pro tip</span>
-      Print a <strong>test sheet on paper</strong> through all your screens before printing on garments. Hold it up to the light — all reg marks should stack perfectly on top of each other. If they don't, your registration needs adjusting before you waste garments.
-    </div>
+    <div class="callout tip"><span class="lbl">💡 Best workflow for spot colour designs</span>1. Remove BG → 2. Tap each colour with isolation tool → 3. Generate plate for each → 4. Turn off any auto-sep channels you don't need → 5. Export only your isolated colour plates.</div>
+    <div class="callout info"><span class="lbl">Pantone Matcher</span>When you sample a colour, the app automatically finds the closest Pantone ink match. This tells your ink supplier exactly which Pantone number to mix. The colour swatch and name appear below the sampled colour.</div>
   </div>
 </div>
 
-<!-- SECTION 8 -->
+<!-- S8 -->
 <div class="section" id="s8">
-  <div class="section-hdr">
-    <div class="section-num">8</div>
-    <div><div class="section-title">Underbase and choke — printing on dark garments</div>
-    <div class="section-sub">Why you need white under everything</div></div>
-  </div>
-  <div class="section-body">
-    <div class="callout warn">
-      <span class="label">⚠️ Dark garment rule</span>
-      If you print colored ink directly onto a black or dark garment, the garment color shows through and your colors look dull and wrong. You must print <strong>white ink first as a base layer</strong>. This is the underbase.
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">Enable white underbase</div>
-          <div class="step-text">In the left panel under <strong>Underbase / Choke</strong>, toggle <strong>White underbase</strong> on. This creates a white plate that covers all the areas your other colors will print on.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">Underbase mode</div>
-          <div class="step-text"><strong>Full image</strong> = white under everything. Use when all colors need the white base.<br><br>
-          <strong>Key areas only</strong> = white only under the colored areas, not under the black outlines. This avoids a white halo showing around black ink.<br><br>
-          <strong>Threshold</strong> = white only under bright/light colored areas.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Choke — preventing the white halo</div>
-          <div class="step-text">When you print white then put color on top, if the white underbase is the same size as your artwork, a tiny white edge can show around the design (called a halo). <strong>Choke shrinks the white plate inward by a few mm</strong> so the white never sticks out from under the color. The choke circle diagram shows you how much you're shrinking it. Start at 0.5mm.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <div class="step-title">Trap — preventing gaps between colors</div>
-          <div class="step-text">The opposite problem: if two colors are supposed to touch exactly, a tiny misalignment at the press can leave a gap where the garment color shows through. <strong>Trap slightly overlaps neighboring color plates</strong> so there's no gap even if registration is slightly off. 0.2mm is usually enough.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- SECTION 9 -->
-<div class="section" id="s9">
-  <div class="section-hdr">
-    <div class="section-num">9</div>
-    <div><div class="section-title">Channels — updated in v4</div>
-    <div class="section-sub">Two separate controls per channel — view and print</div></div>
-  </div>
-  <div class="section-body">
-    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">After separation, every detected color appears as a channel. v4 gives each channel two separate controls so you can manage preview and output independently.</p>
-
-    <div class="callout good">
-      <span class="label">✅ v4 change — eye and printer are now separate</span>
-      Previously one toggle controlled both visibility and export. Now they are split: <strong>👁 eye</strong> controls the preview only, <strong>🖨 printer</strong> controls whether it exports. You can hide a channel from your preview while still printing it, or show it in preview while excluding it from output.
-    </div>
-
+  <div class="shdr"><div class="snum">8</div><div><div class="stitle">Halftone</div><div class="ssub">How gradients get printed with solid ink</div></div></div>
+  <div class="sbody">
+    <p style="color:var(--muted);font-size:12px;margin-bottom:12px;">Screen printing can only print ink or no ink. It cannot print 50% red. Halftone dots create the illusion of lighter or darker shades. Big dots = dark. Small dots = light. No dots = white.</p>
+    <div class="callout info"><span class="lbl">Live preview in v5</span>The <strong>🔴 Live Preview toggle</strong> shows a real-time halftone preview as you drag sliders. Low resolution but instant. When you lift your finger, full quality processes automatically.</div>
     <table>
-      <tr><th>Button</th><th>Icon when ON</th><th>Icon when OFF</th><th>What it controls</th></tr>
-      <tr><td><strong>Eye button</strong></td><td>👁 visible</td><td>🚫 hidden</td><td>Shows or hides in the working preview only. Does NOT affect what gets exported.</td></tr>
-      <tr><td><strong>Print button</strong></td><td>🖨 yellow/bright</td><td>— grey/dim</td><td>Includes or excludes from export, print sheets, and Export All. Turn this OFF for colors you are not printing.</td></tr>
+      <tr><th>Setting</th><th>What it does</th><th>Start here</th></tr>
+      <tr><td><strong>LPI</strong></td><td>Lines per inch — how many dot rows per inch. Higher = finer detail but needs finer mesh.</td><td>45 LPI</td></tr>
+      <tr><td><strong>Shape</strong></td><td>Dot shape: circle, ellipse, square, diamond, line.</td><td>Circle</td></tr>
+      <tr><td><strong>Angle</strong></td><td>Rotation of dot grid. Different channels use different angles to prevent moiré.</td><td>Per-channel ON</td></tr>
+      <tr><td><strong>Contrast</strong></td><td>Pushes highlights lighter and shadows darker.</td><td>20</td></tr>
+      <tr><td><strong>Min/Max dot</strong></td><td>Clips tiny dots that won't print and huge dots that merge.</td><td>5% / 95%</td></tr>
+      <tr><td><strong>AM vs FM</strong></td><td>AM = regular grid (conventional). FM = random dots (stochastic) — better for DTF and fine detail.</td><td>AM for screen, FM for DTF</td></tr>
     </table>
+    <div class="callout warn"><span class="lbl">⚠️ Mesh count rule — critical</span>Your LPI must be no more than 1/3 of your mesh count. Example: 156 mesh screen = maximum 52 LPI. The mesh guide table in the app shows green/amber/red status automatically.</div>
+    <div class="callout tip"><span class="lbl">💡 When to skip halftone</span>If your design is flat solid spot colours with no gradients — skip halftone entirely. Solid ink areas print as solid. Go straight to RIP.</div>
+  </div>
+</div>
 
-    <div class="callout tip">
-      <span class="label">💡 4 color job example</span>
-      You ran Spot and got 7 channels. You only want to print Red, Navy, Black, White UB. Tap the <strong>🖨 print button</strong> on Yellow, Cyan, Magenta and any extras to turn them grey. The color count below the list updates to show "4 colors selected for print: Red, Navy, Black K, White UB." Only those 4 will export.
-    </div>
-
-    <div class="callout info">
-      <span class="label">📋 Print order for screen printing</span>
-      Always print in this order: <strong>White underbase first → lightest colors → darkest colors → black last</strong>. Flash cure (heat) between colors on dark garments when using plastisol ink.
-    </div>
-
+<!-- S9 -->
+<div class="section" id="s9">
+  <div class="shdr"><div class="snum">9</div><div><div class="stitle">RIP — creating your film negatives</div><div class="ssub">The final step before burning screens</div></div></div>
+  <div class="sbody">
+    <p style="color:var(--muted);font-size:12px;margin-bottom:12px;">RIP = Raster Image Processor. Converts your artwork into pure black and white — maximum contrast — for printing on film.</p>
+    <div class="callout good"><span class="lbl">✅ What good film output looks like</span>Pure solid black where ink should go. Pure white everywhere else. No grey. No soft edges. This burns the sharpest, cleanest screen.</div>
+    <table>
+      <tr><th>Mode</th><th>Use when</th></tr>
+      <tr><td><strong>1-bit pure B&W</strong></td><td>Spot colours, logos, text, solid areas. Hardest edge.</td></tr>
+      <tr><td><strong>Floyd-Steinberg dither</strong></td><td>Photographic prints without halftone. Random dot pattern.</td></tr>
+      <tr><td><strong>Stochastic FM</strong></td><td>DTF, high detail photographic. Very fine random dots.</td></tr>
+      <tr><td><strong>Grayscale</strong></td><td>Rarely needed. Only if your film printer handles greyscale.</td></tr>
+    </table>
     <div class="steps">
-      <div class="step">
-        <div class="step-num">!</div>
-        <div class="step-body">
-          <div class="step-title">Color count display</div>
-          <div class="step-text">Below the channels list, a line shows exactly how many screens are active and which colors they are — for example "4 colors selected for print: Cyan, Black K, Red, White UB". This is your quick sanity check before exporting.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">!</div>
-        <div class="step-body">
-          <div class="step-title">Faded / dashed channels</div>
-          <div class="step-text">When a channel's print button is turned off, the channel row goes faded with a dashed border. This visually confirms it's excluded from output without removing it from the list.</div>
-        </div>
-      </div>
+      <div class="step"><div class="sn">A</div><div class="sb2"><div class="st2">Invert (Ink positive)</div><div class="stx">Normally film is black where ink goes. Some exposure units need the opposite — white where ink goes. Toggle Ink Positive if your bureau needs this. Ask your film output provider.</div></div></div>
+      <div class="step"><div class="sn">B</div><div class="sb2"><div class="st2">Mirror output</div><div class="stx">Some printers need film mirrored so ink side faces down against the screen during exposure. If burns come out reversed, turn Mirror on.</div></div></div>
+      <div class="step"><div class="sn">C</div><div class="sb2"><div class="st2">Sharpen passes</div><div class="stx">Runs an unsharp mask before 1-bit conversion. 1–2 passes gives crisp edges. Too many creates artifacts.</div></div></div>
     </div>
   </div>
 </div>
 
-<!-- SECTION 10 -->
+<!-- S10 -->
 <div class="section" id="s10">
-  <div class="section-hdr">
-    <div class="section-num">10</div>
-    <div><div class="section-title">Color isolation tool — tap any color</div>
-    <div class="section-sub">The best way to handle spot color artwork</div></div>
-  </div>
-  <div class="section-body">
-    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">The Color Isolation tool in the PMS tab lets you tap any color in your artwork and generate a clean plate for just that color. This gives you much more control than automatic separation.</p>
-
+  <div class="shdr"><div class="snum">10</div><div><div class="stitle">Registration marks</div><div class="ssub">How multi-colour prints stay perfectly aligned</div></div></div>
+  <div class="sbody">
+    <div class="callout good"><span class="lbl">✅ Reg marks only appear on exported film — not on the preview canvas</span>While you work, you see just a faint dashed border. Bold reg marks only appear on your downloaded film files where they belong.</div>
     <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">Go to PMS tab → tap "🎯 Tap Color in Artwork"</div>
-          <div class="step-text">The button turns orange and your artwork cursor becomes a crosshair. The app is waiting for you to tap a color.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">Tap the color you want to isolate</div>
-          <div class="step-text">Tap directly on the red feathers, or the navy band, or whatever color you want. A preview instantly appears showing what the app thinks belongs to that color.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Adjust the Tolerance slider</div>
-          <div class="step-text"><strong>Tolerance</strong> controls how strict the color match is. <strong>Low (5–20)</strong> = only pixels very close to your tapped color. Good for clean solid colors.<br><strong>High (50–100)</strong> = catches more shades of that color. Good for gradients and shadows within a color.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <div class="step-title">Edge clean and Expand</div>
-          <div class="step-text"><strong>Edge clean</strong> removes stray isolated pixels outside your main selection — the noise and speckles. Set to 1–2 for clean crisp edges.<br><br>
-          <strong>Expand</strong> grows your selection outward by pixels. Use +1 or +2 to add trap — ensures the color overlaps its neighbors slightly and no gap shows at the press.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">5</div>
-        <div class="step-body">
-          <div class="step-title">Tap ⚡ Generate Plate</div>
-          <div class="step-text">The full-resolution plate is created and added to your channels list. Repeat for every color. You can see all your isolated colors listed below with their names and hex codes.</div>
-        </div>
-      </div>
+      <div class="step"><div class="sn">1</div><div class="sb2"><div class="st2">8 reg marks on every exported plate</div><div class="stx">Corners and midpoints — 8 total. Always in exactly the same position on every plate. This is how you align screen 2 perfectly to screen 1 at the press.</div></div></div>
+      <div class="step"><div class="sn">2</div><div class="sb2"><div class="st2">Bold thick marks — visible on film</div><div class="stx">Solid black, thick crosshairs, large outer circle, centre dot. Clearly visible when you hold film up to the light.</div></div></div>
+      <div class="step"><div class="sn">3</div><div class="sb2"><div class="st2">Plate info bar at the bottom of every film</div><div class="stx">Every exported film has a solid black bar showing: colour name with swatch, LPI, angle, DPI, print size, and date. Top left corner label too. When you have 5 films on your workbench you always know which is which.</div></div></div>
+      <div class="step"><div class="sn">4</div><div class="sb2"><div class="st2">Using reg marks at the press</div><div class="stx">Tape your first film (underbase or black) to the screen. Expose it. When setting up, use reg marks as reference points. All other films must have their reg marks in exactly the same position. Use registration pins or a light table for precision.</div></div></div>
     </div>
+    <div class="callout tip"><span class="lbl">💡 Test first</span>Print a test sheet through all screens on paper before printing on garments. Hold to light — all reg marks should stack perfectly. If not, adjust registration before wasting garments.</div>
+  </div>
+</div>
 
-    <div class="callout good">
-      <span class="label">✅ Best practice for spot color artwork</span>
-      Remove BG → tap each color one at a time → generate plates → turn off any auto-sep channels you don't need → export only your isolated color plates.
+<!-- S11 -->
+<div class="section" id="s11">
+  <div class="shdr"><div class="snum">11</div><div><div class="stitle">Underbase and choke</div><div class="ssub">Printing on dark garments</div></div></div>
+  <div class="sbody">
+    <div class="callout warn"><span class="lbl">⚠️ Dark garment rule</span>Coloured ink printed directly onto a black garment looks dull and wrong because the garment shows through. You must print white ink first. This is the underbase.</div>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><div class="sb2"><div class="st2">Enable white underbase</div><div class="stx">Toggle White Underbase ON in the left panel. A white plate is created covering the areas your colours will print on.</div></div></div>
+      <div class="step"><div class="sn">2</div><div class="sb2"><div class="st2">Underbase mode — three options</div><div class="stx"><strong>Full image:</strong> white under everything. Use when all colours need a white base.<br><strong>Key areas only:</strong> white only under coloured areas, NOT under black outlines. Best for most designs — prevents white showing around black ink. The pro choice.<br><strong>Threshold:</strong> white only under bright/light areas. Good for photographic designs.</div></div></div>
+      <div class="step"><div class="sn">3</div><div class="sb2"><div class="st2">Choke — prevents the white halo</div><div class="stx">When white underbase is the same size as your artwork, a tiny white edge can show around the design. <strong>Choke shrinks the white plate inward</strong> so it hides under the colour plates. The choke circle visual shows how much you are shrinking it. Start at 0.5mm. Dark garments use 0.8–1mm.</div></div></div>
+      <div class="step"><div class="sn">4</div><div class="sb2"><div class="st2">Trap — prevents gaps between colours</div><div class="stx">Slightly overlaps neighbouring colour plates (0.1–0.3mm) so no garment colour shows through if registration is slightly off at the press.</div></div></div>
+      <div class="step"><div class="sn">5</div><div class="sb2"><div class="st2">View underbase on canvas</div><div class="stx">Tap <strong>👁 View Underbase on Canvas</strong> — the canvas switches to show just the white underbase plate. You can see exactly where white will print. Then use the layer buttons to add other colours on top to check coverage.</div></div></div>
     </div>
   </div>
 </div>
 
-<!-- SECTION 10b — NEW -->
-<div class="section" id="s10b" style="border-color:rgba(0,229,255,.3);">
-  <div class="section-hdr" style="background:rgba(0,229,255,.05);">
-    <div class="section-num" style="color:var(--acc3)">10+</div>
-    <div><div class="section-title">Preview tools — NEW in v4</div>
-    <div class="section-sub">See what your print will look like before you commit to film</div></div>
+<!-- S12 NEW -->
+<div class="section new-sec" id="s12">
+  <div class="shdr new-hdr"><div class="snum new">12</div><div><div class="stitle">Apple Pencil Underbase Editor — NEW in v5</div><div class="ssub">Paint and erase the white underbase directly on the canvas</div></div></div>
+  <div class="sbody">
+    <div class="callout good"><span class="lbl">✅ New in v5 — full manual control over white underbase</span>Sometimes the automatic underbase is not perfect. Maybe you want white only under specific light colours but not under dark shadow areas. The pencil editor lets you paint and erase the white underbase manually.</div>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><div class="sb2"><div class="st2">Tap "✏️ Edit with Pencil/Finger"</div><div class="stx">The brush toolbar appears. The canvas switches to underbase view. You can now draw on it.</div></div></div>
+      <div class="step"><div class="sn">2</div><div class="sb2"><div class="st2">Choose Paint or Erase</div><div class="stx"><strong>🖌 Paint:</strong> adds white to the underbase. Draws white areas back in.<br><strong>⬜ Erase:</strong> removes white from the underbase. Removes areas you don't want underbase under.</div></div></div>
+      <div class="step"><div class="sn">3</div><div class="sb2"><div class="st2">Brush controls</div><div class="stx"><strong>Size:</strong> brush radius in pixels. Larger for big areas, smaller for detail.<br><strong>Hardness:</strong> how sharp the brush edge is. 80–100% for crisp edges, lower for soft feathering.<br><strong>Opacity:</strong> how strongly each stroke applies. 100% for solid, lower for gradual buildup.</div></div></div>
+      <div class="step"><div class="sn">4</div><div class="sb2"><div class="st2">Apple Pencil pressure sensitivity</div><div class="stx">If you have an Apple Pencil, pressing harder makes the brush larger and more opaque. Light touch = subtle. Heavy press = full effect. Works automatically — no setup needed.</div></div></div>
+      <div class="step"><div class="sn">5</div><div class="sb2"><div class="st2">Tap ✓ Done Editing</div><div class="stx">Your brush strokes are baked into the white underbase plate permanently. The edit canvas clears and the updated underbase is saved. You can then view other layers on top to check the result.</div></div></div>
+    </div>
+    <div class="callout tip"><span class="lbl">💡 Shadow effect technique</span>Want black areas to print on the dark garment without white under them (to keep a shadow look)? Set UB Mode to Key Areas Only — that avoids putting white under your black outlines automatically. Then use the erase brush to fine-tune any remaining areas.</div>
   </div>
-  <div class="section-body">
+</div>
 
+<!-- S13 NEW -->
+<div class="section new-sec" id="s13">
+  <div class="shdr new-hdr"><div class="snum new">13</div><div><div class="stitle">Save and Load Projects — NEW in v5</div><div class="ssub">Never lose your work again</div></div></div>
+  <div class="sbody">
+    <div class="callout good"><span class="lbl">✅ New in v5 — full project persistence</span>You can now save your entire project — image, all separated plates, all settings, all layers — to a .spv5 file on your iPad. Load it later and pick up exactly where you left off.</div>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><div class="sb2"><div class="st2">The save dot — orange means unsaved changes</div><div class="stx">The small dot next to the logo in the header turns <strong>orange</strong> when you have unsaved changes. It turns <strong>green</strong> when everything is saved. Watch this dot as you work.</div></div></div>
+      <div class="step"><div class="sn">2</div><div class="sb2"><div class="st2">💾 Save — saves everything to a .spv5 file</div><div class="stx">Tap Save in the header. A file called screenprint_[date].spv5 downloads to your iPad Files app. This file contains your image, all plates, all layer states, and all settings.</div></div></div>
+      <div class="step"><div class="sn">3</div><div class="sb2"><div class="st2">📂 Load — reopens a saved project</div><div class="stx">Tap Load. Your Files app opens. Find your .spv5 file. The entire project restores exactly as you left it — all plates, layers, settings, everything.</div></div></div>
+      <div class="step"><div class="sn">4</div><div class="sb2"><div class="st2">🗑 New — start a fresh project</div><div class="stx">Tap New to clear everything and start again. The app will warn you if you have unsaved changes first.</div></div></div>
+      <div class="step"><div class="sn">5</div><div class="sb2"><div class="st2">Browser warning when closing</div><div class="stx">If you try to close the tab or browser with unsaved work, Safari will ask "Are you sure you want to leave?" This protects your work from accidental loss.</div></div></div>
+    </div>
+    <div class="callout warn"><span class="lbl">⚠️ Important</span>Save before leaving the app — especially before tapping the 📖 Help button which opens the manual in a new tab. Always save first so you can load back your work.</div>
+  </div>
+</div>
+
+<!-- S14 NEW -->
+<div class="section new-sec" id="s14">
+  <div class="shdr new-hdr"><div class="snum new">14</div><div><div class="stitle">Procedure Log — NEW in v5</div><div class="ssub">Save what worked so you never have to figure it out twice</div></div></div>
+  <div class="sbody">
+    <div class="callout good"><span class="lbl">✅ New in v5 — your personal print recipe book</span>The Procedure Log is different from presets. Presets save settings. The Procedure Log saves settings PLUS your notes about what worked, what mesh you used, what ink type, what to watch out for. It is your personal recipe book for jobs that worked.</div>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><div class="sb2"><div class="st2">Go to ⭐ Presets tab → scroll down to Procedure Log</div><div class="stx">The procedure log section is below your presets in the right sidebar.</div></div></div>
+      <div class="step"><div class="sn">2</div><div class="sb2"><div class="st2">After a successful job — name it and add notes</div><div class="stx">Type a descriptive name: "Dark garment 4-colour spot — black shirt" and add notes like "156 mesh, plastisol ink, 45LPI circle, choke 0.8mm, underbase key areas only, flashed between each colour, perfect result".</div></div></div>
+      <div class="step"><div class="sn">3</div><div class="sb2"><div class="st2">Tap 💾 Save to Procedure Log</div><div class="stx">The entry saves with the date and all your current settings. Next time you do a similar job, load it and you start with working settings and your own notes.</div></div></div>
+      <div class="step"><div class="sn">4</div><div class="sb2"><div class="st2">Load settings from a log entry</div><div class="stx">Tap any log entry. Your notes appear. Tap <strong>Load Settings</strong> to apply all the saved settings to the current job. Your notes stay visible as a reminder.</div></div></div>
+    </div>
+    <div class="callout tip"><span class="lbl">💡 Good log entry names</span>"White garment 3-col spot 45LPI perfect" · "Black tote bag DTF stochastic" · "Red hoodie 156 mesh plastisol" · "Gold foil underbase technique"</div>
+  </div>
+</div>
+
+<!-- S15 -->
+<div class="section" id="s15">
+  <div class="shdr"><div class="snum">15</div><div><div class="stitle">Presets</div><div class="ssub">Save your favourite settings for one-tap recall</div></div></div>
+  <div class="sbody">
+    <p style="color:var(--muted);font-size:12px;margin-bottom:12px;">Presets save all your halftone, RIP, black mode, choke, and ink settings. One tap applies them all.</p>
+    <div class="steps">
+      <div class="step"><div class="sn">1</div><div class="sb2"><div class="st2">Built-in presets — ready to use</div><div class="stx">6 built-in presets cover the most common job types: Spot 45LPI Screen, DTF Photo 35LPI, Dark Garment Spot, Coarse 25LPI, Fine Art 55LPI, DTF Stochastic. Tap any to apply instantly.</div></div></div>
+      <div class="step"><div class="sn">2</div><div class="sb2"><div class="st2">Save your own preset</div><div class="stx">Dial in all your settings. Type a name in the preset box. Tap Save. Your preset appears in My Presets and survives closing the app.</div></div></div>
+      <div class="step"><div class="sn">3</div><div class="sb2"><div class="st2">Difference between Presets and Procedure Log</div><div class="stx"><strong>Preset:</strong> saves settings only. Fast way to apply a known good configuration.<br><strong>Procedure Log:</strong> saves settings + your notes about the job. The full story of what worked.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S16 -->
+<div class="section" id="s16">
+  <div class="shdr"><div class="snum">16</div><div><div class="stitle">Preview tools</div><div class="ssub">See what the final print looks like before burning a single screen</div></div></div>
+  <div class="sbody">
     <table>
       <tr><th>Button</th><th>Where</th><th>What you see</th></tr>
-      <tr><td><strong>🔬 HT Composite</strong></td><td>Header</td><td>All ink channels stacked together with actual halftone dots rendered in each ink color. Shows the rosette dot pattern. This is the closest to what the final print will look like.</td></tr>
-      <tr><td><strong>👕 Preview</strong></td><td>Header</td><td>Your design composited onto a garment silhouette — T-shirt, hoodie, tote, or flat. Shows all visible channels in their ink colors. Change garment color in the dropdown.</td></tr>
-      <tr><td><strong>👁 Composite View</strong></td><td>Below channels list</td><td>Quick composite of all visible channels stacked in the center canvas — without opening a modal.</td></tr>
+      <tr><td><strong>👁 View All Together</strong></td><td>Below layers list</td><td>All visible layers composited in their ink colours on the garment background. Quick composite view.</td></tr>
+      <tr><td><strong>🔬 HT Preview</strong></td><td>Canvas toolbar</td><td>All channels with actual halftone dots rendered. Shows the rosette dot pattern. Closest to what the real print looks like.</td></tr>
+      <tr><td><strong>👕 On Garment</strong></td><td>Canvas toolbar + header</td><td>Your design on a garment silhouette — T-shirt, hoodie, tote, or flat. Save as PNG for client approval.</td></tr>
+      <tr><td><strong>Tap any layer</strong></td><td>Layers list</td><td>That single colour plate fills the canvas. See exactly what prints on that one screen.</td></tr>
+      <tr><td><strong>🖼 Show Original</strong></td><td>Below layers list</td><td>Returns to the original artwork view.</td></tr>
     </table>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">🔬 HT Composite — the most important preview</div>
-          <div class="step-text">Tap <strong>HT Composite</strong> in the header after running separation and halftone. You see all channels rendered together — cyan dots at 15°, magenta at 75°, yellow at 90°, black at 45°. The rosette pattern in the overlapping areas is normal and expected — that's how CMYK printing works. Toggle <strong>Show dots</strong> on/off to compare with and without halftone. Change garment color in the dropdown to check light and dark backgrounds. Download the composite as a PNG for client approval.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">👕 Garment Preview — for client sign-off</div>
-          <div class="step-text">Opens your design on a garment silhouette. Choose T-Shirt, Hoodie, Tote Bag, or Flat. Tap <strong>⬇ Save</strong> to download the preview as a PNG — useful for sending to clients for approval before you burn any screens.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Live halftone preview while adjusting sliders</div>
-          <div class="step-text">In the HT tab, the <strong>Live Preview toggle</strong> at the top shows a real-time low-resolution halftone as you drag any slider. The preview updates within milliseconds as you move. When you lift your finger, the full quality version processes. Turn it off if your iPad is running slow.</div>
-        </div>
-      </div>
-    </div>
-
+    <div class="callout tip"><span class="lbl">💡 Client approval workflow</span>After separation and halftone, tap 👕 On Garment → select the garment colour → tap ⬇ Save. Send the PNG to your client for approval before burning any screens. Saves wasted screens on rejected designs.</div>
   </div>
 </div>
 
-<!-- SECTION 11 -->
-<div class="section" id="s11">
-  <div class="section-hdr">
-    <div class="section-num">11</div>
-    <div><div class="section-title">Presets — saving your favourite settings</div>
-    <div class="section-sub">Set it once, use it forever</div></div>
-  </div>
-  <div class="section-body">
-    <p style="color:var(--muted);font-size:12px;margin-bottom:14px;">Once you find settings that work well for a particular type of job, save them as a preset. Next time you open that type of job, load the preset and you're ready to go in one tap.</p>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">Dial in your settings</div>
-          <div class="step-text">Set your LPI, shape, angle, choke, RIP mode, black mode, ink limit — everything the way you like it for this type of job.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">Go to the ⭐ Presets tab → type a name → tap Save</div>
-          <div class="step-text">Name it something useful like "Dark garment 4 color spot" or "DTF photo 35LPI". The preset saves everything including all toggles.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Load it next time</div>
-          <div class="step-text">Tap any preset in the list and all settings load instantly. Built-in presets are always there as starting points. Your own presets are saved on this device.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="callout tip">
-      <span class="label">💡 Suggested preset names</span>
-      "White garment spot 4col" · "Black garment with underbase" · "DTF photo simulation" · "Coarse mesh 25LPI" · "Fine detail 55LPI"
-    </div>
-  </div>
-</div>
-
-<!-- SECTION 12 -->
-<div class="section" id="s12">
-  <div class="section-hdr">
-    <div class="section-num">12</div>
-    <div><div class="section-title">DTF vs Screen Printing — differences in this app</div>
-    <div class="section-sub">Same app, different settings</div></div>
-  </div>
-  <div class="section-body">
+<!-- S17 -->
+<div class="section" id="s17">
+  <div class="shdr"><div class="snum">17</div><div><div class="stitle">DTF vs Screen Printing</div><div class="ssub">Same app, different settings</div></div></div>
+  <div class="sbody">
     <table>
       <tr><th>Setting</th><th>Screen Printing</th><th>DTF</th></tr>
-      <tr><td><strong>Separation</strong></td><td>Spot colors preferred for most jobs</td><td>CMYK or spot both work</td></tr>
-      <tr><td><strong>Halftone</strong></td><td>AM conventional, 35–65 LPI</td><td>FM Stochastic often better</td></tr>
+      <tr><td><strong>Wizard choice</strong></td><td>Screen Print</td><td>DTF</td></tr>
+      <tr><td><strong>Separation</strong></td><td>Spot colours best for most jobs</td><td>CMYK or spot both work</td></tr>
+      <tr><td><strong>Halftone screen</strong></td><td>AM conventional, 35–65 LPI</td><td>FM Stochastic often better</td></tr>
       <tr><td><strong>Black mode</strong></td><td>Overprint (white) / Knockout (dark)</td><td>Always Knockout</td></tr>
-      <tr><td><strong>Underbase</strong></td><td>Needed for dark garments</td><td>Built into DTF process — not needed here</td></tr>
-      <tr><td><strong>Ink limit</strong></td><td>Up to 320%</td><td>Max 280% — very important</td></tr>
-      <tr><td><strong>RIP mode</strong></td><td>1-bit for film</td><td>Stochastic or 1-bit</td></tr>
-      <tr><td><strong>Mirror</strong></td><td>Depends on exposure unit</td><td>Usually needed — check your printer</td></tr>
-      <tr><td><strong>Output</strong></td><td>Film negatives for screen burn</td><td>Direct print to DTF film</td></tr>
+      <tr><td><strong>Underbase</strong></td><td>Needed for dark garments</td><td>Built into DTF process — not needed</td></tr>
+      <tr><td><strong>Ink limit</strong></td><td>Up to 320%</td><td>Max 280% — critical</td></tr>
+      <tr><td><strong>Mirror</strong></td><td>Depends on exposure unit</td><td>Usually needed</td></tr>
+      <tr><td><strong>RIP mode</strong></td><td>1-bit for film negatives</td><td>Stochastic or 1-bit</td></tr>
     </table>
-
-    <div class="callout warn">
-      <span class="label">⚠️ DTF ink limit</span>
-      DTF films can only hold so much ink. If total ink coverage across all channels exceeds 280%, the ink won't cure properly and the transfer will crack or peel. Use the <strong>Ink tab → Analyse → Apply Ink Limit</strong> before exporting DTF files.
-    </div>
+    <div class="callout warn"><span class="lbl">⚠️ DTF ink limit — most important rule</span>Total ink coverage across all channels must stay under 280% for DTF. Go to Ink tab → Analyse → check the total. If it shows red, tap Apply Ink Limit to reduce automatically. Exceeding 280% causes cracking and poor adhesion after washing.</div>
   </div>
 </div>
 
-<!-- SECTION 13 -->
-<div class="section" id="s13">
-  <div class="section-hdr">
-    <div class="section-num">13</div>
-    <div><div class="section-title">Exporting and printing your plates</div>
-    <div class="section-sub">Getting files off the app and onto film</div></div>
-  </div>
-  <div class="section-body">
+<!-- S18 -->
+<div class="section" id="s18">
+  <div class="shdr"><div class="snum">18</div><div><div class="stitle">Exporting your plates</div><div class="ssub">Getting film-ready files off the app</div></div></div>
+  <div class="sbody">
     <div class="steps">
-      <div class="step">
-        <div class="step-num">A</div>
-        <div class="step-body">
-          <div class="step-title">Export All — downloads every active plate</div>
-          <div class="step-text">Tap <strong>⬇ Export All</strong> in the header. Only channels with the 🖨 print button active will download. Each file is named plate_[color].png and includes registration marks and the info label bar.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">B</div>
-        <div class="step-body">
-          <div class="step-title">Download individual plates</div>
-          <div class="step-text">Hover over any plate thumbnail at the bottom of the canvas. Two buttons appear: <strong>⬇ DL</strong> downloads just that plate. <strong>👁 View</strong> opens it full size in a new tab so you can zoom in and check quality.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">C</div>
-        <div class="step-body">
-          <div class="step-title">Print Plates modal — for printing direct from Safari</div>
-          <div class="step-text">Tap <strong>🖨 Print</strong> in the header. Choose 1-up, 2-up, 4-up, or all-on-one layout. Then tap the print button and Safari's print dialog opens. You can print directly to an AirPrint printer or save as PDF.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">D</div>
-        <div class="step-body">
-          <div class="step-title">Step & Repeat — ganging multiple copies</div>
-          <div class="step-text">Tap <strong>⊞ Step&Repeat</strong>. Set columns, rows, and gap size. This tiles your artwork multiple times on one sheet — useful for printing many small designs on one film to save material.</div>
-        </div>
-      </div>
+      <div class="step"><div class="sn">A</div><div class="sb2"><div class="st2">⬇ Export — downloads all active plates</div><div class="stx">Tap Export in the header. Only channels with the 🖨 print button active download. Each file is named plate_[colour].png with registration marks and info bar.</div></div></div>
+      <div class="step"><div class="sn">B</div><div class="sb2"><div class="st2">Download individual plates</div><div class="stx">Each plate thumbnail at the bottom has a ⬇ button. Tap it to download just that one plate. The ⬇ button is in the top-left corner of each thumbnail.</div></div></div>
+      <div class="step"><div class="sn">C</div><div class="sb2"><div class="st2">🖨 Print Plates modal</div><div class="stx">Tap Print in the header. Choose 1-up, 2-up, 4-up, or all-on-one layout. Tap 🖨 Print — Safari's print dialog opens. Print direct or save as PDF.</div></div></div>
+      <div class="step"><div class="sn">D</div><div class="sb2"><div class="st2">⊞ Step and Repeat</div><div class="stx">Tap Repeat in the header. Set columns, rows, and gap size. Tiles your design multiple times on one sheet — for ganging multiple small designs on one film to save material.</div></div></div>
     </div>
-
-    <div class="callout info">
-      <span class="label">📋 What to do with the files</span>
-      Send your exported PNG files to an <strong>inkjet film printer</strong> (many print shops offer this service). They print on clear acetate film using black ink. You then use this film to expose your screen under UV light. The black blocks the UV, leaving the unexposed emulsion to wash away — creating your stencil.
-    </div>
+    <div class="callout info"><span class="lbl">What to do with the PNG files</span>Send them to an inkjet film printer — many print shops offer this service. They print black ink on clear acetate film. You then use the film to expose your screen under UV light. The black blocks UV, leaving the unexposed emulsion to wash away = your stencil.</div>
+    <div class="callout tip"><span class="lbl">💡 Print order for screen printing</span>Always print in this order: White underbase first → lightest colours → darkest colours → black last. Flash cure between colours on dark garments when using plastisol ink.</div>
   </div>
 </div>
 
-<!-- SECTION 14 -->
-<div class="section" id="s14">
-  <div class="section-hdr">
-    <div class="section-num">14</div>
-    <div><div class="section-title">Glossary of terms</div>
-    <div class="section-sub">Plain English definitions</div></div>
-  </div>
-  <div class="section-body">
-    <div class="gloss-item">
-      <div class="gloss-term">AM Screening (Conventional halftone)</div>
-      <div class="gloss-def">Regular grid of dots where dot <strong>size</strong> varies to create lighter/darker areas. Standard halftone method. Good for most screen printing jobs.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Choke</div>
-      <div class="gloss-def">Shrinking the white underbase plate inward by a small amount (usually 0.3–1mm) to prevent a white halo showing around the edges of your design.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">CMYK</div>
-      <div class="gloss-def">Cyan, Magenta, Yellow, Key (Black). The four process ink colors that can be mixed by overlapping halftone dots to simulate full color. Used for photographic prints.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Color separation</div>
-      <div class="gloss-def">The process of splitting a full-color design into individual single-color layers. Each layer becomes one screen in screen printing.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">DPI (Dots Per Inch)</div>
-      <div class="gloss-def">Resolution. How many ink dots fit in one inch. Higher = more detail but larger files. 300 DPI is standard for print. 600 DPI for fine detail.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">DTF (Direct to Film)</div>
-      <div class="gloss-def">A printing method where ink is printed directly onto a special film, powder is applied, it's heat cured, then heat transferred onto a garment. No screens needed.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Emulsion</div>
-      <div class="gloss-def">The light-sensitive coating on a screen. When exposed to UV light it hardens. Unexposed areas wash away to create the stencil.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Film negative</div>
-      <div class="gloss-def">A clear film with your design printed in black ink. Black blocks UV light during screen exposure, creating the stencil. One film per color.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">FM Screening (Stochastic halftone)</div>
-      <div class="gloss-def">Random placement of same-size dots where <strong>density</strong> varies to create lighter/darker areas. No regular grid = no moiré. Better for fine detail and DTF.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">GCR (Grey Component Replacement)</div>
-      <div class="gloss-def">Replaces equal amounts of CMY ink with K (black) ink in neutral/grey areas. Reduces total ink usage and improves black density.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Halftone</div>
-      <div class="gloss-def">A pattern of dots that creates the illusion of continuous tones. Big dots = dark, small dots = light, no dots = white. The only way to print gradients with solid ink.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Ink limit / Total ink coverage</div>
-      <div class="gloss-def">The maximum amount of ink allowed across all channels combined. DTF: 280%. Screen print: 300–320%. Exceeding this causes bleeding, poor adhesion, and cracking.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Knockout black</div>
-      <div class="gloss-def">Black ink removes all other ink colors from the areas it covers. The black plate is the only thing printing in black areas. Required for DTF and dark garments.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">LPI (Lines Per Inch)</div>
-      <div class="gloss-def">How many rows of halftone dots fit in one inch. Higher LPI = finer, more detailed halftone but requires finer mesh screen. Rule: LPI ≤ mesh count ÷ 3.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Mesh count</div>
-      <div class="gloss-def">The number of threads per inch in a screen printing mesh. Higher mesh = finer detail but less ink flow. Common: 86 (thick ink), 110–156 (standard), 200+ (fine detail).</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Moiré pattern</div>
-      <div class="gloss-def">An unwanted optical pattern that appears when two regular dot grids overlap at the wrong angle. Prevented by using standard CMYK screen angles (C:15°, M:75°, Y:90°, K:45°).</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Overprint black</div>
-      <div class="gloss-def">Black ink prints on top of all other ink colors, not replacing them. Creates richer blacks on white garments. Wrong choice for dark garments.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Pantone (PMS)</div>
-      <div class="gloss-def">Pantone Matching System. A standardized color system used worldwide. Each color has a number (e.g. PMS 485 Red). Your ink supplier can mix any Pantone color exactly.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Platen</div>
-      <div class="gloss-def">The flat board on a screen printing press that the garment sits on. It holds the garment flat and in the same position for each color pass.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Registration marks</div>
-      <div class="gloss-def">Crosshair targets that appear on every plate in the same position. Used to align multiple screens so each color prints in the correct position relative to the others.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">RIP (Raster Image Processor)</div>
-      <div class="gloss-def">Software or process that converts artwork into a high-contrast print-ready format. Creates pure black/white output for film printing with no grey or anti-aliased edges.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Spot color</div>
-      <div class="gloss-def">A specific pre-mixed ink color with its own dedicated screen. More vibrant than CMYK simulation. Each spot color = one screen. Best for logos and flat color artwork.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Squeegee</div>
-      <div class="gloss-def">The rubber blade used to push ink through the screen stencil onto the garment during printing.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Trap</div>
-      <div class="gloss-def">Slightly overlapping neighboring color plates (usually 0.1–0.3mm) to prevent gaps showing between colors if registration is slightly off at the press.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">UCR (Under Color Removal)</div>
-      <div class="gloss-def">More aggressive than GCR — removes CMY from shadow areas and replaces with K. Reduces total ink coverage. Use for dark garments or when ink limit is a concern.</div>
-    </div>
-    <div class="gloss-item">
-      <div class="gloss-term">Underbase</div>
-      <div class="gloss-def">A white ink layer printed first on dark garments. Acts as a bright base for colors printed on top. Without it, dark garment color shows through and dulls your inks.</div>
-    </div>
+<!-- S19 -->
+<div class="section" id="s19">
+  <div class="shdr"><div class="snum">19</div><div><div class="stitle">Glossary</div><div class="ssub">Every term explained in plain English</div></div></div>
+  <div class="sbody">
+    <div class="gloss-item"><div class="gterm">AM Screening</div><div class="gdef">Regular grid of dots where dot <strong>size</strong> varies to create lighter/darker areas. Standard halftone. Good for most screen printing.</div></div>
+    <div class="gloss-item"><div class="gterm">Choke</div><div class="gdef">Shrinking the white underbase plate inward (0.3–1mm) to prevent a white halo showing around design edges on dark garments.</div></div>
+    <div class="gloss-item"><div class="gterm">CMYK</div><div class="gdef">Cyan, Magenta, Yellow, Key (Black). Four process ink colours mixed by overlapping halftone dots to recreate full colour. Used for photographic prints.</div></div>
+    <div class="gloss-item"><div class="gterm">Color isolation</div><div class="gdef">Tapping a colour in your artwork to isolate it as a clean single-colour plate. The most accurate method for spot colour separation.</div></div>
+    <div class="gloss-item"><div class="gterm">Color separation</div><div class="gdef">Splitting a full-colour design into individual single-colour layers. Each layer becomes one screen.</div></div>
+    <div class="gloss-item"><div class="gterm">DPI</div><div class="gdef">Dots Per Inch. Resolution. Higher = more detail, larger files. 300 DPI = standard for print. 600 DPI = fine detail and RIP output.</div></div>
+    <div class="gloss-item"><div class="gterm">DTF (Direct to Film)</div><div class="gdef">Printing method where ink is printed onto special film, powder applied, heat cured, then heat transferred to garment. No screens needed.</div></div>
+    <div class="gloss-item"><div class="gterm">Emulsion</div><div class="gdef">Light-sensitive coating on a screen. UV light hardens it. Unexposed areas wash away to create the printing stencil.</div></div>
+    <div class="gloss-item"><div class="gterm">Film negative</div><div class="gdef">Clear film with design printed in black ink. Black blocks UV during screen exposure. One film per colour.</div></div>
+    <div class="gloss-item"><div class="gterm">FM Screening (Stochastic)</div><div class="gdef">Random placement of same-size dots where <strong>density</strong> varies to create lighter/darker areas. No regular grid = no moiré. Better for DTF and fine detail.</div></div>
+    <div class="gloss-item"><div class="gterm">GCR (Grey Component Replacement)</div><div class="gdef">Replaces equal amounts of CMY ink with K (black) in grey/neutral areas. Reduces total ink and improves black density.</div></div>
+    <div class="gloss-item"><div class="gterm">Halftone</div><div class="gdef">Pattern of dots creating illusion of continuous tones. Big dots = dark, small = light, none = white. Only way to print gradients with solid ink.</div></div>
+    <div class="gloss-item"><div class="gterm">Ink limit / Total ink coverage</div><div class="gdef">Maximum ink across all channels combined. DTF: 280%. Screen print: 300–320%. Exceeding causes bleeding and cracking.</div></div>
+    <div class="gloss-item"><div class="gterm">Knockout black</div><div class="gdef">Black ink removes all other ink from areas it covers. Required for DTF and dark garments. Prevents muddy colour mixing under black areas.</div></div>
+    <div class="gloss-item"><div class="gterm">Layer</div><div class="gdef">In v5, each separated colour is a layer. You can view, hide, edit, and control each colour independently — exactly like layers in Photoshop or Procreate.</div></div>
+    <div class="gloss-item"><div class="gterm">LPI (Lines Per Inch)</div><div class="gdef">How many rows of halftone dots per inch. Higher = finer, more detailed halftone but requires finer mesh. Rule: LPI ≤ mesh count ÷ 3.</div></div>
+    <div class="gloss-item"><div class="gterm">Mesh count</div><div class="gdef">Number of threads per inch in a screen. Higher = finer detail, less ink flow. Common: 86 (thick ink), 110–156 (standard), 200+ (fine detail).</div></div>
+    <div class="gloss-item"><div class="gterm">Moiré pattern</div><div class="gdef">Unwanted optical interference pattern when dot grids overlap at wrong angles. Prevented by using standard CMYK angles: C:15°, M:75°, Y:90°, K:45°.</div></div>
+    <div class="gloss-item"><div class="gterm">Overprint black</div><div class="gdef">Black prints on top of all other inks. Creates richer blacks on white garments. Wrong choice for dark garments.</div></div>
+    <div class="gloss-item"><div class="gterm">Pantone (PMS)</div><div class="gdef">Pantone Matching System. Standardised colour numbers used worldwide. Your ink supplier can mix any Pantone exactly. e.g. PMS 485 = standard red.</div></div>
+    <div class="gloss-item"><div class="gterm">Platen</div><div class="gdef">Flat board on the screen printing press that the garment sits on. Holds garment flat and in the same position for each colour pass.</div></div>
+    <div class="gloss-item"><div class="gterm">Procedure Log</div><div class="gdef">v5 feature. Saves settings plus your personal notes about a job — mesh used, ink type, what worked. Your recipe book for successful jobs.</div></div>
+    <div class="gloss-item"><div class="gterm">Registration marks</div><div class="gdef">Crosshair targets on every plate. Used to align multiple screens so each colour prints in the exact same position. In v5 these only appear on exported film, not on the working preview.</div></div>
+    <div class="gloss-item"><div class="gterm">RIP (Raster Image Processor)</div><div class="gdef">Converts artwork to pure black/white, maximum contrast, for film printing. No grey, no soft edges — just solid black where ink goes.</div></div>
+    <div class="gloss-item"><div class="gterm">Spot colour</div><div class="gdef">Pre-mixed specific ink with its own dedicated screen. More vibrant than CMYK simulation. Each spot colour = one screen.</div></div>
+    <div class="gloss-item"><div class="gterm">Squeegee</div><div class="gdef">Rubber blade used to push ink through the screen stencil onto the garment.</div></div>
+    <div class="gloss-item"><div class="gterm">Trap</div><div class="gdef">Slightly overlapping neighbouring colour plates (0.1–0.3mm) to prevent gaps between colours if press registration is slightly off.</div></div>
+    <div class="gloss-item"><div class="gterm">Underbase</div><div class="gdef">White ink layer printed first on dark garments. Acts as a bright base for colours on top. Without it, dark garment colour shows through and dulls inks.</div></div>
   </div>
 </div>
 
-<!-- SECTION 15 -->
-<div class="section" id="s15">
-  <div class="section-hdr">
-    <div class="section-num">15</div>
-    <div><div class="section-title">FAQ and troubleshooting</div>
-    <div class="section-sub">Common problems and how to fix them</div></div>
-  </div>
-  <div class="section-body">
-
-    <div class="faq-item">
-      <div class="faq-q">My separated plates have dots and noise outside the artwork area</div>
-      <div class="faq-a"><strong>Fix:</strong> Tap <strong>✂️ Remove BG</strong> before running separation. The background color is being caught by the separator. Remove it first and re-run separation.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">The image is too small / too large on the canvas</div>
-      <div class="faq-a"><strong>Fix:</strong> Check your Canvas Size settings. Type the actual print width in cm (e.g. 30cm for a chest print). The image automatically fits the canvas. If it still looks wrong, tap <strong>Fit to Window</strong> to rescale the view.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">The halftone dots are too big / too small</div>
-      <div class="faq-a"><strong>Fix:</strong> Adjust the <strong>LPI slider</strong>. Lower LPI = bigger dots. Higher LPI = smaller dots. Also check your mesh count — if your LPI is marked red in the mesh guide, your dots are too fine for your screen and will clog.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">I can see a moiré pattern (wavy interference pattern)</div>
-      <div class="faq-a"><strong>Fix:</strong> Enable <strong>Per-channel angles</strong> toggle in the HT tab — this gives each color channel a different angle (C:15°, M:75°, Y:90°, K:45°) which prevents moiré. Also enable the <strong>Moiré prevention</strong> toggle.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">The navy/dark blue is showing as black in my separation</div>
-      <div class="faq-a"><strong>Fix:</strong> Very dark colors get absorbed into the K (black) channel in CMYK separation. Use the <strong>🎯 Color Isolation tool</strong> — tap the navy, set tolerance to 30–50, and generate a dedicated navy plate. Then turn off the auto-sep channels you don't need.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">There's a white halo around my design on dark garments</div>
-      <div class="faq-a"><strong>Fix:</strong> Increase the <strong>Choke</strong> value under Underbase/Choke. Start at 0.5mm and increase until the halo disappears in the preview. The choke shrinks the white underbase plate so it can't peek out from under the color plates.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">My DTF print is cracking or peeling</div>
-      <div class="faq-a"><strong>Fix:</strong> Your total ink coverage is too high. Go to the <strong>Ink tab</strong>, tap <strong>📊 Analyse</strong>, check the total. It must be under 280% for DTF. Tap <strong>Apply Ink Limit</strong> to automatically reduce it.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">The plate labels / info bar are not showing on my exported files</div>
-      <div class="faq-a"><strong>Fix:</strong> Make sure you are exporting via <strong>⬇ DL</strong> on the plate thumbnail or <strong>⬇ Export All</strong>. The labels are added during the download process. If viewing the plate preview on screen the label may appear small — it's sized for the full resolution output file.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">Colors I turned off (🖨 off) are still appearing</div>
-      <div class="faq-a"><strong>Fix:</strong> The <strong>👁 eye</strong> button only hides in preview. The <strong>🖨 print button</strong> must be turned off (goes grey/dim) to exclude from export. Make sure you tapped the printer icon, not the eye icon.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">My screens are not aligning — colors are off-register</div>
-      <div class="faq-a"><strong>Fix:</strong> This is a press setup issue, not an app issue. All your film plates have reg marks in exactly the same position. At the press, use registration pins or a light table to align each film plate before burning. Check that your platen is not moving between color passes.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">The registration marks are showing on my preview canvas and getting in the way</div>
-      <div class="faq-a"><strong>This is fixed in v4.</strong> Reg marks no longer show on the working preview — only on exported film files. If you are still seeing them, you may have an older version of the file. Upload the latest index.html to GitHub.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">How do I make my design smaller on the canvas?</div>
-      <div class="faq-a">Scroll down in the left sidebar past Canvas Size to find <strong>Size &amp; Position</strong>. Tap the <strong>75%</strong> or <strong>50%</strong> quick button to instantly shrink the artwork. Use the Scale slider for fine control. Use the arrow nudge pad (↑ ↓ ← →) to move it around. Tap ⌂ to reset.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">I turned off a channel but it still exported</div>
-      <div class="faq-a">There are two separate buttons per channel. The <strong>👁 eye</strong> only hides in preview. You must turn off the <strong>🖨 printer button</strong> (it goes grey/dim) to exclude from export. Make sure you tapped the printer icon, not the eye.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">How do I use the color isolation tool for my spot color design?</div>
-      <div class="faq-a">Go to the <strong>PMS tab</strong> on the right sidebar. Tap <strong>🎯 Tap Color in Artwork</strong> — the button turns orange. Then tap directly on the color you want in your artwork (e.g. tap the red area). A preview appears. Adjust the <strong>Tolerance</strong> slider until only that color is selected. Tap <strong>⚡ Generate Plate</strong>. Repeat for each color. Turn off the auto-sep channels you don't need.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">What's the difference between HT Composite and Garment Preview?</div>
-      <div class="faq-a"><strong>HT Composite</strong> (🔬) shows the actual halftone dots of all channels stacked — this is the technical output view, showing exactly how the ink will land. <strong>Garment Preview</strong> (👕) shows the design on a garment silhouette with ink colors tinted — this is the presentation view for showing clients or checking placement.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">My white underbase is showing a halo or edge around the design</div>
-      <div class="faq-a">Change the <strong>UB Mode</strong> to <strong>Key areas only</strong> — this stops white printing under the black outlines which is usually where the halo appears. Also increase the <strong>Choke</strong> value slightly (try 0.5mm to 1mm) to shrink the white plate inward.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">I made a mistake — how do I undo?</div>
-      <div class="faq-a">Tap <strong>↩ Undo</strong> in the header. This clears the plates and returns to the original loaded image so you can start the separation again. It does not undo individual slider moves — it reverts the last major action like separation or halftone.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">How do I start over with a completely different image?</div>
-      <div class="faq-a">Tap the red <strong>🗑 Delete</strong> button in the header. It asks for confirmation then clears everything — image, plates, channels, history. Tap the artwork upload area to load a new image.</div>
-    </div>
-
+<!-- S20 -->
+<div class="section" id="s20">
+  <div class="shdr"><div class="snum">20</div><div><div class="stitle">FAQ and Troubleshooting</div><div class="ssub">Common problems and exactly how to fix them</div></div></div>
+  <div class="sbody">
+    <div class="faq-item"><div class="faq-q">I lost my work when I tapped the Help button</div><div class="faq-a"><strong>Fix for next time:</strong> tap 💾 Save BEFORE tapping Help. The Help button opens the manual in a new tab, which may reload the app. Your .spv5 project file will restore everything. Always save before navigating away.</div></div>
+    <div class="faq-item"><div class="faq-q">Noise and dots outside my artwork after separation</div><div class="faq-a"><strong>Fix:</strong> tap ✂️ Remove BG before running separation. The background colour is being caught by the separator. Remove it first then re-run separation.</div></div>
+    <div class="faq-item"><div class="faq-q">The image is tiny / too small on the canvas</div><div class="faq-a"><strong>Fix:</strong> check Canvas Size — type your actual print width in cm (e.g. 30). Tap the 100% quick button. Tap Fit to Window. The image should fill the canvas correctly.</div></div>
+    <div class="faq-item"><div class="faq-q">Dark navy blue is showing as black in my separation</div><div class="faq-a"><strong>Fix:</strong> very dark colours get absorbed into the K (black) channel in CMYK. Use the 🎯 Color Isolation tool — tap the navy area, set tolerance 30–50, generate a dedicated navy plate. Turn off the K channel or reduce it.</div></div>
+    <div class="faq-item"><div class="faq-q">White halo showing around my design on dark garments</div><div class="faq-a"><strong>Fix:</strong> increase the Choke value (try 0.8–1mm). Also switch UB Mode to "Key areas only" which prevents white printing under black outlines.</div></div>
+    <div class="faq-item"><div class="faq-q">I can see moiré patterns (wavy interference)</div><div class="faq-a"><strong>Fix:</strong> enable Per-channel angles in the HT tab — gives each channel a different angle (C:15°, M:75°, Y:90°, K:45°) which prevents moiré. Also ensure your LPI is not too high for your mesh.</div></div>
+    <div class="faq-item"><div class="faq-q">Halftone dots are too big or too small</div><div class="faq-a"><strong>Fix:</strong> adjust the LPI slider. Lower LPI = bigger dots. Higher LPI = smaller dots. Check the mesh guide — if your LPI shows red, the dots are too fine for your screen and will clog.</div></div>
+    <div class="faq-item"><div class="faq-q">DTF print is cracking or peeling after washing</div><div class="faq-a"><strong>Fix:</strong> total ink coverage is over 280%. Go to Ink tab → tap Analyse → check the total percentage. It must be under 280% for DTF. Tap Apply Ink Limit to reduce automatically.</div></div>
+    <div class="faq-item"><div class="faq-q">A colour I turned off is still exporting</div><div class="faq-a"><strong>Fix:</strong> there are two buttons per layer. The 👁 eye only hides in preview. You must tap the 🖨 printer button (turns grey/dim) to exclude from export. Make sure you tapped the printer icon not the eye.</div></div>
+    <div class="faq-item"><div class="faq-q">How do I edit the white underbase to remove it from shadow areas?</div><div class="faq-a"><strong>Fix:</strong> first set UB Mode to "Key areas only" — this automatically removes white from under black/dark areas. Then tap ✏️ Edit with Pencil/Finger. Choose ⬜ Erase mode. Draw over the areas where you don't want white. Tap ✓ Done Editing.</div></div>
+    <div class="faq-item"><div class="faq-q">My screens are not aligning — colours are off-register</div><div class="faq-a"><strong>Fix:</strong> this is a press setup issue, not an app issue. All film plates have reg marks in exactly the same position. At the press, use registration pins or a light table to align each film before burning. Check your platen is not moving between colour passes.</div></div>
+    <div class="faq-item"><div class="faq-q">The app is slow on my iPad when processing large images</div><div class="faq-a"><strong>Fix:</strong> set DPI to 150 while working, then switch to 300 or 600 for final export only. Turn off Live Preview if not needed. Large images at 600 DPI take more time to process — this is normal.</div></div>
+    <div class="faq-item"><div class="faq-q">How do I save my settings so I don't have to redo them every time?</div><div class="faq-a">Two ways: <strong>Preset</strong> = tap ⭐ tab → type a name → Save Preset. Loads settings instantly next time. <strong>Procedure Log</strong> = same tab → type name and notes → Save to Procedure Log. Loads settings plus shows your notes about what worked.</div></div>
+    <div class="faq-item"><div class="faq-q">Script error showing in Claude's preview window</div><div class="faq-a">This is a <strong>Claude sandbox restriction</strong>, not a bug in the app. The Claude preview window blocks certain JavaScript for security. When you run the app from GitHub Pages (your ta2hunter.github.io/Screenprint URL), no script errors occur. The app is fine.</div></div>
   </div>
 </div>
 
-<a href="#" class="back-top">↑ Back to top</a>
-<a href="index.html" class="back-top" style="margin-top:6px;background:var(--acc);color:#000;border-color:var(--acc);">← Back to ScreenPrint Studio</a>
+<a href="#" class="btop">↑ Back to top</a>
+<a href="index.html" class="btop" style="margin-top:6px;background:var(--acc);color:#000;border-color:var(--acc);">← Back to ScreenPrint Studio Pro v5</a>
 
-</div><!-- end content -->
+</div>
 </body>
 </html>
