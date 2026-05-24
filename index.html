@@ -193,7 +193,7 @@ select:focus{border-color:var(--acc);}
   <button class="hbtn off" id="ubtn" onclick="doUndo()">↩ Undo</button>
   <button class="hbtn danger off" id="nbtn" onclick="newProject()">🗑 New</button>
   <button class="hbtn" onclick="saveProject()">💾 Save</button>
-  <button class="hbtn" onclick="document.getElementById('lfi').click()">📂 Load</button>
+  <label class="hbtn" for="lfi" style="cursor:pointer;">📂 Load</label>
   <button class="hbtn" onclick="openM('gm')">👕 Preview</button>
   <button class="hbtn" onclick="openM('srm')">⊞ Repeat</button>
   <button class="hbtn" onclick="openM('pm')">🖨 Print</button>
@@ -201,17 +201,17 @@ select:focus{border-color:var(--acc);}
   <a href="manual.html" target="_blank" class="hbtn">📖 Help</a>
   <span class="badge">v5</span>
   <input type="file" id="lfi" accept=".spv5,.json" style="display:none" onchange="loadProjFile(event)">
-  <input type="file" id="ifi" accept="image/*" style="display:none" onchange="loadImgFile(event)">
 </div>
 
 <div id="app">
 <div class="sb" id="sbl">
   <div class="sec">
     <div class="st">Artwork</div>
-    <div id="dz" style="border:2px dashed var(--b2);border-radius:7px;padding:14px;text-align:center;cursor:pointer;background:var(--s1);">
+    <label for="ifi" style="display:block;border:2px dashed var(--b2);border-radius:7px;padding:14px;text-align:center;cursor:pointer;background:var(--s1);transition:all .2s;" id="dz">
       <div style="font-size:26px;margin-bottom:4px">🎨</div>
       <div style="color:var(--muted);font-size:10px;line-height:1.7"><strong style="color:var(--txt)">Tap to load image</strong><br>PNG · JPG · TIFF</div>
-    </div>
+    </label>
+    <input type="file" id="ifi" accept="image/*" style="display:none" onchange="loadImgFile(event)">
     <div class="b2" style="margin-top:5px">
       <button class="btn bs" onclick="removeBG()">✂️ Remove BG</button>
       <button class="btn bs" onclick="cleanupArt()">🧹 Cleanup</button>
@@ -636,12 +636,17 @@ function wstart(){
   updBk();chkMesh();
   gv('wizard').style.display='none';gv('cvarea').style.display='flex';
   gv('nbtn').classList.remove('off');gv('ubtn').classList.remove('off');
-  gv('ifi').click();
+  // Show a clear prompt to load image - do NOT call .click() programmatically
+  // Safari blocks file picker unless triggered directly by user tap
+  gv('dz').style.borderColor='var(--acc)';
+  gv('dz').style.background='rgba(245,196,0,0.08)';
+  gv('dz').querySelector('div').textContent='⬆️';
+  gv('dz').querySelectorAll('div')[1].innerHTML='<strong style="color:var(--acc)">Now tap here to load your image</strong>';
 }
 
-// UPLOAD
+// UPLOAD - label for="ifi" handles tap natively on iPad Safari
+// Only need drag/drop handler here
 const dz=gv('dz');
-dz.addEventListener('click',()=>gv('ifi').click());
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.style.borderColor='var(--acc)';});
 dz.addEventListener('dragleave',()=>dz.style.borderColor='var(--b2)');
 dz.addEventListener('drop',e=>{e.preventDefault();dz.style.borderColor='var(--b2)';if(e.dataTransfer.files[0])procImg(e.dataTransfer.files[0]);});
