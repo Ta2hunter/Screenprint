@@ -43,31 +43,29 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--txt);font
 #sbl{border-right:1px solid var(--b1);}
 #sbr{border-left:1px solid var(--b1);}
 .sbpad{height:160px;}
-#ctr{background:#0d0d10;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
-  display:flex;flex-direction:column;align-items:center;padding:14px;gap:10px;}
+#ctr{background:#0d0d10;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:10px;gap:8px;}
 
 /* WIZARD */
 #wiz{background:var(--panel);border:1px solid var(--b1);border-radius:10px;
-  max-width:560px;width:100%;padding:20px;margin:auto;flex-shrink:0;}
-.wt{font-family:var(--disp);font-size:26px;letter-spacing:2px;color:var(--acc);margin-bottom:6px;}
-.ws{font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.7;}
-.wq{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;
-  color:var(--muted);margin-bottom:8px;margin-top:14px;}
-/* WIZARD BUTTONS - real buttons, guaranteed to work on iPad Safari */
-.wopts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  max-width:580px;width:100%;padding:14px;margin:auto;flex-shrink:0;}
+.wt{font-family:var(--disp);font-size:22px;letter-spacing:2px;color:var(--acc);margin-bottom:2px;}
+.ws{font-size:10px;color:var(--muted);margin-bottom:8px;line-height:1.5;}
+.wq{font-size:9px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:5px;margin-top:8px;}
+.wopts{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
 .wopts.four{grid-template-columns:1fr 1fr 1fr 1fr;}
 .wopt{background:var(--s1);border:2px solid var(--b1);border-radius:var(--r);
-  padding:10px 6px;cursor:pointer;font-family:var(--font);font-size:12px;
-  color:var(--txt);line-height:1.7;width:100%;text-align:center;
+  padding:8px 5px;cursor:pointer;font-family:var(--font);font-size:11px;
+  color:var(--txt);line-height:1.5;width:100%;text-align:center;
   -webkit-appearance:none;appearance:none;touch-action:manipulation;}
 .wopt.on{border-color:var(--acc);background:rgba(245,196,0,.1);color:var(--acc);}
 .wopt b{display:block;font-size:10px;font-weight:600;color:var(--txt);}
 .wopt.on b{color:var(--acc);}
 .wopt s2{display:block;font-size:9px;color:var(--muted);font-style:normal;}
-#wrec{margin-top:12px;font-size:10px;color:var(--muted);line-height:1.9;}
-.wgo{width:100%;padding:14px;background:var(--acc);color:#000;border:none;
-  border-radius:var(--r);font-family:var(--disp);font-size:22px;letter-spacing:3px;
-  cursor:pointer;margin-top:14px;-webkit-appearance:none;appearance:none;touch-action:manipulation;}
+#wrec{margin-top:6px;font-size:10px;color:var(--muted);line-height:1.6;}
+.wgo{width:100%;padding:12px;background:var(--acc);color:#000;border:none;
+  border-radius:var(--r);font-family:var(--disp);font-size:20px;letter-spacing:3px;
+  cursor:pointer;margin-top:8px;-webkit-appearance:none;appearance:none;touch-action:manipulation;}
 
 /* CANVAS AREA */
 #cvarea{display:none;flex-direction:column;align-items:center;gap:9px;width:100%;padding-bottom:60px;}
@@ -701,6 +699,7 @@ function wpick(grp,idx){
 }
 
 function wgo(){dbg('wgo called - START JOB tapped');
+  G('ctr').style.overflow='auto';G('ctr').style.overflowX='hidden';
   // Apply settings from wizard
   if(ws.g===1){setOn('tub',true);G('gcol').value='#111111';G('bkm').value='knockout';}
   else{setOn('tub',false);G('gcol').value='#ffffff';G('bkm').value='overprint';}
@@ -743,6 +742,7 @@ function imgPicked(e){dbg('imgPicked called');
       plates={}; layers=[];
       G('wiz').style.display='none';
       G('cvarea').style.display='flex';
+      G('ctr').style.overflow='auto';G('ctr').style.overflowX='hidden';
       G('dzlbl').style.borderColor=''; G('dzlbl').style.background='';
       G('nbtn').classList.remove('off');
       G('ubtn').classList.remove('off');
