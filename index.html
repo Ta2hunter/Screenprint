@@ -864,7 +864,11 @@ function erode(arr,W,H,r){const out=new Uint8ClampedArray(arr.length);for(let y=
 // COLOR SEPARATION
 // ================================================================
 function doSep(){
-  if(!img)return;pushUndo('sep');showP('SEPARATING','Analysing…',0);
+  if(!img)return;
+  // Reset position so separation is always at 0,0
+  G('ox').value=0;G('oy').value=0;G('sc').value=100;G('rot').value=0;
+  sv('oxv','0%');sv('oyv','0%');sv('scv','100%');sv('rotv','0°');
+  pushUndo('sep');showP('SEPARATING','Analysing…',0);
   setTimeout(()=>{
     const{d,W,H}=getWork();const dd=d.data;const gcr=G('gcr').value,bkm=G('bkm').value;
     const ch={cyan:new Uint8ClampedArray(W*H*4),magenta:new Uint8ClampedArray(W*H*4),yellow:new Uint8ClampedArray(W*H*4),key:new Uint8ClampedArray(W*H*4)};
@@ -887,7 +891,10 @@ function doSep(){
   },30);
 }
 function doSpot(){
-  if(!img)return;pushUndo('spot');showP('SPOT COLORS','Detecting…',0);
+  if(!img)return;
+  G('ox').value=0;G('oy').value=0;G('sc').value=100;G('rot').value=0;
+  sv('oxv','0%');sv('oyv','0%');sv('scv','100%');sv('rotv','0°');
+  pushUndo('spot');showP('SPOT COLORS','Detecting…',0);
   setTimeout(()=>{
     const{d,W,H}=getWork();const dd=d.data;const map={};
     for(let i=0;i<dd.length;i+=4){if(dd[i+3]<10)continue;const r=Math.round(dd[i]/32)*32,gx=Math.round(dd[i+1]/32)*32,b=Math.round(dd[i+2]/32)*32;const key=`${r},${gx},${b}`;map[key]=(map[key]||0)+1;}
@@ -989,6 +996,9 @@ function liveHT(){
 function fullHT(){if(!img||!Object.keys(plates).length)return;clearTimeout(fullT);fullT=setTimeout(()=>applyHT(true),600);}
 function applyHT(silent=false){
   if(!img)return;if(!Object.keys(plates).length){doSep();return;}
+  // Reset position to 0 before processing so plates are always centred
+  const savedOx=G('ox').value,savedOy=G('oy').value,savedSc=G('sc').value,savedRot=G('rot').value;
+  G('ox').value=0;G('oy').value=0;G('sc').value=100;G('rot').value=0;
   if(!silent){pushUndo('halftone');showP('HALFTONE','Generating dots…',0);}
   setTimeout(()=>{
     const lpi=parseInt(G('lpi').value),shp=G('htsh').value;const bAng=parseInt(G('htang').value)*Math.PI/180;
@@ -1017,6 +1027,8 @@ function updScr(){G('amctrls').style.display=G('htscr').value==='fm'?'none':'blo
 // ================================================================
 function applyRIP(){
   if(!img)return;if(!Object.keys(plates).length)doSep();
+  G('ox').value=0;G('oy').value=0;G('sc').value=100;G('rot').value=0;
+  sv('oxv','0%');sv('oyv','0%');sv('scv','100%');sv('rotv','0°');
   pushUndo('RIP');showP('RIP','Film output…',0);
   setTimeout(()=>{
     const mode=G('rmod').value,thresh=parseInt(G('rth').value),sharpen=parseInt(G('rsh').value);
