@@ -64,11 +64,12 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);font-size:12p
 .wopts{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
 .wopts.four{grid-template-columns:1fr 1fr 1fr 1fr;}
 .wopt{background:var(--s1);border:2px solid var(--b1);border-radius:var(--r);
-  padding:10px;cursor:pointer;text-align:center;user-select:none;-webkit-user-select:none;}
+  padding:10px;cursor:pointer;text-align:center;user-select:none;-webkit-user-select:none;
+  -webkit-touch-callout:none;}
 .wopt.sel{border-color:var(--acc);background:rgba(245,196,0,.08);}
-.wopt .oi{font-size:22px;margin-bottom:4px;}
-.wopt .ot{font-size:10px;font-weight:600;color:var(--txt);}
-.wopt .os{font-size:9px;color:var(--muted);margin-top:2px;}
+.wopt .oi{font-size:22px;margin-bottom:4px;pointer-events:none;}
+.wopt .ot{font-size:10px;font-weight:600;color:var(--txt);pointer-events:none;}
+.wopt .os{font-size:9px;color:var(--muted);margin-top:2px;pointer-events:none;}
 #wrec{margin-top:12px;font-size:10px;color:var(--muted);line-height:1.9;min-height:40px;}
 .wbtn{width:100%;padding:14px;background:var(--acc);color:#000;border:none;
   border-radius:var(--r);font-family:var(--disp);font-size:22px;letter-spacing:3px;
@@ -400,28 +401,28 @@ select{background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);co
     <div class="ws">Answer 4 questions — the app sets everything up automatically like a professional printer would.</div>
     <div class="wq">1. Garment colour?</div>
     <div class="wopts">
-      <div class="wopt sel" id="wg0" onclick="wpick('g',0,this)"><div class="oi">⬜</div><div class="ot">White / Light</div><div class="os">No underbase needed</div></div>
-      <div class="wopt" id="wg1" onclick="wpick('g',1,this)"><div class="oi">⬛</div><div class="ot">Dark / Black</div><div class="os">Needs white underbase</div></div>
+      <div class="wopt sel" id="wg0" ontouchstart="wpick('g',0,this)" onclick="wpick('g',0,this)"><div class="oi">⬜</div><div class="ot">White / Light</div><div class="os">No underbase needed</div></div>
+      <div class="wopt" id="wg1" ontouchstart="wpick('g',1,this)" onclick="wpick('g',1,this)"><div class="oi">⬛</div><div class="ot">Dark / Black</div><div class="os">Needs white underbase</div></div>
     </div>
     <div class="wq">2. Design type?</div>
     <div class="wopts">
-      <div class="wopt sel" id="wd0" onclick="wpick('d',0,this)"><div class="oi">🎨</div><div class="ot">Spot colors / Logo</div><div class="os">Flat countable colors</div></div>
-      <div class="wopt" id="wd1" onclick="wpick('d',1,this)"><div class="oi">📷</div><div class="ot">Photo / Gradient</div><div class="os">Smooth blending colors</div></div>
+      <div class="wopt sel" id="wd0" ontouchstart="wpick('d',0,this)" onclick="wpick('d',0,this)"><div class="oi">🎨</div><div class="ot">Spot colors / Logo</div><div class="os">Flat countable colors</div></div>
+      <div class="wopt" id="wd1" ontouchstart="wpick('d',1,this)" onclick="wpick('d',1,this)"><div class="oi">📷</div><div class="ot">Photo / Gradient</div><div class="os">Smooth blending colors</div></div>
     </div>
     <div class="wq">3. Print method?</div>
     <div class="wopts">
-      <div class="wopt sel" id="wm0" onclick="wpick('m',0,this)"><div class="oi">🖨</div><div class="ot">Screen Print</div><div class="os">Film → burn → press</div></div>
-      <div class="wopt" id="wm1" onclick="wpick('m',1,this)"><div class="oi">🎯</div><div class="ot">DTF</div><div class="os">Direct to film transfer</div></div>
+      <div class="wopt sel" id="wm0" ontouchstart="wpick('m',0,this)" onclick="wpick('m',0,this)"><div class="oi">🖨</div><div class="ot">Screen Print</div><div class="os">Film → burn → press</div></div>
+      <div class="wopt" id="wm1" ontouchstart="wpick('m',1,this)" onclick="wpick('m',1,this)"><div class="oi">🎯</div><div class="ot">DTF</div><div class="os">Direct to film transfer</div></div>
     </div>
     <div class="wq">4. How many colors?</div>
     <div class="wopts four">
-      <div class="wopt sel" id="wc0" onclick="wpick('c',0,this)"><div class="oi">2</div><div class="ot">1–2</div></div>
-      <div class="wopt" id="wc1" onclick="wpick('c',1,this)"><div class="oi">4</div><div class="ot">3–4</div></div>
-      <div class="wopt" id="wc2" onclick="wpick('c',2,this)"><div class="oi">6</div><div class="ot">5–6</div></div>
-      <div class="wopt" id="wc3" onclick="wpick('c',3,this)"><div class="oi">∞</div><div class="ot">Full</div></div>
+      <div class="wopt sel" id="wc0" ontouchstart="wpick('c',0,this)" onclick="wpick('c',0,this)"><div class="oi">2</div><div class="ot">1–2</div></div>
+      <div class="wopt" id="wc1" ontouchstart="wpick('c',1,this)" onclick="wpick('c',1,this)"><div class="oi">4</div><div class="ot">3–4</div></div>
+      <div class="wopt" id="wc2" ontouchstart="wpick('c',2,this)" onclick="wpick('c',2,this)"><div class="oi">6</div><div class="ot">5–6</div></div>
+      <div class="wopt" id="wc3" ontouchstart="wpick('c',3,this)" onclick="wpick('c',3,this)"><div class="oi">∞</div><div class="ot">Full</div></div>
     </div>
     <div id="wrec"></div>
-    <button class="wbtn" onclick="wgo()">⚡ START JOB</button>
+    <button class="wbtn" ontouchstart="wgo()" onclick="wgo()">⚡ START JOB</button>
   </div>
 
   <!-- CANVAS AREA (hidden until image loaded) -->
@@ -712,11 +713,14 @@ function markClean(){isDirty=false;g('sdot').className='';}
 // WIZARD - simple index-based, no data attributes needed
 // ================================================================
 function wpick(grp,idx,el){
+  // el may be a child element - always walk up to the .wopt
+  let target=el;
+  while(target && !target.classList.contains('wopt')) target=target.parentElement;
+  if(!target)return;
   ws[grp]=idx;
-  // Find all opts in same group and deselect
   const prefix={g:'wg',d:'wd',m:'wm',c:'wc'}[grp];
   for(let i=0;i<10;i++){const e=g(prefix+i);if(e)e.classList.remove('sel');}
-  el.classList.add('sel');
+  target.classList.add('sel');
   updWRec();
 }
 function updWRec(){
