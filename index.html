@@ -988,33 +988,55 @@ function fullHT(){
   return;
 }
 function applyHT(silent=false){
-  if(!img)return;if(!Object.keys(plates).length){doSep();return;}
-  // Reset position to 0 before processing so plates are always centred
-  const savedOx=G('ox').value,savedOy=G('oy').value,savedSc=G('sc').value,savedRot=G('rot').value;
+  if(!img)return;
+  if(!Object.keys(plates).length){doSep();return;}
   G('ox').value=0;G('oy').value=0;G('sc').value=100;G('rot').value=0;
+  sv('oxv','0%');sv('oyv','0%');sv('scv','100%');sv('rotv','0°');
   if(!silent){pushUndo('halftone');showP('HALFTONE','Generating dots…',0);}
   setTimeout(()=>{
-    const lpi=parseInt(G('lpi').value),shp=G('htsh').value;const bAng=parseInt(G('htang').value)*Math.PI/180;
-    const inv=isOn('tinv'),pca=isOn('tpca'),scr=G('htscr').value,con=parseInt(G('htcon').value)/100;
-    const dpi=parseInt(G('dpi').value),cp=dpi/lpi;
-    Object.keys(plates).forEach((id,idx)=>{
-      if(!silent)setP(Math.round(idx/Object.keys(plates).length*90),'Halftoning '+id+'…');
-      const src=plates[id];const W=src.width,H=src.height;const sd=src.getContext('2d').getImageData(0,0,W,H).data;
-      const out=offs(W,H);const ctx=out.getContext('2d');ctx.fillStyle=inv?'#000':'#fff';ctx.fillRect(0,0,W,H);
-      if(scr==='fm'){for(let i=0;i<sd.length;i+=4){if(sd[i+3]<10)continue;if(Math.random()>(inv?sd[i]/255:1-sd[i]/255)){const x=(i/4)%W,y=Math.floor((i/4)/W);ctx.fillStyle=inv?'#fff':'#000';ctx.fillRect(x,y,2,2);}}}
-      else{const ang=pca&&CHANG[id]!=null?CHANG[id]*Math.PI/180:bAng;const cos=Math.cos(ang),sin=Math.sin(ang);
-        const ext=Math.ceil(Math.sqrt(W*W+H*H)/2);
-        for(let cy=-ext;cy<H+ext;cy+=cp)for(let cx=-ext;cx<W+ext;cx+=cp){
-          const rx=Math.round((cx-W/2)*cos-(cy-H/2)*sin+W/2);
-          const ry=Math.round((cx-W/2)*sin+(cy-H/2)*cos+H/2);
-          if(rx<0||rx>=W||ry<0||ry>=H)continue;
-          const px=(ry*W+rx)*4;if(sd[px+3]<10)continue;let luma=sd[px]/255;luma=Math.max(0,Math.min(1,(luma-.5)*(1+con)+.5));
-          const radius=(inv?luma:1-luma)*(cp/2)*.9;if(radius<.4)continue;ctx.fillStyle=inv?'#fff':'#000';
-          ctx.beginPath();switch(shp){case 'circle':ctx.arc(cx,cy,radius,0,Math.PI*2);break;case 'ellipse':ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.ellipse(0,0,radius,radius*.5,0,0,Math.PI*2);ctx.restore();break;case 'square':ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.rect(-radius,-radius,radius*2,radius*2);ctx.restore();break;case 'diamond':ctx.save();ctx.translate(cx,cy);ctx.rotate(Math.PI/4+ang);ctx.rect(-radius*.75,-radius*.75,radius*1.5,radius*1.5);ctx.restore();break;case 'line':ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.rect(-radius,-radius*.22,radius*2,radius*.44);ctx.restore();break;default:ctx.arc(cx,cy,radius,0,Math.PI*2);}ctx.fill();}}
+    const lpi=parseInt(G('lpi').value);
+    const shp=G('htsh').value;
+    const inv=isOn('tinv');
+    const con=parseInt(G('htcon').value)/100;
+    const dpi=parseInt(G('dpi').value);
+    const cp=Math.max(2,Math.round(dpi/lpi));
+    const pca=isOn('tpca');
+    const chAngDeg={cyan:15,magenta:75,yellow:90,key:45};
+    const ids=Object.keys(plates);
+    ids.forEach((id,idx)=>{
+      if(!silent)setP(Math.round(idx/ids.length*90),'Halftoning '+id+'...');
+      const src=plates[id];const W=src.width,H=src.height;
+      const sd=src.getContext('2d').getImageData(0,0,W,H).data;
+      const out=offs(W,H);const ctx=out.getContext('2d');
+      ctx.fillStyle=inv?'#000':'#fff';ctx.fillRect(0,0,W,H);
+      ctx.fillStyle=inv?'#fff':'#000';
+      const angDeg=pca&&chAngDeg[id]!=null?chAngDeg[id]:parseInt(G('htang').value);
+      const ang=angDeg*Math.PI/180;
+      const cosA=Math.cos(ang),sinA=Math.sin(ang);
+      const step=cp;
+      const range=Math.ceil(Math.sqrt(W*W+H*H));
+      for(let gv=-range;gv<=range;gv+=step){
+        for(let gu=-range;gu<=range;gu+=step){
+          const ix=Math.round(gu*cosA-gv*sinA+W/2);
+          const iy=Math.round(gu*sinA+gv*cosA+H/2);
+          if(ix<0||ix>=W||iy<0||iy>=H)continue;
+          const pi=(iy*W+ix)*4;
+          if(sd[pi+3]<10)continue;
+          let luma=sd[pi]/255;
+          luma=Math.max(0,Math.min(1,(luma-0.5)*(1+con)+0.5));
+          const density=inv?luma:1-luma;
+          const radius=Math.sqrt(density)*step*0.5*0.95;
+          if(radius<0.3)continue;
+          const dx=Math.round(gu*cosA+gv*sinA+W/2);
+          const dy=Math.round(-gu*sinA+gv*cosA+H/2);
+          if(dx<-step||dx>=W+step||dy<-step||dy>=H+step)continue;
+          drawDot(ctx,shp,dx,dy,radius,ang);
+        }
+      }
       plates[id]=out;
     });
     if(!silent){setP(95);setTimeout(()=>{renderPlates();redraw(true);hideP();markDirty();},30);}
-    else{renderPlates();}
+    else renderPlates();
   },30);
 }
 function updScr(){G('amctrls').style.display=G('htscr').value==='fm'?'none':'block';}
