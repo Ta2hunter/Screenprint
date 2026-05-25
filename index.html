@@ -809,9 +809,10 @@ function onSz(w){const wv=parseFloat(G('aW').value)||10,hv=parseFloat(G('aH').va
 // CANVAS DRAWING
 // ================================================================
 function getDS(){const c=G('ctr');let cW=c.clientWidth;if(!cW||cW<100)cW=window.innerWidth-255-272-20;const mW=Math.min(cW-20,900),mH=Math.min(window.innerHeight-180,700);const asp=artH/artW;let W=mW,H=Math.round(mW*asp);if(H>mH){H=mH;W=Math.round(H/asp);}return{W,H};}
-function redraw(){
+function redraw(forceMaster=false){
   if(!img)return;
   if(G('cvarea').style.display==='none'){G('cvarea').style.display='flex';}
+  if(forceMaster)activeId='master';
   const{W,H}=getDS();
   ['mcv','dcv','rcv'].forEach(id=>{const c=G(id);c.width=W;c.height=H;c.style.width=W+'px';c.style.height=H+'px';});
   const ctx=G('mcv').getContext('2d');
@@ -887,7 +888,7 @@ function doSep(){
       layers.push({id:ch2.id,name:ch2.name,color:ch2.color,visible:true,print:true,type:'cmyk'});
     });
     if(isOn('tub'))buildUB(dd,W,H);
-    setP(85);setTimeout(()=>{renderLL();renderPlates();calcCov();showMaster();hideP();markDirty();},40);
+    setP(85);setTimeout(()=>{renderLL();renderPlates();calcCov();redraw(true);hideP();markDirty();},40);
   },30);
 }
 function doSpot(){
@@ -905,7 +906,7 @@ function doSpot(){
       const cv=offs(W,H);cv.getContext('2d').putImageData(new ImageData(mask,W,H),0,0);
       const id='sp'+idx;plates[id]=cv;layers.push({id,name:'Spot '+(idx+1),color:`rgb(${r},${gx},${b})`,visible:true,print:true,type:'spot'});
     });
-    setP(90);setTimeout(()=>{renderLL();renderPlates();showMaster();hideP();markDirty();},40);
+    setP(90);setTimeout(()=>{renderLL();renderPlates();redraw(true);hideP();markDirty();},40);
   },30);
 }
 
@@ -1002,14 +1003,17 @@ function applyHT(silent=false){
       const out=offs(W,H);const ctx=out.getContext('2d');ctx.fillStyle=inv?'#000':'#fff';ctx.fillRect(0,0,W,H);
       if(scr==='fm'){for(let i=0;i<sd.length;i+=4){if(sd[i+3]<10)continue;if(Math.random()>(inv?sd[i]/255:1-sd[i]/255)){const x=(i/4)%W,y=Math.floor((i/4)/W);ctx.fillStyle=inv?'#fff':'#000';ctx.fillRect(x,y,2,2);}}}
       else{const ang=pca&&CHANG[id]!=null?CHANG[id]*Math.PI/180:bAng;const cos=Math.cos(ang),sin=Math.sin(ang);
-        for(let cy=-cp;cy<H+cp;cy+=cp)for(let cx=-cp;cx<W+cp;cx+=cp){
-          const rx=Math.round(cx*cos-cy*sin),ry=Math.round(cx*sin+cy*cos);if(rx<0||rx>=W||ry<0||ry>=H)continue;
+        const ext=Math.ceil(Math.sqrt(W*W+H*H)/2);
+        for(let cy=-ext;cy<H+ext;cy+=cp)for(let cx=-ext;cx<W+ext;cx+=cp){
+          const rx=Math.round((cx-W/2)*cos-(cy-H/2)*sin+W/2);
+          const ry=Math.round((cx-W/2)*sin+(cy-H/2)*cos+H/2);
+          if(rx<0||rx>=W||ry<0||ry>=H)continue;
           const px=(ry*W+rx)*4;if(sd[px+3]<10)continue;let luma=sd[px]/255;luma=Math.max(0,Math.min(1,(luma-.5)*(1+con)+.5));
           const radius=(inv?luma:1-luma)*(cp/2)*.9;if(radius<.4)continue;ctx.fillStyle=inv?'#fff':'#000';
           ctx.beginPath();switch(shp){case 'circle':ctx.arc(cx,cy,radius,0,Math.PI*2);break;case 'ellipse':ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.ellipse(0,0,radius,radius*.5,0,0,Math.PI*2);ctx.restore();break;case 'square':ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.rect(-radius,-radius,radius*2,radius*2);ctx.restore();break;case 'diamond':ctx.save();ctx.translate(cx,cy);ctx.rotate(Math.PI/4+ang);ctx.rect(-radius*.75,-radius*.75,radius*1.5,radius*1.5);ctx.restore();break;case 'line':ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.rect(-radius,-radius*.22,radius*2,radius*.44);ctx.restore();break;default:ctx.arc(cx,cy,radius,0,Math.PI*2);}ctx.fill();}}
       plates[id]=out;
     });
-    if(!silent){setP(95);setTimeout(()=>{renderPlates();showMaster();hideP();markDirty();},30);}
+    if(!silent){setP(95);setTimeout(()=>{renderPlates();redraw(true);hideP();markDirty();},30);}
     else{renderPlates();}
   },30);
 }
@@ -1041,7 +1045,7 @@ function applyRIP(){
       const l=layers.find(x=>x.id===id)||{name:id,color:'#fff'};if(crop)drawReg(ctx,W,H,l.name,l.color,lpi,ang,dpi);
       plates[id]=cv;
     });
-    setP(100);setTimeout(()=>{renderPlates();showMaster();hideP();markDirty();},30);
+    setP(100);setTimeout(()=>{renderPlates();redraw();hideP();markDirty();},30);
   },30);
 }
 function ripAll(){showP('EXPORTING','');setTimeout(()=>{applyRIP();setTimeout(exportAll,800);},100);}
