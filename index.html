@@ -209,11 +209,6 @@ select{background:var(--s2);border:1px solid var(--b1);border-radius:var(--r);co
 <body>
 
 <!-- HEADER -->
-<div id="dbg" style="position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,.9);
-color:#0f0;font-family:monospace;font-size:11px;padding:6px 10px;z-index:9999;
-border-top:2px solid #0f0;max-height:80px;overflow-y:auto;display:block;">
-DEBUG: App loaded. Tap anything to test.
-</div>
 <div id="hdr">
   <div class="logo">SCREEN<em>PRINT</em><sup>PRO v5</sup></div>
   <div class="sp"></div>
@@ -678,9 +673,7 @@ const markClean=()=>{isDirty=false;G('sdot').className='';};
 // ================================================================
 // WIZARD - buttons fire onclick reliably on all browsers
 // ================================================================
-function dbg(msg){const el=document.getElementById('dbg');if(el){el.textContent='DEBUG: '+msg;console.log(msg);}}
 function wpick(grp,idx){
-  dbg('wpick called: grp='+grp+' idx='+idx);
   ws[grp]=idx;
   // Clear all in group, select chosen
   const pfx={g:'wg',d:'wd',m:'wm',c:'wc'}[grp];
@@ -698,7 +691,7 @@ function wpick(grp,idx){
   G('wrec').innerHTML=lines.join('<br>');
 }
 
-function wgo(){dbg('wgo called - START JOB tapped');
+function wgo(){
   G('ctr').style.overflow='auto';G('ctr').style.overflowX='hidden';
   // Apply settings from wizard
   if(ws.g===1){setOn('tub',true);G('gcol').value='#111111';G('bkm').value='knockout';}
@@ -730,7 +723,7 @@ function wgo(){dbg('wgo called - START JOB tapped');
 // ================================================================
 // IMAGE LOADING
 // ================================================================
-function imgPicked(e){dbg('imgPicked called');
+function imgPicked(e){
   const f=e.target.files[0]; if(!f)return;
   e.target.value='';
   const rd=new FileReader();
@@ -809,7 +802,7 @@ function onSz(w){const wv=parseFloat(G('aW').value)||10,hv=parseFloat(G('aH').va
 // CANVAS DRAWING
 // ================================================================
 function getDS(){const c=G('ctr');let cW=c.clientWidth;if(!cW||cW<100)cW=window.innerWidth-255-272-20;const mW=Math.min(cW-20,900),mH=Math.min(window.innerHeight-180,700);const asp=artH/artW;let W=mW,H=Math.round(mW*asp);if(H>mH){H=mH;W=Math.round(H/asp);}return{W,H};}
-function redraw(){dbg('redraw called, img='+(img?'yes':'no')+' ctr.w='+G('ctr').clientWidth);
+function redraw(){
   if(!img)return;
   if(G('cvarea').style.display==='none'){G('cvarea').style.display='flex';}
   const{W,H}=getDS();
