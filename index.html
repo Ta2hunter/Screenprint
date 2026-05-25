@@ -887,7 +887,7 @@ function doSep(){
       layers.push({id:ch2.id,name:ch2.name,color:ch2.color,visible:true,print:true,type:'cmyk'});
     });
     if(isOn('tub'))buildUB(dd,W,H);
-    setP(85);setTimeout(()=>{renderLL();renderPlates();calcCov();hideP();markDirty();},40);
+    setP(85);setTimeout(()=>{renderLL();renderPlates();calcCov();showMaster();hideP();markDirty();},40);
   },30);
 }
 function doSpot(){
@@ -905,7 +905,7 @@ function doSpot(){
       const cv=offs(W,H);cv.getContext('2d').putImageData(new ImageData(mask,W,H),0,0);
       const id='sp'+idx;plates[id]=cv;layers.push({id,name:'Spot '+(idx+1),color:`rgb(${r},${gx},${b})`,visible:true,print:true,type:'spot'});
     });
-    setP(90);setTimeout(()=>{renderLL();renderPlates();hideP();markDirty();},40);
+    setP(90);setTimeout(()=>{renderLL();renderPlates();showMaster();hideP();markDirty();},40);
   },30);
 }
 
@@ -1009,7 +1009,8 @@ function applyHT(silent=false){
           ctx.beginPath();switch(shp){case 'circle':ctx.arc(cx,cy,radius,0,Math.PI*2);break;case 'ellipse':ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.ellipse(0,0,radius,radius*.5,0,0,Math.PI*2);ctx.restore();break;case 'square':ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.rect(-radius,-radius,radius*2,radius*2);ctx.restore();break;case 'diamond':ctx.save();ctx.translate(cx,cy);ctx.rotate(Math.PI/4+ang);ctx.rect(-radius*.75,-radius*.75,radius*1.5,radius*1.5);ctx.restore();break;case 'line':ctx.save();ctx.translate(cx,cy);ctx.rotate(ang);ctx.rect(-radius,-radius*.22,radius*2,radius*.44);ctx.restore();break;default:ctx.arc(cx,cy,radius,0,Math.PI*2);}ctx.fill();}}
       plates[id]=out;
     });
-    if(!silent){setP(95);setTimeout(()=>{renderPlates();if(activeId!=='master')selLayer(activeId);hideP();markDirty();},30);}else renderPlates();
+    if(!silent){setP(95);setTimeout(()=>{renderPlates();showMaster();hideP();markDirty();},30);}
+    else{renderPlates();}
   },30);
 }
 function updScr(){G('amctrls').style.display=G('htscr').value==='fm'?'none':'block';}
@@ -1040,7 +1041,7 @@ function applyRIP(){
       const l=layers.find(x=>x.id===id)||{name:id,color:'#fff'};if(crop)drawReg(ctx,W,H,l.name,l.color,lpi,ang,dpi);
       plates[id]=cv;
     });
-    setP(100);setTimeout(()=>{renderPlates();if(activeId!=='master')selLayer(activeId);hideP();markDirty();},30);
+    setP(100);setTimeout(()=>{renderPlates();showMaster();hideP();markDirty();},30);
   },30);
 }
 function ripAll(){showP('EXPORTING','');setTimeout(()=>{applyRIP();setTimeout(exportAll,800);},100);}
